@@ -3,11 +3,11 @@
 
 #include <QObject>
 
-class db : public QObject
+class Db : public QObject
 {
     Q_OBJECT
 public:
-    explicit db(QObject *parent = 0);
+    explicit Db(QObject *parent = 0);
 
 signals:
 

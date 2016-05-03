@@ -11,8 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = db
 TEMPLATE = app
 
+CONFIG += c++14
 
 SOURCES += main.cpp\
-        mainwindow.cpp
 
-HEADERS  += mainwindow.h
+
+HEADERS  +=
+
+include(db.pri)

@@ -1,6 +1,6 @@
 #include "db.h"
 
-db::db(QObject *parent) : QObject(parent)
+Db::Db(QObject *parent) : QObject(parent)
 {
 
 }
