@@ -1,6 +1,11 @@
-#include "logger.h"
+#include "logtofile.h"
 
-Logger::Logger()
+LogToFile::LogToFile()
 {
 
+}
+
+void LogToFile::log(QString message)
+{
+    qDebug() << "asd";
 }

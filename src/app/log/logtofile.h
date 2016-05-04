@@ -1,14 +1,14 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef LOGTOFILE_H
+#define LOGTOFILE_H
 
 #include "ilog.h"
 #include <QDebug>
 
-class Logger : public ILog
+class LogToFile : public ILog
 {
 public:
-    Logger();
+    LogToFile();
     virtual void log(QString message);
 };
 
-#endif // LOGGER_H
+#endif // LOGTOFILE_H
