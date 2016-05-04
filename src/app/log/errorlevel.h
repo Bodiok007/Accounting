@@ -6,10 +6,10 @@
  *
  * Allow error levels for Logger
  */
-enum class ErrorLevel
+enum class ErrorType
 {
-    WARNING,
-    ERROR
+    WARNING = 0,
+    ERROR = 1
 };
 
 #endif // ERRORLEVEL_H

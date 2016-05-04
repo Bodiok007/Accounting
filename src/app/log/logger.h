@@ -7,7 +7,10 @@
 class Logger
 {
 public:
-    Logger();
+    Logger(ILog *logger);
+    void log(ErrorType errorType,
+             QString message,
+             ErrorFileInfo errorFileInfo);
 
 private:
     QSharedPointer<ILog> _logger;
