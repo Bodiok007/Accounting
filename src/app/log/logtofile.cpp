@@ -3,12 +3,22 @@
 #include <QFile>
 #include <QCoreApplication>
 
+/*!
+ * \brief LogToFile::LogToFile
+ */
 LogToFile::LogToFile()
 {
     _errorType[ErrorType::WARNING] = "Warning";
     _errorType[ErrorType::ERROR] = "Error";
 }
 
+/*!
+ * \brief LogToFile::log
+ * \param errorType
+ * \param message
+ * \param errorFileInfo
+ * \return
+ */
 bool LogToFile::log(ErrorType errorType,
                     QString message,
                     ErrorFileInfo errorFileInfo)
@@ -29,6 +39,7 @@ bool LogToFile::log(ErrorType errorType,
 
     return statusOk;
 }
+
 
 void LogToFile::createLogFolder()
 {
