@@ -2,6 +2,10 @@
 #include <QTextStream>
 #include <QMessageBox>
 
+
+/*!
+ * \brief DbSetting::DbSetting
+ */
 DbSetting::DbSetting()
 {
     _settingFile =
@@ -10,38 +14,6 @@ DbSetting::DbSetting()
     setErrors();
     checkSettingFolder();
     readSetting();
-}
-
-bool DbSetting::saveSetting( DbSettingData dbSettingData )
-{
-    if (!_settingFile->open( QIODevice::WriteOnly
-                               | QIODevice::Text ) ) {
-        message( _errorMessages[ DbSettingErrors::ErrorOpenFileForWriting ] );
-
-        return false;
-    }
-
-    writeSettingToFile( dbSettingData );
-
-    _settingFile->close();
-
-    /*_databaseName = dbSettingData.databaseName;
-    _userName = dbSettingData.userName;
-    _hostName = dbSettingData.hostName;
-    _password = dbSettingData.password;*/
-    readSetting();
-
-    return true;
-}
-
-
-void DbSetting::writeSettingToFile( DbSettingData &dbSettingData )
-{
-    QTextStream out( &*_settingFile );
-    out << "databaseName:" << dbSettingData.databaseName << "\n";
-    out << "userName:" << dbSettingData.userName << "\n";
-    out << "password:" << dbSettingData.password << "\n";
-    out << "hostName:" << dbSettingData.hostName;
 }
 
 
@@ -77,6 +49,48 @@ void DbSetting::createSettingFolder()
 }
 
 
+/*!
+ * \brief DbSetting::saveSetting
+ * \param dbSettingData
+ * \return
+ */
+bool DbSetting::saveSetting( DbSettingData dbSettingData )
+{
+    if (!_settingFile->open( QIODevice::WriteOnly
+                               | QIODevice::Text ) ) {
+        message( _errorMessages[ DbSettingErrors::ErrorOpenFileForWriting ] );
+
+        return false;
+    }
+
+    writeSettingToFile( dbSettingData );
+
+    _settingFile->close();
+
+    /*_databaseName = dbSettingData.databaseName;
+    _userName = dbSettingData.userName;
+    _hostName = dbSettingData.hostName;
+    _password = dbSettingData.password;*/
+    readSetting();
+
+    return true;
+}
+
+
+void DbSetting::writeSettingToFile( DbSettingData &dbSettingData )
+{
+    QTextStream out( &*_settingFile );
+    out << "databaseName:" << dbSettingData.databaseName << "\n";
+    out << "userName:" << dbSettingData.userName << "\n";
+    out << "password:" << dbSettingData.password << "\n";
+    out << "hostName:" << dbSettingData.hostName;
+}
+
+
+/*!
+ * \brief DbSetting::readSetting
+ * \return
+ */
 bool DbSetting::readSetting()
 {
     if ( !isFileWithSettingExists() ) {

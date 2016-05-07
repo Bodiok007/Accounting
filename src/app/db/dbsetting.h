@@ -16,6 +16,7 @@ public:
 
 public:
     bool saveSetting( DbSettingData dbSettingData );
+    bool readSetting();
 
 private:
     QSharedPointer<QIODevice> _settingFile;
@@ -42,7 +43,6 @@ private:
 private:
     void createSettingFolder();
     void checkSettingFolder();
-    bool readSetting();
     void setErrors();
     bool isFileWithSettingExists();
     void readSettingFromFile( QString *settings[], int numSetting );
