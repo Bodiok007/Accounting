@@ -6,14 +6,17 @@
 
 QT       += testlib
 
-QT       -= gui
+QT       += core gui widgets
 
 TARGET = tst_dbsetting
-CONFIG   += console
-CONFIG   -= app_bundle
+#CONFIG   += console
+#CONFIG   -= app_bundle
 
 TEMPLATE = app
 
 
 SOURCES += tst_dbsetting.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+include(../../../../src/app/db/db.pri)
+INCLUDEPATH += ../../../../src/app/db/
