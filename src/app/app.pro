@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-
 SUBDIRS += \
-    db
+    db\
+    log
