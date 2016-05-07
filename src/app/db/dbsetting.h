@@ -40,6 +40,7 @@ private:
     void writeSettingToFile( DbSettingData &dbSettingData );
 
     void message( QString message );
+    void logError( DbSettingError error, QString fileName, int line );
 };
 
 #endif // DBSETTINGS_H

@@ -5,6 +5,7 @@ enum class DbSettingError
 {
     NoError,
     FileNotExists,
+    FolderNotExists,
     ErrorOpenFileForReading,
     ErrorOpenFileForWriting
 };

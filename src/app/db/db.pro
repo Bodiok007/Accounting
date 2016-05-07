@@ -19,3 +19,5 @@ SOURCES += main.cpp\
 HEADERS  +=
 
 include(db.pri)
+include(../log/logger.pri)
+INCLUDEPATH += ../log/

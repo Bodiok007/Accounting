@@ -1,6 +1,7 @@
 #include "dbsetting.h"
 #include <QTextStream>
 #include <QMessageBox>
+#include "logger.h"
 
 
 /*!
@@ -23,6 +24,10 @@ void DbSetting::setErrors()
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
        + QObject::tr( " не існує! Задайте налашування для підключення до бази даних!" );
+   _errorMessages[ DbSettingError::FolderNotExists ] =
+       QString( QObject::tr( "Папка " ) ) + QDir::currentPath()
+       + QDir::separator() + DB_SETTING_DIRECTORY
+       + QObject::tr( " не існує! Створення нової папки." );
    _errorMessages[ DbSettingError::ErrorOpenFileForReading ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
@@ -30,7 +35,7 @@ void DbSetting::setErrors()
    _errorMessages[ DbSettingError::ErrorOpenFileForWriting ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
-           + QObject::tr( " неможливо відкрити для запису!" );
+       + QObject::tr( " неможливо відкрити для запису!" );
 }
 
 
@@ -38,6 +43,7 @@ void DbSetting::checkSettingFolder()
 {
     if ( !QFile::exists( DB_SETTING_DIRECTORY ) ) {
         createSettingFolder();
+        logError( DbSettingError::FolderNotExists, __FILE__, __LINE__ );
     }
 }
 
@@ -59,9 +65,11 @@ bool DbSetting::saveSetting( DbSettingData dbSettingData )
     if (!_settingFile->open( QIODevice::WriteOnly
                                | QIODevice::Text ) ) {
         message( _errorMessages[ DbSettingError::ErrorOpenFileForWriting ] );
+        logError( DbSettingError::ErrorOpenFileForWriting, __FILE__, __LINE__ );
 
         return false;
     }
+
     writeSettingToFile( dbSettingData );
     _settingFile->close();
 
@@ -89,6 +97,7 @@ DbSettingData DbSetting::readSetting()
 {
     if ( !isFileWithSettingExists() ) {
         _setting.error = DbSettingError::FileNotExists;
+        logError( DbSettingError::FileNotExists, __FILE__, __LINE__ );
 
         return _setting;
     }
@@ -97,6 +106,7 @@ DbSettingData DbSetting::readSetting()
                               | QIODevice::Text ) ) {
         message( _errorMessages[ DbSettingError::ErrorOpenFileForReading ] );
         _setting.error = DbSettingError::ErrorOpenFileForReading;
+        logError( DbSettingError::ErrorOpenFileForReading, __FILE__, __LINE__ );
 
         return _setting;
     }
@@ -151,4 +161,15 @@ void DbSetting::message( QString message )
     QMessageBox msgBox;
     msgBox.setText( message );
     msgBox.exec();
+}
+
+
+void DbSetting::logError( DbSettingError error, QString fileName, int line )
+{
+    ErrorFileInfo errorInfo;
+    errorInfo.setFileName( fileName );
+    errorInfo.setLine( line );
+    Logger::getInstance()->log( ErrorType::ERROR
+                                , _errorMessages[ error ]
+                                , errorInfo );
 }
