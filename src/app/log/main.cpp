@@ -1,4 +1,3 @@
-#include "mainwindow.h"
 #include "logger.h"
 #include "logtofile.h"
 #include "errorfileinfo.h"
@@ -7,15 +6,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
 
     ErrorFileInfo errorFileInfo;
-    errorFileInfo.setFileName(__FILE__);
-    errorFileInfo.setLine(__LINE__);
+    errorFileInfo.setFileName( __FILE__ );
+    errorFileInfo.setLine( __LINE__ );
 
-    Logger logger(new LogToFile());
-    logger.log(ErrorType::ERROR, "message", errorFileInfo);
-
+    Logger::getInstance()->log( ErrorType::ERROR, "message from Singleton", errorFileInfo );
+    //ExpLog::getInstance();//->log( ErrorType::ERROR, "message from exp", errorFileInfo );
     return a.exec();
 }
