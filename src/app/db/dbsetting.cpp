@@ -19,15 +19,15 @@ DbSetting::DbSetting()
 
 void DbSetting::setErrors()
 {
-   _errorMessages[ DbSettingErrors::FileNotExists ] =
+   _errorMessages[ DbSettingError::FileNotExists ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
        + QObject::tr( " не існує! Задайте налашування для підключення до бази даних!" );
-   _errorMessages[ DbSettingErrors::ErrorOpenFileForReading ] =
+   _errorMessages[ DbSettingError::ErrorOpenFileForReading ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
        + QObject::tr( " неможливо відкрити для читання!" );
-   _errorMessages[ DbSettingErrors::ErrorOpenFileForWriting ] =
+   _errorMessages[ DbSettingError::ErrorOpenFileForWriting ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
        + QDir::separator() + DB_SETTING_FILE_PATH
            + QObject::tr( " неможливо відкрити для запису!" );
@@ -58,19 +58,13 @@ bool DbSetting::saveSetting( DbSettingData dbSettingData )
 {
     if (!_settingFile->open( QIODevice::WriteOnly
                                | QIODevice::Text ) ) {
-        message( _errorMessages[ DbSettingErrors::ErrorOpenFileForWriting ] );
+        message( _errorMessages[ DbSettingError::ErrorOpenFileForWriting ] );
 
         return false;
     }
-
     writeSettingToFile( dbSettingData );
-
     _settingFile->close();
 
-    /*_databaseName = dbSettingData.databaseName;
-    _userName = dbSettingData.userName;
-    _hostName = dbSettingData.hostName;
-    _password = dbSettingData.password;*/
     readSetting();
 
     return true;
@@ -91,38 +85,43 @@ void DbSetting::writeSettingToFile( DbSettingData &dbSettingData )
  * \brief DbSetting::readSetting
  * \return
  */
-bool DbSetting::readSetting()
+DbSettingData DbSetting::readSetting()
 {
     if ( !isFileWithSettingExists() ) {
-        return false;
+        _setting.error = DbSettingError::FileNotExists;
+
+        return _setting;
     }
 
     if ( !_settingFile->open( QIODevice::ReadOnly
                               | QIODevice::Text ) ) {
-        message( _errorMessages[ DbSettingErrors::ErrorOpenFileForReading ] );
+        message( _errorMessages[ DbSettingError::ErrorOpenFileForReading ] );
+        _setting.error = DbSettingError::ErrorOpenFileForReading;
 
-        return false;
+        return _setting;
     }
 
     const int numSetting = 4;
     QString *settings[ numSetting ];
-    settings[ 0 ] = &_databaseName;
-    settings[ 1 ] = &_userName;
-    settings[ 2 ] = &_password;
-    settings[ 3 ] = &_hostName;
+    settings[ 0 ] = &_setting.databaseName;
+    settings[ 1 ] = &_setting.userName;
+    settings[ 2 ] = &_setting.password;
+    settings[ 3 ] = &_setting.hostName;
 
     readSettingFromFile( settings, numSetting );
 
     _settingFile->close();
 
-    return true;
+    _setting.error = DbSettingError::NoError;
+
+    return _setting;
 }
 
 
 bool DbSetting::isFileWithSettingExists()
 {
     if ( !QFile::exists( DB_SETTING_FILE_PATH ) ) {
-        message( _errorMessages[ DbSettingErrors::FileNotExists ] );
+        message( _errorMessages[ DbSettingError::FileNotExists ] );
         return false;
     }
 
