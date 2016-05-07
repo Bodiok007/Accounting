@@ -2,6 +2,7 @@
 #define DBSETTINGS_H
 
 #include "dbsettingdata.h"
+#include "../log/logger.h"
 #include <QFile>
 #include <QSharedPointer>
 #include <QDir>
