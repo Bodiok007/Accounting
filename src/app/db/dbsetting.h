@@ -16,14 +16,11 @@ public:
 
 public:
     bool saveSetting( DbSettingData dbSettingData );
-    bool readSetting();
+    DbSettingData readSetting();
 
 private:
     QSharedPointer<QIODevice> _settingFile;
-    QString _databaseName;
-    QString _userName;
-    QString _password;
-    QString _hostName;
+    DbSettingData _setting;
 
 private:
     const QString DB_SETTING_DIRECTORY = QString( QObject::tr( "dbSetting" ) );
@@ -31,14 +28,7 @@ private:
                                        + QDir::separator()
                                        + QString( QObject::tr( "dbSetting.ini" ) );
 private:
-    enum class DbSettingErrors
-    {
-        FileNotExists,
-        ErrorOpenFileForReading,
-        ErrorOpenFileForWriting
-    };
-
-    QMap<DbSettingErrors, QString> _errorMessages;
+    QMap<DbSettingError, QString> _errorMessages;
 
 private:
     void createSettingFolder();

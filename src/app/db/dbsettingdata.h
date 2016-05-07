@@ -2,6 +2,7 @@
 #define DBSETTINGDATA_H
 
 #include <QString>
+#include "dbsettingerror.h"
 
 struct DbSettingData
 {
@@ -9,6 +10,7 @@ struct DbSettingData
     QString userName;
     QString password;
     QString hostName;
+    DbSettingError error;
 };
 
 #endif // DBSETTINGDATA_H
