@@ -8,9 +8,9 @@
 class ILog
 {
 public:
-    virtual bool log(ErrorType errorType,
-                     QString message,
-                     ErrorFileInfo errorFileInfo) = 0;
+    virtual bool log( ErrorType errorType,
+                      QString message,
+                      ErrorFileInfo errorFileInfo ) = 0;
 };
 
 #endif // ILOG_H

@@ -8,8 +8,8 @@
  */
 LogToFile::LogToFile()
 {
-    _errorType[ErrorType::WARNING] = "Warning";
-    _errorType[ErrorType::ERROR] = "Error";
+    _errorType[ ErrorType::WARNING ] = "Warning";
+    _errorType[ ErrorType::ERROR ] = "Error";
 }
 
 /*!
@@ -19,23 +19,23 @@ LogToFile::LogToFile()
  * \param errorFileInfo
  * \return
  */
-bool LogToFile::log(ErrorType errorType,
-                    QString message,
-                    ErrorFileInfo errorFileInfo)
+bool LogToFile::log( ErrorType errorType,
+                     QString message,
+                     ErrorFileInfo errorFileInfo )
 {
-    if (!QFile::exists(LOG_DIRECTORY)) {
+    if ( !QFile::exists( LOG_DIRECTORY ) ) {
         createLogFolder();
     }
 
     QString messageToLog;
     messageToLog = "Date: "
-                 + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") + "; "
+                 + QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) + "; "
                  + _errorType[errorType] + ": " + message + "; "
                  + "Path: " + QDir::currentPath() + "/"
                  + errorFileInfo.getFileName() + "; "
-                 + "Line: " + QString::number(errorFileInfo.getLine()) + "\n";
+                 + "Line: " + QString::number( errorFileInfo.getLine() ) + "\n";
 
-    bool statusOk = writeLog(messageToLog);
+    bool statusOk = writeLog( messageToLog );
 
     return statusOk;
 }
@@ -44,16 +44,16 @@ bool LogToFile::log(ErrorType errorType,
 void LogToFile::createLogFolder()
 {
     QDir dir;
-    dir.mkdir(LOG_DIRECTORY);
+    dir.mkdir( LOG_DIRECTORY );
 }
 
-bool LogToFile::writeLog(QString message)
+bool LogToFile::writeLog( QString message )
 {
     bool statusOk = false;
-    QFile file(LOG_FILE_PATH);
-    statusOk = file.open(QIODevice::ReadWrite | QIODevice::Append);
+    QFile file( LOG_FILE_PATH );
+    statusOk = file.open( QIODevice::ReadWrite | QIODevice::Append );
 
-    QTextStream out(&file);
+    QTextStream out( &file );
     out << message;
 
     file.close();
