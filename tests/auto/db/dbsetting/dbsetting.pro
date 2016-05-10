@@ -6,7 +6,7 @@
 
 QT       += testlib
 
-QT       += core gui widgets
+QT       += core gui widgets sql
 
 TARGET = tst_dbsetting
 #CONFIG   += console
@@ -20,3 +20,6 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 include(../../../../src/app/db/db.pri)
 INCLUDEPATH += ../../../../src/app/db/
+
+include(../../../../src/app/log/logger.pri)
+INCLUDEPATH += ../../../../src/app/log/
