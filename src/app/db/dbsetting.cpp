@@ -2,6 +2,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include "logger.h"
+#include <QDebug>
 
 
 /*!
