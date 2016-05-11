@@ -4,12 +4,12 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     LoginForm w;
     w.show();
 
     QStyle* pstyle = QStyleFactory::create("Fusion");
     QApplication::setStyle(pstyle);
 
-    return a.exec();
+    return app.exec();
 }

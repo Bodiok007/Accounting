@@ -1,34 +1,33 @@
 #include "loginform.h"
 #include "ui_loginform.h"
-#include "db.h"
 
-LoginForm::LoginForm(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::LoginForm)
+
+LoginForm::LoginForm( QWidget *parent )
+    : QWidget( parent ),
+      ui( new Ui::LoginForm )
 {
-    ui->setupUi(this);
-    connect(getLoginButton(),
-            SIGNAL(clicked(bool)),
-            SLOT(pressLoginButton())
-           );
+    ui->setupUi( this );
+    _db = Db::getInstance();
+    addSettingDbToForm();
+    initQueries();
+    initErrors();
+
+    connect( getLoginButton(),
+             SIGNAL( clicked( bool ) ),
+             SLOT( pressLoginButton() ) );
 
     // save parameters
-    connect(ui->buttonSaveSettings,
-            SIGNAL(clicked(bool)),
-            SLOT(saveSettings())
-           );
+    connect( ui->buttonSaveSettings,
+             SIGNAL( clicked( bool ) ),
+             SLOT( saveSettings() ) );
 
     // reconnect to DB with new parameter
-    /*connect(this,
-            SIGNAL(changeSettings()),
-            DB::instance(),
-            SLOT(connectToDB())
-           );*/
+    connect( this,
+             SIGNAL( changeSettings() ),
+             &*Db::getInstance(),
+             SLOT( connectToDb() ) );
 
-    setSettingsDB();
-    initQueries();
-
-    ui->toolBox->setCurrentIndex(0);
+    ui->toolBox->setCurrentIndex( 0 );
 }
 
 
@@ -39,50 +38,105 @@ QPushButton *LoginForm::getLoginButton()
 
 
 void LoginForm::pressLoginButton()
-{
-    /*QString login = ui->lineLogin->text().replace(" ", "");
-    QString password = ui->linePassword->text().replace(" ", "");
+{   
+    QString login = ui->lineLogin->text().replace( " ", "" );
+    QString password = ui->linePassword->text().replace( " ", "" );
 
-    if (login == "" || password == "") {
-        message("Заповніть, будь ласка, поля логіна та пароля!");
+    if ( login == "" || password == "" ) {
+        logError( LoginFormError::EMPTY_LOGIN_OR_PASSWORD, __FILE__, __LINE__ );
+        message( _errors[ LoginFormError::EMPTY_LOGIN_OR_PASSWORD ] );
+
         return;
     }
 
-    QString userName = "";
-    if ((userName = DB::instance()->logIn(login, password)) == NULL) {
-        message("Користувач не знайдений! "
-                "Перевірте, будь ласка, логін та пароль!" + DB::instance()->lastError().isValid());
+    bool isAdmin = ui->checkBoxAdmin->isChecked();
+    QStringList parameters;
+    parameters << login
+               << password
+               << (isAdmin ? "admin" : "seller");
+
+    bool statusOk = _db->query( _queries[ QueryType::LOGIN ], parameters);
+    if ( !statusOk ) {
+        message( _errors[ LoginFormError::ERROR_QUERY ] );
         return;
     }
 
-    emit logged(userName);
+    if ( saveUserDataToApp() ) {
+        emitlogInSuccessSignal( isAdmin );
 
-    //this->hide();
-    ui->linePassword->setText("");*/
+        //this->hide();
+    }
+    else {
+        logError( LoginFormError::USER_NOT_FOUND, __FILE__, __LINE__ );
+        message( _errors[ LoginFormError::USER_NOT_FOUND ] );
+    }
+
+    ui->linePassword->setText( "" );
 }
 
 
-void LoginForm::message(QString text)
+void LoginForm::emitlogInSuccessSignal( bool isAdmin )
+{
+    if ( isAdmin ) {
+        emit logInSuccessAsAdmin();
+    }
+    else {
+        emit logInSuccessAsSeller();
+    }
+}
+
+
+bool LoginForm::saveUserDataToApp()
+{
+    auto data = _db->getData();
+    if ( data->size() <= 0 ) {
+        return false;
+    }
+
+    data->next();
+
+    QString userId = data->value( 0 ).toString();
+    qApp->setProperty( "userId", userId );
+    QString userName = data->value( 1 ).toString();
+    qApp->setProperty( "userName", userName );
+
+    return true;
+}
+
+
+void LoginForm::logError( LoginFormError errorType, QString fileName, int line )
+{
+    ErrorFileInfo fileInfo;
+    fileInfo.setFileName( fileName );
+    fileInfo.setLine( line );
+
+    Logger::getInstance()->log( ErrorType::ERRORR
+                                , _errors[ errorType ]
+                                , fileInfo );
+}
+
+
+void LoginForm::message( QString text )
 {
     QMessageBox msgBox;
-    msgBox.setText(text);
+    msgBox.setText( text );
     msgBox.exec();
 }
 
 
-void LoginForm::setSettingsDB()
+void LoginForm::addSettingDbToForm()
 {
-    auto settings = Db::getInstance()->getSetting()->readSetting();
-    ui->lineNameDB->setText(settings.databaseName);
-    ui->lineNameUserDB->setText(settings.userName);
-    ui->linePasswordUserDB->setText(settings.password);
-    ui->lineHostDB->setText(settings.hostName);
+    auto setting = Db::getInstance()->getSetting()->readSetting();
+    ui->lineNameDB->setText( setting.databaseName );
+    ui->lineNameUserDB->setText( setting.userName );
+    ui->linePasswordUserDB->setText( setting.password );
+    ui->lineHostDB->setText( setting.hostName );
 }
 
 
 void LoginForm::saveSettings()
 {
-    auto setting = Db::getInstance()->getSetting();
+    auto setting = _db->getSetting();
 
     DbSettingData data;
     data.databaseName = ui->lineNameDB->text();
@@ -91,34 +145,42 @@ void LoginForm::saveSettings()
     data.hostName = ui->lineHostDB->text();
 
     bool statusOk = setting->saveSetting( data );
-    if (statusOk) {
+    if ( statusOk ) {
+        message( tr( "Налаштування збережено!" ) );
         emit changeSettings();
     }
     else {
-        message( tr( "Неможливо зберегти дані налаштувань!" ) );
+        logError( LoginFormError::ERROR_SAVE_SETTING, __FILE__, __LINE__ );
+        message( _errors[ LoginFormError::ERROR_SAVE_SETTING ] );
     }
-    /*DB::instance()->getSettings()->writeSettings(
-                                        ui->lineNameDB->text(),
-                                        ui->lineNameUserDB->text(),
-                                        ui->linePasswordUserDB->text(),
-                                        ui->lineHostDB->text()
-                                        );
-    emit changeSettings();
-    DB::instance()->connectToDB();*/
 }
 
 
 void LoginForm::initQueries()
 {
     _queries[ QueryType::LOGIN ] =
-        "SELECT firstName FROM employeerole"
-        "INNER JOIN role"
-            "ON employeerole.roleId = role.roleId"
-        "INNER JOIN employee"
-            "ON employeerole.employeeId = employee.employeeId"
-        "WHERE employee.login = ?"
-            "AND employee.password = ?"
-        "AND role.name = ?";
+        "SELECT employee.employeeId, CONCAT( firstName, ' ', lastName )"
+        " FROM employeerole"
+        " INNER JOIN role"
+            " ON employeerole.roleId = role.roleId"
+        " INNER JOIN employee"
+            " ON employeerole.employeeId = employee.employeeId"
+        " WHERE employee.login = ?"
+            " AND employee.password = ?"
+        " AND role.name = ?";
+}
+
+
+void LoginForm::initErrors()
+{
+   _errors[ LoginFormError::ERROR_QUERY ] =
+       QString( tr( "Помилка запиту до бази даних!" ) );
+   _errors[ LoginFormError::EMPTY_LOGIN_OR_PASSWORD ] =
+       QString( tr( "Заповніть, будь ласка, поля логіна та пароля!" ) );
+   _errors[ LoginFormError::USER_NOT_FOUND ] =
+       QString( tr( "Користувача з таким логіном і паролем не знайдено!" ) );
+   _errors[ LoginFormError::ERROR_SAVE_SETTING ] =
+       QString( tr( "Неможливо зберегти дані налаштувань!" ) );
 }
 
 

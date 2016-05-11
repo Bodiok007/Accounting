@@ -4,6 +4,7 @@
 Db::Db( IDb *dbRepository, QObject *parent ) : QObject( parent )
 {
     _db = QSharedPointer<IDb>( dbRepository );
+    _db->connectToDb();
 }
 
 

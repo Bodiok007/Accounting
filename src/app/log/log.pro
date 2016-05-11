@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = log
 TEMPLATE = lib
 
+CONFIG += staticlib
 CONFIG += c++14
 
 SOURCES +=

@@ -12,7 +12,6 @@ class Db : public QObject
 public:
     static QSharedPointer<Db> getInstance();
 
-    bool connectToDb();
     bool connectToDb( DbSettingData settingData );
 
     QSharedPointer<DbSetting> getSetting() const;
@@ -28,6 +27,7 @@ public:
 signals:
 
 public slots:
+    bool connectToDb();
 
 private:
     Db( IDb *dbRepository , QObject *parent = 0 );
