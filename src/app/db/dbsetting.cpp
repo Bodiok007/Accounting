@@ -170,7 +170,7 @@ void DbSetting::logError( DbSettingError error, QString fileName, int line )
     ErrorFileInfo errorInfo;
     errorInfo.setFileName( fileName );
     errorInfo.setLine( line );
-    Logger::getInstance()->log( ErrorType::ERROR
+    Logger::getInstance()->log( ErrorType::ERRORR
                                 , _errorMessages[ error ]
                                 , errorInfo );
 }

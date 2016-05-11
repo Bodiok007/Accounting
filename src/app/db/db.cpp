@@ -82,7 +82,7 @@ void Db::logError(QString fileName, int line)
     errorFileInfo.setFileName( fileName );
     errorFileInfo.setLine( line );
 
-    Logger::getInstance()->log( ErrorType::ERROR
+    Logger::getInstance()->log( ErrorType::ERRORR
                                 , lastError.text()
                                 , errorFileInfo );
 }

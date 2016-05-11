@@ -121,7 +121,7 @@ void MySqlDb::logOpenDbError( QString fileName, int line )
     errorInfo.setFileName( fileName );
     errorInfo.setLine( line );
 
-    Logger::getInstance()->log( ErrorType::ERROR
+    Logger::getInstance()->log( ErrorType::ERRORR
                                 , QObject::tr( "Помилка при відкритті бази даних: " )
                                 + _db.lastError().text() + QString("\n")
                                 , errorInfo );

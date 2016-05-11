@@ -9,7 +9,7 @@
 enum class ErrorType
 {
     WARNING = 0,
-    ERROR = 1
+    ERRORR = 1
 };
 
 #endif // ERRORLEVEL_H

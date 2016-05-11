@@ -9,12 +9,11 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = log
-TEMPLATE = app
+TEMPLATE = lib
 
 CONFIG += c++14
 
-SOURCES += \
-    main.cpp
+SOURCES +=
 
 
 include(logger.pri)

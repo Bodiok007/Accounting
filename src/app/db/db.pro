@@ -9,11 +9,11 @@ QT       += core gui sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = db
-TEMPLATE = app
+TEMPLATE = lib
 
 CONFIG += c++14
 
-SOURCES += main.cpp\
+SOURCES +=
 
 
 HEADERS  +=

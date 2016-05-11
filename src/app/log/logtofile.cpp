@@ -9,7 +9,7 @@
 LogToFile::LogToFile()
 {
     _errorType[ ErrorType::WARNING ] = "Warning";
-    _errorType[ ErrorType::ERROR ] = "Error";
+    _errorType[ ErrorType::ERRORR ] = "Error";
 }
 
 /*!
