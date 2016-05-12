@@ -21,7 +21,6 @@ public:
 
     QPushButton *getLoginButton();
     void message( QString text );
-
     void addSettingDbToForm();
 
 public slots:

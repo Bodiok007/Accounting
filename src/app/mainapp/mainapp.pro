@@ -27,8 +27,15 @@ RESOURCES += \
 
 include(loginform.pri)
 
-include(../db/db.pri)
-INCLUDEPATH += ../db/
+#include(../db/db.pri)
+#INCLUDEPATH += ../db/
 
-include(../log/logger.pri)
-INCLUDEPATH += ../log/
+#include(../log/logger.pri)
+INCLUDEPATH += ../log
+LIBS += -llog
+
+INCLUDEPATH += ../db
+LIBS += -ldb
+#INCLUDEPATH += ../../../build/src/app/db/debu
+#include(../../../build/src/app/db/debug)
+
