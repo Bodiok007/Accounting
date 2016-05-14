@@ -1,0 +1,25 @@
+#ifndef MESSAGEMODEL_H
+#define MESSAGEMODEL_H
+
+#include <QObject>
+#include "db.h"
+
+class MessageModel : public QObject
+{
+    Q_OBJECT
+public:
+    explicit MessageModel( QObject *parent = 0 );
+    ~MessageModel();
+
+public:
+    QSqlQueryModel *getModel();
+
+private:
+    QSqlQueryModel *_model;
+
+private:
+    void setHeaderModelSales();
+    void logError( QString fileName, int line );
+};
+
+#endif // MESSAGEMODEL_H

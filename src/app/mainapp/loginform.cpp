@@ -41,7 +41,7 @@ void LoginForm::pressLoginButton()
 {   
     QString login = ui->lineLogin->text().replace( " ", "" );
     QString password = ui->linePassword->text().replace( " ", "" );
-
+    qDebug() << login << password;
     if ( login == "" || password == "" ) {
         logError( LoginFormError::EMPTY_LOGIN_OR_PASSWORD, __FILE__, __LINE__ );
         message( _errors[ LoginFormError::EMPTY_LOGIN_OR_PASSWORD ] );
@@ -58,6 +58,7 @@ void LoginForm::pressLoginButton()
     bool statusOk = _db->query( _queries[ QueryType::LOGIN ], parameters);
     if ( !statusOk ) {
         message( _errors[ LoginFormError::ERROR_QUERY ] );
+        ui->linePassword->setText( "" );
         return;
     }
 
@@ -159,15 +160,15 @@ void LoginForm::saveSettings()
 void LoginForm::initQueries()
 {
     _queries[ QueryType::LOGIN ] =
-        "SELECT employee.employeeId, CONCAT( firstName, ' ', lastName )"
-        " FROM employeerole"
+        "call getUser('%1', '%2', '%3')"
+        /*" FROM employeerole"
         " INNER JOIN role"
             " ON employeerole.roleId = role.roleId"
         " INNER JOIN employee"
             " ON employeerole.employeeId = employee.employeeId"
         " WHERE employee.login = ?"
             " AND employee.password = ?"
-        " AND role.name = ?";
+        " AND role.name = ?"*/;
 }
 
 

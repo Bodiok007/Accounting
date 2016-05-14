@@ -13,8 +13,10 @@ public:
                 QStringList &arguments,
                 QSqlQueryModel *model );*/
 
-    virtual bool query( QString &query,
+    virtual bool query( QString query,
                         QStringList &arguments ) = 0;
+    /*virtual bool queryProcedure( QString &query,
+                                 QStringList &arguments ) = 0;*/
 
     /*bool query( QString &query );*/
 

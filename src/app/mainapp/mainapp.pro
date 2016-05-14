@@ -20,12 +20,16 @@ HEADERS  += mainwindow.h \
     querytype.h
 
 FORMS += \
-    loginform.ui
+    loginform.ui \
+    adminform.ui
 
 RESOURCES += \
     resource.qrc
 
 include(loginform.pri)
+include(admin.pri)
+include(models.pri)
+include(views.pri)
 
 INCLUDEPATH += ../log
 LIBS += -llog

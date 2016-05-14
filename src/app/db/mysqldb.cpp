@@ -54,7 +54,7 @@ void MySqlDb::setSetting( DbSettingData settingData )
 }
 
 
-bool MySqlDb::query( QString &query, QStringList &arguments )
+bool MySqlDb::query( QString query, QStringList &arguments )
 {
     bool statusOk = false;
 
@@ -73,12 +73,16 @@ QSharedPointer<QSqlQuery> MySqlDb::getData() const
 
 bool MySqlDb::queryWithParameters( QString &query, QStringList &arguments )
 {
-    _query->prepare( query );
+    /*_query->prepare( query );
     foreach ( QString arg, arguments ) {
         _query->addBindValue( arg );
-    }
+    }*/
 
-    if ( !_query->exec() ) {
+    for ( int i = 0; i < arguments.size(); ++i ) {
+        query = query.arg( arguments.at( i ) );
+    }
+    qDebug() << query;
+    if ( !_query->exec( query ) ) {
         return false;
     }
 
