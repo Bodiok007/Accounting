@@ -11,14 +11,43 @@ class EmployeeTableView : public QTableView
 public:
     EmployeeTableView( QWidget *parent);
 
+    enum class Errors
+    {
+        NO_ADD_ROLE_ERROR,
+        NO_REMOVE_ROLE_ERROR,
+        ADD_ROLE_ERROR,
+        REMOVE_ROLE_ERROR
+    };
+
 public slots:
     void setEmployeeModel();
 
-private:
-    void message( QString text );
+protected:
+    virtual void contextMenuEvent( QContextMenuEvent *pe );
 
 private:
+    void initContextMenu();
+    void initError();
+
+    QString getCurrentEmployeeId();
+    void addAdminRoleToUser();
+    void removeAdminRoleFromUser();
+
+    void message( QString text );
+    void logError( Errors error
+                   , QString fileName
+                   , int line );
+
+private slots:
+    void activateCotextMenu( QAction *pAction );
+
+private:
+
+
     QSharedPointer<UserModel> _model;
+    QSharedPointer<QMenu> _contextMenu;
+    QMap<Errors, QString> _errors;
+
 };
 
 #endif // EMPLOYEETABLEVIEW_H

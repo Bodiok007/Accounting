@@ -16,9 +16,11 @@ public:
 public:
     QMap<QString, QString> &getRoles();
     QStringList getListRoles();
-    bool addUser( UserInfo user );
     QSharedPointer<QSqlQueryModel> getModel();
 
+    bool addUser( UserInfo user );
+    bool addRoleToUser( QString userId, QString role );
+    bool removeRoleFromUser( QString userId, QString role );
 
 private:
     void logError( QString fileName, int line );

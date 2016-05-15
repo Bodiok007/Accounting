@@ -100,6 +100,30 @@ void UserModel::setHeadersToModel()
 }
 
 
+bool UserModel::addRoleToUser( QString userId, QString role )
+{
+    QStringList arguments;
+    arguments << userId
+              << role;
+
+    bool statusOk = _db->query( _queries[ QueryType::ADD_ROLE_TO_EMPLOYEE ]
+                                , arguments );
+    return statusOk;
+}
+
+
+bool UserModel::removeRoleFromUser( QString userId, QString role )
+{
+    QStringList arguments;
+    arguments << userId
+              << role;
+
+    bool statusOk = _db->query( _queries[ QueryType::REMOVE_ROLE_FROM_EMPLOYEE ]
+                                , arguments );
+    return statusOk;
+}
+
+
 void UserModel::logError( QString fileName, int line )
 {
     ErrorFileInfo fileInfo;
@@ -117,6 +141,7 @@ void UserModel::setRoles()
     auto roles = _db->getData();
     QString roleId = "";
     QString roleName = "";
+
     while ( roles->next() ) {
         roleId = roles->value( 0 ).toString();
         roleName = roles->value( 1 ).toString();
@@ -129,5 +154,9 @@ void UserModel::initQueries()
 {
     _queries[ QueryType::ADD_EMPLOYEE ] =
             "call addUser('%1', '%2', '%3', '%4', '%5')";
+    _queries[ QueryType::ADD_ROLE_TO_EMPLOYEE ] =
+            "call addRoleToUser('%1', '%2')";
+    _queries[ QueryType::REMOVE_ROLE_FROM_EMPLOYEE ] =
+            "call removeRoleFromUser('%1', '%2')";
 }
 
