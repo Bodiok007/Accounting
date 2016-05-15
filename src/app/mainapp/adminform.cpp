@@ -7,6 +7,7 @@ AdminForm::AdminForm(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tableMessage->setMessageModel();
+    ui->tableEmployee->setEmployeeModel();
 }
 
 AdminForm::~AdminForm()

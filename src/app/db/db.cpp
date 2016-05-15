@@ -39,15 +39,27 @@ QSharedPointer<DbSetting> Db::getSetting() const
 }
 
 
-void Db::setSetting(DbSettingData settingData)
+void Db::setSetting( DbSettingData settingData )
 {
     _db->setSetting( settingData );
 }
 
 
-bool Db::query(QString &query, QStringList &arguments)
+bool Db::query( QString query, QStringList &arguments )
 {
     bool statusOk = _db->query( query, arguments );
+
+    if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
+    }
+
+    return statusOk;
+}
+
+
+bool Db::query( QString query )
+{
+    bool statusOk = _db->query( query );
 
     if ( !statusOk ) {
         logError( __FILE__, __LINE__ );

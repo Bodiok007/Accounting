@@ -2,6 +2,7 @@
 #define ADMINFORM_H
 
 #include <QWidget>
+#include "messagemodel.h"
 
 namespace Ui {
 class AdminForm;

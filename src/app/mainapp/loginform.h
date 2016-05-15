@@ -38,6 +38,8 @@ private:
     bool saveUserDataToApp();
     void logError( LoginFormError errorType, QString fileName, int line );
     void emitlogInSuccessSignal( bool isAdmin );
+    QString getHashString( QCryptographicHash::Algorithm algorithm
+                           , QString inputString );
 
 private:
     Ui::LoginForm *ui;

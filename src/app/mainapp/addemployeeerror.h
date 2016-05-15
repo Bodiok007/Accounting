@@ -1,4 +1,12 @@
 #ifndef ADDEMPLOYEEERROR_H
 #define ADDEMPLOYEEERROR_H
 
+enum class AddEmployeeFromError
+{
+    NO_ERRORR,
+    PASSWORDS_NOT_EQUALS,
+    EMPTY_FIELDS_ERROR,
+    ADD_EMPLOYEE_ERROR
+};
+
 #endif // ADDEMPLOYEEERROR_H

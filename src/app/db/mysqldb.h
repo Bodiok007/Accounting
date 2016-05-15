@@ -16,8 +16,7 @@ public:
 
     bool query( QString query,
                 QStringList &arguments );
-    /*bool queryProcedure( QString &query,
-                         QStringList &arguments ) = 0;*/
+    bool query( QString query );
 
     QSharedPointer<QSqlQuery> getData() const;
     QSqlError lastError() const;
@@ -34,8 +33,6 @@ private:
 
     bool queryWithParameters( QString &query,
                               QStringList &arguments );
-    /*bool queryProcedureWithParameters( QString &query,
-                              QStringList &arguments );*/
 
     void closeConnectionIfDbOpen();
 

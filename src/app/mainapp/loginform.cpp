@@ -41,19 +41,22 @@ void LoginForm::pressLoginButton()
 {   
     QString login = ui->lineLogin->text().replace( " ", "" );
     QString password = ui->linePassword->text().replace( " ", "" );
+
     qDebug() << login << password;
-    if ( login == "" || password == "" ) {
+    if ( login.isEmpty() || password.isEmpty() ) {
         logError( LoginFormError::EMPTY_LOGIN_OR_PASSWORD, __FILE__, __LINE__ );
         message( _errors[ LoginFormError::EMPTY_LOGIN_OR_PASSWORD ] );
 
         return;
     }
 
+    QString hashPassword = getHashString( QCryptographicHash::Sha256, password );
     bool isAdmin = ui->checkBoxAdmin->isChecked();
+
     QStringList parameters;
     parameters << login
-               << password
-               << (isAdmin ? "admin" : "seller");
+               << hashPassword
+               << ( isAdmin ? "admin" : "seller" );
 
     bool statusOk = _db->query( _queries[ QueryType::LOGIN ], parameters);
     if ( !statusOk ) {
@@ -64,8 +67,6 @@ void LoginForm::pressLoginButton()
 
     if ( saveUserDataToApp() ) {
         emitlogInSuccessSignal( isAdmin );
-
-        //this->hide();
     }
     else {
         logError( LoginFormError::USER_NOT_FOUND, __FILE__, __LINE__ );
@@ -84,6 +85,17 @@ void LoginForm::emitlogInSuccessSignal( bool isAdmin )
     else {
         emit logInSuccessAsSeller();
     }
+}
+
+
+QString LoginForm::getHashString( QCryptographicHash::Algorithm algorithm
+                                  , QString inputString )
+{
+    QByteArray tempBytePassword( inputString.toStdString().c_str() );
+    QString hashString = QString( QCryptographicHash::hash(
+                                    tempBytePassword
+                                    , algorithm ).toHex() );
+    return hashString;
 }
 
 
@@ -160,15 +172,7 @@ void LoginForm::saveSettings()
 void LoginForm::initQueries()
 {
     _queries[ QueryType::LOGIN ] =
-        "call getUser('%1', '%2', '%3')"
-        /*" FROM employeerole"
-        " INNER JOIN role"
-            " ON employeerole.roleId = role.roleId"
-        " INNER JOIN employee"
-            " ON employeerole.employeeId = employee.employeeId"
-        " WHERE employee.login = ?"
-            " AND employee.password = ?"
-        " AND role.name = ?"*/;
+        "call getUser('%1', '%2', '%3')";
 }
 
 

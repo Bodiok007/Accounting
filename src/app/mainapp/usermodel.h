@@ -2,16 +2,35 @@
 #define USERMODEL_H
 
 #include <QObject>
+#include "db.h"
+#include "userinfo.h"
+#include "querytype.h"
 
 class UserModel : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit UserModel(QObject *parent = 0);
+    explicit UserModel( QObject *parent = 0 );
 
-signals:
+public:
+    QMap<QString, QString> &getRoles();
+    QStringList getListRoles();
+    bool addUser( UserInfo user );
+    QSharedPointer<QSqlQueryModel> getModel();
 
-public slots:
+
+private:
+    void logError( QString fileName, int line );
+    void setRoles();
+    void initQueries();
+    void setHeadersToModel();
+
+private:
+    QSharedPointer<Db> _db;
+    QMap<QString, QString> _roles;
+    QMap<QueryType, QString> _queries;
+    QSharedPointer<QSqlQueryModel> _model;
 };
 
 #endif // USERMODEL_H

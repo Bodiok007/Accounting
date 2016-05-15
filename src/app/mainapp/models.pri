@@ -1,5 +1,8 @@
 HEADERS += \
-    $$PWD/messagemodel.h
+    $$PWD/messagemodel.h \
+    $$PWD/usermodel.h \
+    $$PWD/userinfo.h
 
 SOURCES += \
-    $$PWD/messagemodel.cpp
+    $$PWD/messagemodel.cpp \
+    $$PWD/usermodel.cpp

@@ -4,6 +4,7 @@ MessageTableView::MessageTableView( QWidget *parent )
     : QTableView( parent )
 {
     _model = QSharedPointer<MessageModel>( new MessageModel() );
+    //this->horizontalHeader()->resizeSections( QHeaderView::Stretch );
 }
 
 
@@ -16,7 +17,8 @@ void MessageTableView::setMessageModel()
         return;
     }
 
-    this->setModel( _model->getModel() );
+    this->setModel( &*model );
+    horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Stretch );
 }
 
 

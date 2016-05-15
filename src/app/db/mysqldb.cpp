@@ -65,6 +65,17 @@ bool MySqlDb::query( QString query, QStringList &arguments )
     return statusOk;
 }
 
+
+bool MySqlDb::query( QString query )
+{
+    if ( !_query->exec( query ) ) {
+        return false;
+    }
+
+    return true;
+}
+
+
 QSharedPointer<QSqlQuery> MySqlDb::getData() const
 {
     return _query;

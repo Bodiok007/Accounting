@@ -9,16 +9,15 @@ class MessageModel : public QObject
     Q_OBJECT
 public:
     explicit MessageModel( QObject *parent = 0 );
-    ~MessageModel();
 
 public:
-    QSqlQueryModel *getModel();
+    QSharedPointer<QSqlQueryModel> getModel();
 
 private:
-    QSqlQueryModel *_model;
+    QSharedPointer<QSqlQueryModel> _model;
 
 private:
-    void setHeaderModelSales();
+    void setHeadersToModel();
     void logError( QString fileName, int line );
 };
 

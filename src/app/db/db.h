@@ -17,8 +17,9 @@ public:
     QSharedPointer<DbSetting> getSetting() const;
     void setSetting( DbSettingData settingData );
 
-    bool query( QString &query,
+    bool query( QString query,
                 QStringList &arguments );
+    bool query( QString query );
 
     QSharedPointer<QSqlQuery> getData() const;
     QSqlError lastError() const;

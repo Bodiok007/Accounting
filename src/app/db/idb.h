@@ -18,7 +18,7 @@ public:
     /*virtual bool queryProcedure( QString &query,
                                  QStringList &arguments ) = 0;*/
 
-    /*bool query( QString &query );*/
+    virtual bool query( QString query ) = 0;
 
     virtual QSqlError lastError() const = 0;
     virtual QVariant lastInsertId() const = 0;

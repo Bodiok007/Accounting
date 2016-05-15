@@ -127,7 +127,7 @@
           </layout>
          </item>
          <item>
-          <widget class="MessageTableView" name="tableMessage"/>
+          <widget class="EmployeeTableView" name="tableEmployee"/>
          </item>
         </layout>
        </item>
@@ -139,7 +139,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="MessageTableView" name="tableView_2"/>
+        <widget class="MessageTableView" name="tableMessage"/>
        </item>
       </layout>
      </widget>
@@ -152,6 +152,11 @@
    <class>MessageTableView</class>
    <extends>QTableView</extends>
    <header>messagetableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EmployeeTableView</class>
+   <extends>QTableView</extends>
+   <header>employeetableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

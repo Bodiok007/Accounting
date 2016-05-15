@@ -3,19 +3,15 @@
 MessageModel::MessageModel( QObject *parent )
     : QObject( parent )
 {
-    _model = new QSqlQueryModel();
+    _model = QSharedPointer<QSqlQueryModel>( new QSqlQueryModel() );
 }
 
 
-QSqlQueryModel *MessageModel::getModel()
+QSharedPointer<QSqlQueryModel> MessageModel::getModel()
 {
-    QString getMessageQuery =
-        "SELECT po.productOrderId, msg.text, msg.status"
-        " FROM message AS msg"
-        " LEFT JOIN productorder AS po"
-            " ON msg.messageId = po.messageId";
+    QString getMessageQuery = "CALL getMessage()";
 
-    _model->setQuery(getMessageQuery);
+    _model->setQuery( getMessageQuery );
 
     if ( _model->lastError().isValid() ) {
         logError( __FILE__, __LINE__ );
@@ -23,14 +19,16 @@ QSqlQueryModel *MessageModel::getModel()
         return _model;
     }
 
+    setHeadersToModel();
+
     return _model;
 }
 
 
-void MessageModel::setHeaderModelSales()
+void MessageModel::setHeadersToModel()
 {
     QStringList headers;
-    headers << tr( "Номер замовлення" )
+    headers << tr( "Замовлення №" )
             << tr( "Повідомлення" )
             << tr( "Статус" );
 
@@ -56,10 +54,4 @@ void MessageModel::logError( QString fileName, int line )
     Logger::getInstance()->log( ErrorType::ERRORR
                                 , _model->lastError().text()
                                 , fileInfo );
-}
-
-
-MessageModel::~MessageModel()
-{
-    delete _model;
 }
