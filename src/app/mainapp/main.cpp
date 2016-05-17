@@ -4,6 +4,7 @@
 #include "adminform.h"
 #include "addemployeeform.h"
 #include "mainapp.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,8 @@ int main(int argc, char *argv[])
     qDebug() << blah;*/
 
     MainApp mainApp;
+    MainWindow mw;
+    mw.show();
 
     QStyle* pstyle = QStyleFactory::create("Fusion");
     QApplication::setStyle( pstyle );

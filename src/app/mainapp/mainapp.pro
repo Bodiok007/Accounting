@@ -13,12 +13,10 @@ TEMPLATE = app
 
 CONFIG += c++14
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
+SOURCES += main.cpp \
     mainapp.cpp
 
-HEADERS  += mainwindow.h \
-    querytype.h \
+HEADERS  += querytype.h \
     mainapp.h
 
 
@@ -27,7 +25,8 @@ FORMS += \
     adminform.ui \
     addemployeeform.ui \
     editemployeeform.ui \
-    changepasswordform.ui
+    changepasswordform.ui \
+    mainwindow.ui
 
 RESOURCES += \
     resource.qrc
@@ -36,6 +35,7 @@ include(loginform.pri)
 include(admin.pri)
 include(models.pri)
 include(views.pri)
+include(mainwindow.pri)
 
 INCLUDEPATH += ../log
 LIBS += -llog
