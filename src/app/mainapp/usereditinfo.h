@@ -1,0 +1,4 @@
+#ifndef USEREDITINFO_H
+#define USEREDITINFO_H
+
+#endif // USEREDITINFO_H
