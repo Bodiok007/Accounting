@@ -9,7 +9,7 @@ class EmployeeTableView : public QTableView
     Q_OBJECT
 
 public:
-    EmployeeTableView( QWidget *parent);
+    EmployeeTableView( QWidget *parent );
 
     enum class Errors
     {
@@ -22,6 +22,9 @@ public:
 public slots:
     void setEmployeeModel();
 
+signals:
+    void editUser( UserEditInfo user );
+
 protected:
     virtual void contextMenuEvent( QContextMenuEvent *pe );
 
@@ -32,6 +35,7 @@ private:
     QString getCurrentEmployeeId();
     void addAdminRoleToUser();
     void removeAdminRoleFromUser();
+    UserEditInfo getCurrentUserInfo();
 
     void message( QString text );
     void logError( Errors error
@@ -42,8 +46,6 @@ private slots:
     void activateCotextMenu( QAction *pAction );
 
 private:
-
-
     QSharedPointer<UserModel> _model;
     QSharedPointer<QMenu> _contextMenu;
     QMap<Errors, QString> _errors;

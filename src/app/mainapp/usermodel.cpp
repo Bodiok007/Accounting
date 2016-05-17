@@ -15,10 +15,8 @@ QMap<QString, QString> &UserModel::getRoles()
         return _roles;
     }
 
-    QString query =
-        "SELECT roleId, name FROM role";
-
-    if ( !_db->query( query ) ) {
+    bool statusOk = _db->query( _queries[ QueryType::GET_ROLES ] );
+    if ( !statusOk ) {
         logError( __FILE__, __LINE__ );
     }
 
@@ -102,24 +100,50 @@ void UserModel::setHeadersToModel()
 
 bool UserModel::addRoleToUser( QString userId, QString role )
 {
-    QStringList arguments;
-    arguments << userId
-              << role;
+    QStringList parameters;
+    parameters << userId
+               << role;
 
     bool statusOk = _db->query( _queries[ QueryType::ADD_ROLE_TO_EMPLOYEE ]
-                                , arguments );
+                                , parameters );
     return statusOk;
 }
 
 
 bool UserModel::removeRoleFromUser( QString userId, QString role )
 {
-    QStringList arguments;
-    arguments << userId
-              << role;
+    QStringList parameters;
+    parameters << userId
+               << role;
 
     bool statusOk = _db->query( _queries[ QueryType::REMOVE_ROLE_FROM_EMPLOYEE ]
-                                , arguments );
+                                , parameters );
+    return statusOk;
+}
+
+
+bool UserModel::updateUser( UserEditInfo user )
+{
+    QStringList parameters;
+    parameters << user.userId
+               << user.firstName
+               << user.lastName
+               << user.login;
+
+    bool statusOk = _db->query( _queries[ QueryType::UPDATE_USER ]
+                                , parameters );
+    return statusOk;
+}
+
+
+bool UserModel::updatePassword( QString userId, QString password )
+{
+    QStringList parameters;
+    parameters << userId
+               << password;
+
+    bool statusOk = _db->query( _queries[ QueryType::UPDATE_PASSWORD ]
+                                , parameters );
     return statusOk;
 }
 
@@ -153,10 +177,16 @@ void UserModel::setRoles()
 void UserModel::initQueries()
 {
     _queries[ QueryType::ADD_EMPLOYEE ] =
-            "call addUser('%1', '%2', '%3', '%4', '%5')";
+        "call addUser('%1', '%2', '%3', '%4', '%5')";
     _queries[ QueryType::ADD_ROLE_TO_EMPLOYEE ] =
-            "call addRoleToUser('%1', '%2')";
+        "call addRoleToUser('%1', '%2')";
+    _queries[ QueryType::GET_ROLES ] =
+        "SELECT roleId, name FROM role";
     _queries[ QueryType::REMOVE_ROLE_FROM_EMPLOYEE ] =
-            "call removeRoleFromUser('%1', '%2')";
+        "call removeRoleFromUser('%1', '%2')";
+    _queries[ QueryType::UPDATE_USER ] =
+        "call updateUser('%1', '%2', '%3', '%4')";
+    _queries[ QueryType::UPDATE_PASSWORD ] =
+        "call updatePassword('%1', '%2')";
 }
 

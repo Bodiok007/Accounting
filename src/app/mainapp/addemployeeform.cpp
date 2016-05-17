@@ -6,8 +6,11 @@ AddEmployeeForm::AddEmployeeForm( QWidget *parent ) :
     QWidget( parent ),
     ui( new Ui::AddEmployeeForm )
 {
-    ui->setupUi(this);
+    ui->setupUi( this );
+    setAttribute( Qt::WA_ShowModal );
+
     _userModel = QSharedPointer<UserModel>( new UserModel() );
+
     setRoles();
     initErrors();
     connectSlots();
@@ -38,10 +41,11 @@ void AddEmployeeForm::addEmployee()
     if ( password != repeatPassword ) {
         logError( AddEmployeeFromError::PASSWORDS_NOT_EQUALS, __FILE__, __LINE__);
         message( _errors[ AddEmployeeFromError::PASSWORDS_NOT_EQUALS ] );
+        clearPasswordFields();
         return;
     }
 
-    UserInfo employee = getEmployee();
+    UserInfo &employee = getEmployee();
 
     if ( isFieldsEmpty( employee ) ) {
         logError( AddEmployeeFromError::EMPTY_FIELDS_ERROR, __FILE__, __LINE__);
@@ -54,10 +58,14 @@ void AddEmployeeForm::addEmployee()
     if ( !statusOk ) {
         logError( AddEmployeeFromError::ADD_EMPLOYEE_ERROR, __FILE__, __LINE__);
         message( _errors[ AddEmployeeFromError::ADD_EMPLOYEE_ERROR ] );
+        clearFields();
         return;
     }
 
     message( _errors[ AddEmployeeFromError::NO_ERRORR ] );
+    hide();
+    clearFields();
+    emit updateEmployees();
 }
 
 
@@ -84,7 +92,7 @@ bool AddEmployeeForm::isFieldsEmpty( UserInfo &user )
          || user.lastName.isEmpty()
          || user.login.isEmpty()
          || user.password.isEmpty()
-         || user.role.isEmpty()) {
+         || user.role.isEmpty() ) {
         return true;
     }
 
@@ -100,6 +108,22 @@ QString AddEmployeeForm::getHashString( QCryptographicHash::Algorithm algorithm
                                     tempBytePassword
                                     , algorithm ).toHex() );
     return hashString;
+}
+
+
+void AddEmployeeForm::clearFields()
+{
+    ui->lineFirstName->setText("");
+    ui->lineLastName->setText("");
+    ui->lineLogin->setText("");
+    clearPasswordFields();
+}
+
+
+void AddEmployeeForm::clearPasswordFields()
+{
+    ui->linePassword->setText("");
+    ui->lineRepeatPassword->setText("");
 }
 
 

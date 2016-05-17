@@ -5,12 +5,100 @@ AdminForm::AdminForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AdminForm)
 {
-    ui->setupUi(this);
-    ui->tableMessage->setMessageModel();
+    ui->setupUi( this );
+    setEmployeeModel();
+    setMessageModel();
+
+    connectSlots();
+}
+
+
+void AdminForm::setEmployeeModel()
+{
     ui->tableEmployee->setEmployeeModel();
 }
+
+
+void AdminForm::setMessageModel()
+{
+   ui->tableMessage->setMessageModel();
+}
+
+
+void AdminForm::connectSlots()
+{
+    connect( ui->tableEmployee
+             , SIGNAL( editUser( UserEditInfo ) )
+             , SLOT( editEmployee( UserEditInfo ) ) );
+
+    connect( ui->pushButtonAddEmployee
+             , SIGNAL( clicked( bool ) )
+             , SLOT( addEmployee() ) );
+}
+
+
+void AdminForm::createEditEmployeeForm()
+{
+    _editEmployeeForm = QSharedPointer<EditEmployeeForm>(
+                            new EditEmployeeForm() );
+
+    connect( &*_editEmployeeForm
+             , SIGNAL( updateEmployees() )
+             , SLOT( setEmployeeModel() ) );
+}
+
+
+void AdminForm::createAddEmployeeForm()
+{
+    _addEmployeeForm = QSharedPointer<AddEmployeeForm>(
+                            new AddEmployeeForm() );
+
+    connect( &*_addEmployeeForm
+             , SIGNAL( updateEmployees() )
+             , SLOT( setEmployeeModel() ) );
+}
+
+
+void AdminForm::editEmployee( UserEditInfo user )
+{
+    if ( _editEmployeeForm.isNull() ) {
+        createEditEmployeeForm();
+    }
+
+    _editEmployeeForm->setUserEditInfo( user );
+
+    showEditEmployeeForm();
+}
+
+
+void AdminForm::addEmployee()
+{
+    showAddEmployeeForm();
+}
+
+
+void AdminForm::showEditEmployeeForm()
+{
+    if ( _editEmployeeForm.isNull() ) {
+        createEditEmployeeForm();
+    }
+
+    _editEmployeeForm->show();
+}
+
+
+void AdminForm::showAddEmployeeForm()
+{
+    if ( _editEmployeeForm.isNull() ) {
+        createAddEmployeeForm();
+    }
+
+    _addEmployeeForm->show();
+}
+
 
 AdminForm::~AdminForm()
 {
     delete ui;
 }
+

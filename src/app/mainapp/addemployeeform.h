@@ -18,6 +18,9 @@ public:
     explicit AddEmployeeForm(QWidget *parent = 0);
     ~AddEmployeeForm();
 
+signals:
+    void updateEmployees();
+
 private:
     void setRoles();
     void connectSlots();
@@ -27,6 +30,8 @@ private:
     QString getHashString( QCryptographicHash::Algorithm algorithm
                            , QString inputString );
 
+    void clearPasswordFields();
+    void clearFields();
     void message( QString text );
     void logError( AddEmployeeFromError error
                    , QString fileName

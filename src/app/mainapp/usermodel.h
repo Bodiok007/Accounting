@@ -5,6 +5,7 @@
 #include "db.h"
 #include "userinfo.h"
 #include "querytype.h"
+#include "usereditinfo.h"
 
 class UserModel : public QObject
 {
@@ -21,6 +22,8 @@ public:
     bool addUser( UserInfo user );
     bool addRoleToUser( QString userId, QString role );
     bool removeRoleFromUser( QString userId, QString role );
+    bool updateUser( UserEditInfo user );
+    bool updatePassword( QString userId, QString password );
 
 private:
     void logError( QString fileName, int line );

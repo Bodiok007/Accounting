@@ -16,7 +16,6 @@ CONFIG += c++14
 SOURCES += main.cpp\
         mainwindow.cpp
 
-
 HEADERS  += mainwindow.h \
     querytype.h
 
@@ -24,7 +23,9 @@ HEADERS  += mainwindow.h \
 FORMS += \
     loginform.ui \
     adminform.ui \
-    addemployeeform.ui
+    addemployeeform.ui \
+    editemployeeform.ui \
+    changepasswordform.ui
 
 RESOURCES += \
     resource.qrc

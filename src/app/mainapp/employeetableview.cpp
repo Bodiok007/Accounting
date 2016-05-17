@@ -36,6 +36,10 @@ void EmployeeTableView::initContextMenu()
 {
     _contextMenu = QSharedPointer<QMenu>( new QMenu( this ) );
 
+    QAction *updateUser =
+        _contextMenu->addAction( tr( "Редагувати працівника" ) );
+    updateUser->setObjectName( "updateUser" );
+
     QAction *addSales =
         _contextMenu->addAction( tr( "Додати роль адміністратора" ) );
     addSales->setObjectName( "addAdmin" );
@@ -83,6 +87,31 @@ void EmployeeTableView::activateCotextMenu( QAction *pAction )
     else if ( pAction->objectName() == "removeAdmin" ) {
         removeAdminRoleFromUser();
     }
+    else if ( pAction->objectName() == "updateUser" ) {
+        UserEditInfo user = getCurrentUserInfo();
+        emit editUser( user );
+    }
+}
+
+
+UserEditInfo EmployeeTableView::getCurrentUserInfo()
+{
+    int currentRow = selectionModel()->currentIndex().row();
+
+    // 0 is hide column with Id
+    QModelIndex userIdIndex = model()->index( currentRow, 0 );
+    QString userId = model()->data( userIdIndex ).toString();
+
+    QString userName = model()->data( model()->index( currentRow, 1 ) ).toString();
+    QStringList splitUserName = userName.split( " " );
+
+    UserEditInfo user;
+    user.userId = userId;
+    user.firstName = splitUserName.at( 0 );
+    user.lastName = splitUserName.at( 1 );
+    user.login = model()->data( model()->index( currentRow, 2 ) ).toString();
+    qDebug() << "gettInfo";
+    return user;
 }
 
 

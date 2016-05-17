@@ -11,8 +11,7 @@ int main(int argc, char *argv[])
     w.show();
     AdminForm af;
     af.show();
-    AddEmployeeForm aef;
-    aef.show();
+
     QString p = "1111";
     QByteArray pass( p.toStdString().c_str() );
     QString blah = QString(QCryptographicHash::hash((pass),QCryptographicHash::Sha256).toHex());
