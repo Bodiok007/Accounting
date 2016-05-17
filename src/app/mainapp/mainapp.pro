@@ -14,10 +14,12 @@ TEMPLATE = app
 CONFIG += c++14
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    mainapp.cpp
 
 HEADERS  += mainwindow.h \
-    querytype.h
+    querytype.h \
+    mainapp.h
 
 
 FORMS += \

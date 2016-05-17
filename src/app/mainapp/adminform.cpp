@@ -34,6 +34,10 @@ void AdminForm::connectSlots()
     connect( ui->pushButtonAddEmployee
              , SIGNAL( clicked( bool ) )
              , SLOT( addEmployee() ) );
+
+    connect( ui->pushButtonOut
+             , SIGNAL( clicked( bool ) )
+             , SLOT( emitClose() ) );
 }
 
 
@@ -94,6 +98,20 @@ void AdminForm::showAddEmployeeForm()
     }
 
     _addEmployeeForm->show();
+}
+
+
+void AdminForm::emitClose()
+{
+    emit closeAdminForm();
+}
+
+
+void AdminForm::closeEvent( QCloseEvent *event )
+{
+    emitClose();
+
+    QWidget::closeEvent(event);
 }
 
 

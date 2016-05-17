@@ -18,6 +18,12 @@ public:
     explicit AdminForm( QWidget *parent = 0 );
     ~AdminForm();
 
+signals:
+    void closeAdminForm();
+
+protected:
+    virtual void closeEvent( QCloseEvent *event );
+
 private:
     void connectSlots();
     void createEditEmployeeForm();
@@ -30,6 +36,7 @@ private slots:
     void setMessageModel();
     void editEmployee( UserEditInfo user );
     void addEmployee();
+    void emitClose();
 
 private:
     Ui::AdminForm *ui;

@@ -3,11 +3,12 @@
 #include <QApplication>
 #include "adminform.h"
 #include "addemployeeform.h"
+#include "mainapp.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app( argc, argv );
-    LoginForm w;
+    /*LoginForm w;
     w.show();
     AdminForm af;
     af.show();
@@ -15,7 +16,9 @@ int main(int argc, char *argv[])
     QString p = "1111";
     QByteArray pass( p.toStdString().c_str() );
     QString blah = QString(QCryptographicHash::hash((pass),QCryptographicHash::Sha256).toHex());
-    qDebug() << blah;
+    qDebug() << blah;*/
+
+    MainApp mainApp;
 
     QStyle* pstyle = QStyleFactory::create("Fusion");
     QApplication::setStyle( pstyle );
