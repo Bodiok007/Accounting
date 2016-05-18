@@ -78,7 +78,7 @@
  <customwidgets>
   <customwidget>
    <class>ProductOrderView</class>
-   <extends>QTableView</extends>
+   <extends>QTableWidget</extends>
    <header>productorderview.h</header>
   </customwidget>
  </customwidgets>

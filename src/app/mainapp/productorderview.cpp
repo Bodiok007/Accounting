@@ -2,7 +2,8 @@
 
 ProductOrderView::ProductOrderView( QWidget *parent )
     : QTableWidget( parent )
-{
+{ 
+    setColumnCount(5);
     setHeaders();
 }
 

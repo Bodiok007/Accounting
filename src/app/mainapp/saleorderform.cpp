@@ -3,7 +3,7 @@
 
 SaleOrderForm::SaleOrderForm( QWidget *parent ) :
    QWidget( parent ),
-   ui(new Ui::SaleOrderForm)
+   ui( new Ui::SaleOrderForm )
 {
     ui->setupUi(this);
 }
@@ -18,6 +18,8 @@ SaleOrderForm::~SaleOrderForm()
 void SaleOrderForm::closeEvent( QCloseEvent *event )
 {
     emitClose();
+
+    QWidget::closeEvent( event );
 }
 
 

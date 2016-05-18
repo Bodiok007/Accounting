@@ -5,6 +5,7 @@
 #include "addemployeeform.h"
 #include "mainapp.h"
 #include "mainwindow.h"
+#include "productorderview.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +19,8 @@ int main(int argc, char *argv[])
     QByteArray pass( p.toStdString().c_str() );
     QString blah = QString(QCryptographicHash::hash((pass),QCryptographicHash::Sha256).toHex());
     qDebug() << blah;*/
-
+    ProductOrderView prd;
+    prd.show();
     MainApp mainApp;
     /*MainWindow mw;
     mw.show();*/
