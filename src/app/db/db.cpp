@@ -57,6 +57,42 @@ bool Db::query( QString query, QStringList &arguments )
 }
 
 
+bool Db::transaction()
+{
+    bool statusOk = _db->transaction();
+
+    if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
+    }
+
+    return statusOk;
+}
+
+
+bool Db::commit()
+{
+    bool statusOk = _db->commit();
+
+    if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
+    }
+
+    return statusOk;
+}
+
+
+bool Db::rollback()
+{
+    bool statusOk = _db->rollback();
+
+    if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
+    }
+
+    return statusOk;
+}
+
+
 bool Db::query( QString query )
 {
     bool statusOk = _db->query( query );

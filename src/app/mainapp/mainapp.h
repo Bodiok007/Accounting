@@ -4,6 +4,7 @@
 #include <QObject>
 #include "loginform.h"
 #include "adminform.h"
+#include "mainwindow.h"
 
 class MainApp : public QObject
 {
@@ -22,9 +23,16 @@ private slots:
     void showAdminForm();
     void destroyAdminForm();
 
+    void createMainForm();
+    void showMainForm();
+    void destroyMainForm();
+
+    void showLoginForm();
+
 private:
     QSharedPointer<LoginForm> _loginForm;
     QSharedPointer<AdminForm> _adminForm;
+    QSharedPointer<MainWindow> _mainForm;
 };
 
 #endif // MAINAPP_H

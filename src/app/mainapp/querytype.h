@@ -9,7 +9,8 @@ enum class QueryType
     GET_ROLES,
     REMOVE_ROLE_FROM_EMPLOYEE,
     UPDATE_USER,
-    UPDATE_PASSWORD
+    UPDATE_PASSWORD,
+    ADD_PRODUCT
 };
 
 #endif // QUERYTYPE_H

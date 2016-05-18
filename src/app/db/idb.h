@@ -13,12 +13,13 @@ public:
                 QStringList &arguments,
                 QSqlQueryModel *model );*/
 
+    virtual bool query( QString query ) = 0;
     virtual bool query( QString query,
                         QStringList &arguments ) = 0;
-    /*virtual bool queryProcedure( QString &query,
-                                 QStringList &arguments ) = 0;*/
 
-    virtual bool query( QString query ) = 0;
+    virtual bool transaction() = 0;
+    virtual bool commit() = 0;
+    virtual bool rollback() = 0;
 
     virtual QSqlError lastError() const = 0;
     virtual QVariant lastInsertId() const = 0;

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SaleOrderForm</class>
+ <widget class="QWidget" name="SaleOrderForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>551</width>
+    <height>334</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="ProductOrderView" name="tableViewProductOrder"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSaveSaleOrder">
+       <property name="minimumSize">
+        <size>
+         <width>151</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Зберегти замовлення</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonPrintCheck">
+       <property name="minimumSize">
+        <size>
+         <width>121</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Друкувати чек</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonAddProduct">
+       <property name="minimumSize">
+        <size>
+         <width>121</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Додати продукт</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ProductOrderView</class>
+   <extends>QTableView</extends>
+   <header>productorderview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

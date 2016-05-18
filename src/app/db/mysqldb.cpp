@@ -66,6 +66,36 @@ bool MySqlDb::query( QString query, QStringList &arguments )
 }
 
 
+bool MySqlDb::transaction()
+{
+    if ( !_db.transaction() ) {
+        return false;
+    }
+
+    return true;
+}
+
+
+bool MySqlDb::commit()
+{
+    if ( !_db.commit() ) {
+        return false;
+    }
+
+    return true;
+}
+
+
+bool MySqlDb::rollback()
+{
+    if ( !_db.rollback() ) {
+        return false;
+    }
+
+    return true;
+}
+
+
 bool MySqlDb::query( QString query )
 {
     if ( !_query->exec( query ) ) {

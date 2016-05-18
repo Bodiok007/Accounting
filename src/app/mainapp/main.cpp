@@ -20,8 +20,11 @@ int main(int argc, char *argv[])
     qDebug() << blah;*/
 
     MainApp mainApp;
-    MainWindow mw;
-    mw.show();
+    /*MainWindow mw;
+    mw.show();*/
+
+    /*auto Db::getInstance()->
+    qDebug() << db.transaction();*/
 
     QStyle* pstyle = QStyleFactory::create("Fusion");
     QApplication::setStyle( pstyle );

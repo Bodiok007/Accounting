@@ -67,6 +67,7 @@ void LoginForm::pressLoginButton()
 
     if ( saveUserDataToApp() ) {
         emitlogInSuccessSignal( isAdmin );
+        hide();
     }
     else {
         logError( LoginFormError::USER_NOT_FOUND, __FILE__, __LINE__ );
