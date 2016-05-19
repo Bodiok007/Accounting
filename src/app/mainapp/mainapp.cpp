@@ -19,6 +19,10 @@ MainApp::MainApp( QObject *parent ) : QObject( parent )
 void MainApp::createAdminForm()
 {
     _adminForm = QSharedPointer<AdminForm>( new AdminForm() );
+
+    connect( &*_adminForm
+             , SIGNAL( closeAdminForm() )
+             , SLOT( showLoginForm() ) );
     connect( &*_adminForm
              , SIGNAL( closeAdminForm() )
              , SLOT( destroyAdminForm() ) );
@@ -53,7 +57,6 @@ void MainApp::createMainForm()
     connect( &*_mainForm
              , SIGNAL( closeMainForm() )
              , SLOT( destroyMainForm() ) );
-
 }
 
 

@@ -2,6 +2,7 @@
 #define SALEORDERFORM_H
 
 #include <QWidget>
+#include "addproductform.h"
 
 namespace Ui {
 class SaleOrderForm;
@@ -26,6 +27,8 @@ private slots:
 
 private:
     Ui::SaleOrderForm *ui;
+    QSharedPointer<AddProductForm> _addProductForm;
+    QSharedPointer<ProductModel> _productModel;
 };
 
 #endif // SALEORDERFORM_H

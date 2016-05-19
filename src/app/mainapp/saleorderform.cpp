@@ -6,24 +6,38 @@ SaleOrderForm::SaleOrderForm( QWidget *parent ) :
    ui( new Ui::SaleOrderForm )
 {
     ui->setupUi(this);
-}
+    setAttribute( Qt::WA_ShowModal );
 
+    _productModel = QSharedPointer<ProductModel>( new ProductModel() );
+    _addProductForm = QSharedPointer<AddProductForm>(
+                      new AddProductForm( nullptr, _productModel ) );
 
-SaleOrderForm::~SaleOrderForm()
-{
-    delete ui;
+    connect( ui->pushButtonAddProduct
+             , SIGNAL( clicked( bool ) )
+             , &*_addProductForm
+             , SLOT( show() ) );
 }
 
 
 void SaleOrderForm::closeEvent( QCloseEvent *event )
 {
+    qDebug() << "Before emitClose SaleOrderForm";
     emitClose();
-
-    QWidget::closeEvent( event );
+    qDebug() << "After emitClose SaleOrderForm";
+    event->accept();
+    /*QWidget::closeEvent( event );*/
+    qDebug() << "After QWidget::closeEvent( event ); SaleOrderForm";
 }
 
 
 void SaleOrderForm::emitClose()
 {
     emit closeSaleOrderForm();
+}
+
+
+SaleOrderForm::~SaleOrderForm()
+{
+    qDebug() << "Destroy SaleOrderForm";
+    delete ui;
 }

@@ -8,12 +8,12 @@ ProductModel::ProductModel( QObject *parent )
 }
 
 
-bool ProductModel::saveProduct( Product *product )
+bool ProductModel::saveProduct( Product &product )
 {
     QStringList parameters;
-    parameters << product->name
-               << product->cost
-               << product->barcode;
+    parameters << product.name
+               << product.cost
+               << product.barcode;
 
     bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT ], parameters );
 
@@ -25,14 +25,55 @@ bool ProductModel::saveProduct( Product *product )
 }
 
 
+QMap<QString, QString> &ProductModel::getCategories() const
+{
+    bool statusOk = _db->query( _queries[ QueryType::GET_PRODUCT_CATEGORIES ] );
+
+    if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
+        return _categories;
+    }
+
+    auto categories = _db->getData();
+
+    while ( categories->next() ) {
+        QString categoryName = categories->value( 0 ).toString();
+        QString categoryID = categories->value( 1 ).toString();
+        _categories[ categoryName ] = categoryID;
+    }
+
+    return _categories;
+}
+
+
+QStringList ProductModel::getCategoryList()
+{
+    if ( _categories.empty() ) {
+        getCategories();
+    }
+
+    QStringList categories;
+
+    QMapIterator<QString, QString> i( _categories );
+    while ( i.hasNext() ) {
+        i.next();
+        categories << i.value();
+    }
+
+    return categories;
+}
+
+
 void ProductModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT ] =
             "call addProduct('%1', '%2', '%3')";
+    _queries[ QueryType::GET_PRODUCT_CATEGORIES ] =
+            "call getProductCategories()";
 }
 
 
-void ProductModel::logError( QString fileName, int line )
+void ProductModel::logError( QString fileName, int line ) const
 {
     ErrorFileInfo fileInfo;
     fileInfo.setFileName( fileName );
