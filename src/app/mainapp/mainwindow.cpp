@@ -9,7 +9,6 @@ MainWindow::MainWindow( QWidget *parent )
     ui->setupUi( this );
 
     connectSlots();
-
 }
 
 
@@ -61,7 +60,14 @@ void MainWindow::showSaleOrderForm()
 void MainWindow::destroySaleOrderForm()
 {
     if ( !_saleOrderForm.isNull() ) {
+        qDebug() << "before Destroy SaleOrder from destroySaleOrderForm";
         _saleOrderForm.clear();
+        qDebug() << "after Destroy SaleOrder from destroySaleOrderForm";
     }
 }
 
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
