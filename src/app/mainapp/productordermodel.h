@@ -10,7 +10,7 @@ class ProductOrderModel : public QObject
     Q_OBJECT
 public:
     explicit ProductOrderModel( QObject *parent = 0 );
-    int addOrder();
+    QString addOrder();
 
 signals:
 
@@ -19,6 +19,8 @@ public slots:
 private:
     void initQueries();
     void logError( QString fileName, int line );
+
+    QString lastInsertId();
 
 private:
     QSharedPointer<Db> _db;

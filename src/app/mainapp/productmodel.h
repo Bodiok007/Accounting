@@ -15,7 +15,7 @@ public:
 signals:
 
 public slots:
-    bool addProduct( Product &product );
+    QString addProduct( Product &product );
 
     QMap<QString, QString> &getCategories() const;
     QStringList getCategoryList();
@@ -23,6 +23,8 @@ public slots:
 private:
     void initQueries();
     void logError( QString fileName, int line ) const;
+
+    QString lastInsertId();
 
 private:
     QSharedPointer<Db> _db;

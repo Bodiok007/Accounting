@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "addproductform.h"
+#include "productordermodel.h"
+#include "productorderdetailmodel.h"
 
 namespace Ui {
 class SaleOrderForm;
@@ -13,6 +15,13 @@ class SaleOrderForm : public QWidget
     Q_OBJECT
 
 public:
+    enum class Errors
+    {
+        NO_ERRORR,
+        PRODUCT_LIST_EMPTY,
+        ADD_ORDER_ERROR
+    };
+
     explicit SaleOrderForm( QWidget *parent = 0 );
     ~SaleOrderForm();
 
@@ -29,13 +38,20 @@ private slots:
 
 private:
     void addProductToForm();
+    void initFields();
+    void initErrors();
+    void connectSlots();
     void message( QString text );
 
 private:
     Ui::SaleOrderForm *ui;
+    QSharedPointer<Db> _db;
     QSharedPointer<AddProductForm> _addProductForm;
     QSharedPointer<ProductModel> _productModel;
+    QSharedPointer<ProductOrderModel> _productOrderModel;
+    QSharedPointer<ProductOrderDetailModel> _productOrderDetailModel;
     QList<Product> _productList;
+    QMap<Errors, QString> _errors;
 };
 
 #endif // SALEORDERFORM_H

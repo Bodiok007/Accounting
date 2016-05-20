@@ -110,9 +110,9 @@ bool LoginForm::saveUserDataToApp()
     data->next();
 
     QString userId = data->value( 0 ).toString();
-    qApp->setProperty( "userId", userId );
+    qApp->setProperty( "employeeId", userId );
     QString userName = data->value( 1 ).toString();
-    qApp->setProperty( "userName", userName );
+    qApp->setProperty( "employeeName", userName );
 
     return true;
 }

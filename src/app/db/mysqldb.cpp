@@ -68,7 +68,9 @@ bool MySqlDb::query( QString query, QStringList &arguments )
 
 bool MySqlDb::transaction()
 {
-    if ( !_db.transaction() ) {
+    _db.exec( "start transaction" );
+
+    if ( _db.lastError().isValid() ) {
         return false;
     }
 
@@ -78,7 +80,9 @@ bool MySqlDb::transaction()
 
 bool MySqlDb::commit()
 {
-    if ( !_db.commit() ) {
+    _db.exec( "commit" );
+
+    if ( _db.lastError().isValid() ) {
         return false;
     }
 
@@ -88,7 +92,9 @@ bool MySqlDb::commit()
 
 bool MySqlDb::rollback()
 {
-    if ( !_db.rollback() ) {
+    _db.exec( "rollback" );
+
+    if ( _db.lastError().isValid() ) {
         return false;
     }
 

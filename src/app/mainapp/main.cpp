@@ -22,9 +22,72 @@ int main(int argc, char *argv[])
     /*ProductOrderView prd;
     prd.show();*/
     MainApp mainApp;
-    qDebug() << QDate::currentDate().toString( QString("yyyy-MM-dd") );
+    QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
+    qDebug() << date;
     /*MainWindow mw;
     mw.show();*/
+
+    /*auto db = Db::getInstance();
+
+    bool ok = db->transaction();
+    qDebug() << ok;
+
+    if ( db->lastError().isValid() ) {
+        qDebug() << "Begin transaction error" << db->lastError().text();
+    }
+    //db->query( "INSERT INTO product(productCategoryId, name, cost, barcode) VALUES(1, 'SAMSUNG LS24D300HSI (LS24D300HSI/CI)', 3000, 1234 )" );
+    db->query( "select addOr('1', '" + date +"')" );
+    //db->query( "call getLastInsetId()" );
+    qDebug() << db->lastInsertId().toString();
+
+    auto query = db->getData();
+
+    while (query->next()) {
+        qDebug() << query->value(0).toString() << " ";
+    }*/
+
+    /*db->getData()->next();
+    qDebug() << db->getData()->lastInsertId().toString();*/
+    /*db->rollback();
+    if ( db->lastError().isValid() ) {
+        qDebug() << "Rollback transaction error" << db->lastError().text();
+    }*/
+
+    //db->connectToDb();
+    /*bool statusOk = db->transaction();
+    qDebug() << statusOk;
+    if ( !statusOk ) {
+        qDebug() << "Transaction error" << db->lastError().text();
+    }
+    db->query( "call getEmployee() " );
+    statusOk = db->rollback();
+    if ( !statusOk ) {
+        qDebug() << "Rollback error" << db->lastError().text();
+    }*/
+
+    /*auto db =  QSqlDatabase::addDatabase( "QMYSQL" );
+
+    db.setDatabaseName( "accounting" );
+    db.setUserName( "root" );
+    db.setHostName( "localhost" );
+    db.setPassword( "1111" );
+
+    if ( !db.open() )
+    {
+        qDebug() << db.lastError().text();
+    }
+
+    if (db.driver()->beginTransaction()) {
+        qDebug() << "OK";
+    }
+    db.exec("INSERT INTO product(productCategoryId, name, cost, barcode) VALUES(1, 'Prod', 10, 1234 )");
+    if (db.lastError().isValid()) {
+        qDebug() << db.lastError().text();
+    }
+    db.driver()->rollbackTransaction();
+    if ( !db.transaction() ) {
+        qDebug() << db.lastError().text() << "NOOOOO1";
+    }*/
 
     /*auto Db::getInstance()->
     qDebug() << db.transaction();*/

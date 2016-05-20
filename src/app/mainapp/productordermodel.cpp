@@ -4,25 +4,44 @@ ProductOrderModel::ProductOrderModel( QObject *parent ) :
     QObject(parent)
 {
     _db = Db::getInstance();
+    initQueries();
 }
 
 
-int ProductOrderModel::addOrder()
+QString ProductOrderModel::addOrder()
 {
-    bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT_ORDER ] );
+    QStringList parameters;
+    parameters << qApp->property( "employeeId" ).toString()
+               << QDate::currentDate().toString( QString( "yyyy-MM-dd" ) );
+    qDebug() << "parameters" << parameters.at(1);
+
+    bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT_ORDER ]
+                                , parameters );
 
     if ( !statusOk ) {
+        logError( __FILE__, __LINE__ );
         return -1;
     }
 
-    return _db->lastInsertId();
+    return lastInsertId();
 }
 
 
 void ProductOrderModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT_ORDER ] =
-            "call addProductOrder('%1', '%2')";
+            "select addProductOrder('%1', '%2')";
+}
+
+
+QString ProductOrderModel::lastInsertId()
+{
+    auto query = _db->getData();
+    query->next();
+
+    QString lastInsertId = query->value( 0 ).toString();
+
+    return lastInsertId;
 }
 
 
@@ -36,3 +55,4 @@ void ProductOrderModel::logError( QString fileName, int line )
                                 , _db->lastError().text()
                                 , fileInfo );
 }
+

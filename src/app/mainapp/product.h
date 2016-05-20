@@ -5,6 +5,7 @@
 
 struct Product
 {
+    QString productId;
     QString name;
     QString barcode;
     QString category;

@@ -8,10 +8,31 @@ SaleOrderForm::SaleOrderForm( QWidget *parent ) :
     ui->setupUi(this);
     setAttribute( Qt::WA_ShowModal );
 
+    initFields();
+    initErrors();
+    connectSlots();
+}
+
+
+void SaleOrderForm::initFields()
+{
+    _db = Db::getInstance();
+
     _productModel = QSharedPointer<ProductModel>( new ProductModel() );
+
     _addProductForm = QSharedPointer<AddProductForm>(
                       new AddProductForm( nullptr, _productModel ) );
 
+    _productOrderModel = QSharedPointer<ProductOrderModel>(
+                         new ProductOrderModel() );
+
+    _productOrderDetailModel = QSharedPointer<ProductOrderDetailModel>(
+                               new ProductOrderDetailModel() );
+}
+
+
+void SaleOrderForm::connectSlots()
+{
     connect( ui->pushButtonAddProduct
              , SIGNAL( clicked( bool ) )
              , &*_addProductForm
@@ -21,11 +42,10 @@ SaleOrderForm::SaleOrderForm( QWidget *parent ) :
              , SIGNAL( addProduct( Product & ) )
              , SLOT( addProduct( Product & ) ) );
 
-    /*connect( ui->pushButtonSaveSaleOrder
+    connect( ui->pushButtonSaveSaleOrder
              , SIGNAL( clicked( bool ) )
-             , SLOT( addOrder() ) );*/
+             , SLOT( addOrder() ) );
 }
-
 
 void SaleOrderForm::closeEvent( QCloseEvent *event )
 {
@@ -51,18 +71,55 @@ void SaleOrderForm::addProduct( Product &product )
 }
 
 
-void SaleOrderForm::addOrder()
+void SaleOrderForm::addOrder() // cycle
 {
     if ( _productList.empty() ) {
-        message( "Немає товарів для збереження!" );
+        message( _errors[ Errors::PRODUCT_LIST_EMPTY ] );
         return;
     }
 
-    bool statusOk = _productModel->addProduct( _productList.last() );
-
-    if ( !statusOk ) {
-        message( "Помилка при збереженні товару" );
+    bool transactionOk = _db->transaction();
+    if ( !transactionOk ) {
+        message( _errors[ Errors::ADD_ORDER_ERROR ] );
+        return;
     }
+
+    QString orderId = _productOrderModel->addOrder();
+    if ( orderId.toInt() <= 0 ) {
+        _db->rollback();
+        message( _errors[ Errors::ADD_ORDER_ERROR ] );
+        return;
+    }
+
+    QString productId = "-1";
+    bool addOrderDatailOk = false;
+    for ( Product &product : _productList ) {
+        productId = _productModel->addProduct( product );
+        if ( productId.toInt() <= 0  ) {
+            _db->rollback();
+             message( _errors[ Errors::ADD_ORDER_ERROR ] );
+            return;
+        }
+        product.productId = productId;
+
+        addOrderDatailOk = _productOrderDetailModel->addOrderDetail( orderId
+                                                                     , product );
+        if ( !addOrderDatailOk ) {
+            _db->rollback();
+             message( _errors[ Errors::ADD_ORDER_ERROR ] );
+            return;
+        }
+    }
+
+    bool commitTransactionOk = _db->commit();
+    if ( commitTransactionOk ) {
+        message( _errors[ Errors::NO_ERRORR ] );
+    }
+    else {
+        _db->rollback();
+        message( _errors[ Errors::ADD_ORDER_ERROR ] );
+    }
+
 }
 
 
@@ -85,6 +142,19 @@ void SaleOrderForm::addProductToForm()
     for ( int i = 0; i < items.size(); ++i ) {
         table->setItem( row, i, items[ i ] );
     }
+}
+
+
+void SaleOrderForm::initErrors()
+{
+    _errors[ Errors::NO_ERRORR ] =
+        QString( tr( "Замовлення успішно додано!" ) );
+
+    _errors[ Errors::PRODUCT_LIST_EMPTY ] =
+        QString( tr( "Немає товарів для збереження!" ) );
+
+    _errors[ Errors::ADD_ORDER_ERROR ] =
+        QString( tr( "Помилка при додаванні замовлення!" ) );
 }
 
 

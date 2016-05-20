@@ -8,7 +8,7 @@ ProductModel::ProductModel( QObject *parent )
 }
 
 
-bool ProductModel::addProduct( Product &product )
+QString ProductModel::addProduct( Product &product )
 {
     QStringList parameters;
     parameters << product.name
@@ -20,9 +20,21 @@ bool ProductModel::addProduct( Product &product )
 
     if ( !statusOk ) {
         logError( __FILE__, __LINE__ );
+        return -1;
     }
 
-    return statusOk;
+    return lastInsertId();
+}
+
+
+QString ProductModel::lastInsertId()
+{
+    auto query = _db->getData();
+    query->next();
+
+    QString lastInsertId = query->value( 0 ).toString();
+
+    return lastInsertId;
 }
 
 
@@ -68,7 +80,7 @@ QStringList ProductModel::getCategoryList()
 void ProductModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT ] =
-            "call addProduct('%1', '%2', '%3', '%4')";
+            "select addProduct('%1', '%2', '%3', '%4')";
     _queries[ QueryType::GET_PRODUCT_CATEGORIES ] =
             "call getProductCategories()";
 }
