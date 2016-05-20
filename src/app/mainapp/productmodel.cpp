@@ -8,12 +8,13 @@ ProductModel::ProductModel( QObject *parent )
 }
 
 
-bool ProductModel::saveProduct( Product &product )
+bool ProductModel::addProduct( Product &product )
 {
     QStringList parameters;
     parameters << product.name
-               << product.cost
-               << product.barcode;
+               << product.barcode
+               << product.category
+               << product.cost;
 
     bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT ], parameters );
 
@@ -67,7 +68,7 @@ QStringList ProductModel::getCategoryList()
 void ProductModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT ] =
-            "call addProduct('%1', '%2', '%3')";
+            "call addProduct('%1', '%2', '%3', '%4')";
     _queries[ QueryType::GET_PRODUCT_CATEGORIES ] =
             "call getProductCategories()";
 }

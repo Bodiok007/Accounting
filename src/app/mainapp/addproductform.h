@@ -1,7 +1,7 @@
 #ifndef ADDPRODUCTFORM_H
 #define ADDPRODUCTFORM_H
 
-#include <QWidget>
+#include <QtWidgets>
 #include "productmodel.h"
 
 namespace Ui {
@@ -16,12 +16,23 @@ public:
     explicit AddProductForm( QWidget *parent, QSharedPointer<ProductModel> productModel );
     ~AddProductForm();
 
+signals:
+    void addProduct( Product & );
+
+private slots:
+    void saveProduct();
+
 private:
-    void setCategories();
+    void addCategoriesToForm();
+    bool isEmpty();
+
+    void message( QString text );
+    void clearFields();
 
 private:
     Ui::AddProductForm *ui;
     QSharedPointer<ProductModel> _productModel;
+    Product _product;
 };
 
 #endif // ADDPRODUCTFORM_H

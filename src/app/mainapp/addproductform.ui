@@ -35,7 +35,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="lineProductName">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -57,7 +57,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="lineBarCode">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -113,7 +113,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="lineCount">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -141,7 +141,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_3">
+      <widget class="QLineEdit" name="lineCost">
        <property name="minimumSize">
         <size>
          <width>0</width>

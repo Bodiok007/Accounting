@@ -20,7 +20,6 @@ public:
     ~LoginForm();
 
     QPushButton *getLoginButton();
-    void message( QString text );
     void addSettingDbToForm();
 
 public slots:
@@ -36,6 +35,7 @@ private:
     void initQueries();
     void initErrors();
     bool saveUserDataToApp();
+    void message( QString text );
     void logError( LoginFormError errorType, QString fileName, int line );
     void emitlogInSuccessSignal( bool isAdmin );
     QString getHashString( QCryptographicHash::Algorithm algorithm

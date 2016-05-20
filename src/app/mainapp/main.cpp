@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     /*ProductOrderView prd;
     prd.show();*/
     MainApp mainApp;
+    qDebug() << QDate::currentDate().toString( QString("yyyy-MM-dd") );
     /*MainWindow mw;
     mw.show();*/
 

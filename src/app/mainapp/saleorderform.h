@@ -24,11 +24,18 @@ protected:
 
 private slots:
     void emitClose();
+    void addProduct( Product &product );
+    void addOrder();
+
+private:
+    void addProductToForm();
+    void message( QString text );
 
 private:
     Ui::SaleOrderForm *ui;
     QSharedPointer<AddProductForm> _addProductForm;
     QSharedPointer<ProductModel> _productModel;
+    QList<Product> _productList;
 };
 
 #endif // SALEORDERFORM_H

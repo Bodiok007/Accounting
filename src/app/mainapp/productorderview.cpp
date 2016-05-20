@@ -13,9 +13,9 @@ void ProductOrderView::setHeaders()
     QStringList headers;
     headers << tr( "Назва товару" )
             << tr( "Штрих-код" )
-            << tr( "Жанр" )
+            << tr( "Категорія" )
             << tr( "Кількіть" )
-            << tr( "Ціна одиниці" );
+            << tr( "Вартість одиниці" );
 
     setHorizontalHeaderLabels( headers );
 }

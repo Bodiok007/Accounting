@@ -6,8 +6,10 @@
 struct Product
 {
     QString name;
-    QString cost;
     QString barcode;
+    QString category;
+    QString count;
+    QString cost;
 };
 
 #endif // PRODUCT_H
