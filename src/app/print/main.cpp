@@ -2,6 +2,7 @@
 #include "declaremetatype.h"
 #include "productcheck.h"
 #include <QDebug>
+#include "checkmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,9 +31,13 @@ int main(int argc, char *argv[])
     QVariant toCheckContainer;
     toCheckContainer.setValue( map );
 
-    ProductCheck check;
+    CheckManager manager( nullptr, new ProductCheck() );
+    manager.create( toCheckContainer );
+    manager.print();
+
+    /*ProductCheck check;
     check.create( toCheckContainer );
-    check.print();
+    check.print();*/
 
 
     return a.exec();
