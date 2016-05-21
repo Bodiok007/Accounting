@@ -8,6 +8,7 @@
 class ILog
 {
 public:
+    virtual ~ILog() {}
     virtual bool log( ErrorType errorType,
                       QString message,
                       ErrorFileInfo errorFileInfo ) = 0;

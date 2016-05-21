@@ -9,6 +9,7 @@
 class IDb
 {
 public:
+    virtual ~IDb() {}
     /*bool query( QString &query,
                 QStringList &arguments,
                 QSqlQueryModel *model );*/

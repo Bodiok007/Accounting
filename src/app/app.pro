@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     db \
     log \
-    mainapp
+    mainapp \
+    print
