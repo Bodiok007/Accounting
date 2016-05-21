@@ -5,6 +5,7 @@
 #include "addproductform.h"
 #include "productordermodel.h"
 #include "productorderdetailmodel.h"
+#include "checkmanager.h"
 
 namespace Ui {
 class SaleOrderForm;
@@ -35,6 +36,7 @@ private slots:
     void emitClose();
     void addProduct( Product &product );
     void addOrder();
+    void printCheck();
 
 private:
     void addProductToForm();
@@ -47,9 +49,13 @@ private:
     Ui::SaleOrderForm *ui;
     QSharedPointer<Db> _db;
     QSharedPointer<AddProductForm> _addProductForm;
+
     QSharedPointer<ProductModel> _productModel;
     QSharedPointer<ProductOrderModel> _productOrderModel;
     QSharedPointer<ProductOrderDetailModel> _productOrderDetailModel;
+
+    QSharedPointer<CheckManager> _check;
+
     QList<Product> _productList;
     QMap<Errors, QString> _errors;
 };

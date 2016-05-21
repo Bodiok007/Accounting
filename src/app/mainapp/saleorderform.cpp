@@ -1,5 +1,6 @@
 #include "saleorderform.h"
 #include "ui_saleorderform.h"
+#include "productcheck.h"
 
 SaleOrderForm::SaleOrderForm( QWidget *parent ) :
    QWidget( parent ),
@@ -28,6 +29,9 @@ void SaleOrderForm::initFields()
 
     _productOrderDetailModel = QSharedPointer<ProductOrderDetailModel>(
                                new ProductOrderDetailModel() );
+
+    _check = QSharedPointer<CheckManager>(
+             new CheckManager( nullptr, new ProductCheck() ) );
 }
 
 
@@ -45,6 +49,10 @@ void SaleOrderForm::connectSlots()
     connect( ui->pushButtonSaveSaleOrder
              , SIGNAL( clicked( bool ) )
              , SLOT( addOrder() ) );
+
+    connect( ui->pushButtonPrintCheck
+             , SIGNAL( clicked( bool ) )
+             , SLOT( printCheck() ) );
 }
 
 void SaleOrderForm::closeEvent( QCloseEvent *event )
@@ -120,6 +128,30 @@ void SaleOrderForm::addOrder() // cycle
         message( _errors[ Errors::ADD_ORDER_ERROR ] );
     }
 
+}
+
+
+void SaleOrderForm::printCheck()
+{
+    if ( _productList.empty() ) {
+        message( _errors[ Errors::PRODUCT_LIST_EMPTY ] );
+        return;
+    }
+
+    QString orderId = _productOrderModel->getOrderId();
+    QString employeeName = qApp->property( "employeeName" ).toString();
+
+    QStringList general;
+    general << orderId << employeeName;
+
+    ProductCheckData mapContainer;
+    mapContainer[ general ] = &_productList;
+
+    QVariant dataToCheck;
+    dataToCheck.setValue( mapContainer );
+
+    _check->create( dataToCheck );
+    _check->print();
 }
 
 

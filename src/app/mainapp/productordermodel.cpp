@@ -4,6 +4,7 @@ ProductOrderModel::ProductOrderModel( QObject *parent ) :
     QObject(parent)
 {
     _db = Db::getInstance();
+    _orderId = "";
     initQueries();
 }
 
@@ -27,6 +28,12 @@ QString ProductOrderModel::addOrder()
 }
 
 
+QString ProductOrderModel::getOrderId()
+{
+    return _orderId;
+}
+
+
 void ProductOrderModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT_ORDER ] =
@@ -40,6 +47,7 @@ QString ProductOrderModel::lastInsertId()
     query->next();
 
     QString lastInsertId = query->value( 0 ).toString();
+    _orderId = lastInsertId;
 
     return lastInsertId;
 }

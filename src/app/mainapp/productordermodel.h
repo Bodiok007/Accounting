@@ -11,10 +11,7 @@ class ProductOrderModel : public QObject
 public:
     explicit ProductOrderModel( QObject *parent = 0 );
     QString addOrder();
-
-signals:
-
-public slots:
+    QString getOrderId();
 
 private:
     void initQueries();
@@ -25,6 +22,7 @@ private:
 private:
     QSharedPointer<Db> _db;
     QMap<QueryType, QString> _queries;
+    QString _orderId;
 };
 
 #endif // PRODUCTORDERMODEL_H

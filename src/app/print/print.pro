@@ -9,8 +9,9 @@ QT       += core gui printsupport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = print
-TEMPLATE = app
+TEMPLATE = lib
 
+CONFIG += staticlib
 CONFIG += c++14
 
 SOURCES += main.cpp
