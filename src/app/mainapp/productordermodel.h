@@ -12,17 +12,19 @@ public:
     explicit ProductOrderModel( QObject *parent = 0 );
     QString addOrder();
     QString getOrderId();
+    QSharedPointer<QSqlQueryModel> getModel();
 
 private:
     void initQueries();
-    void logError( QString fileName, int line );
-
+    void logError( QString error, QString fileName, int line );
+    void setHeadersToModel();
     QString lastInsertId();
 
 private:
     QSharedPointer<Db> _db;
     QMap<QueryType, QString> _queries;
     QString _orderId;
+    QSharedPointer<QSqlQueryModel> _model;
 };
 
 #endif // PRODUCTORDERMODEL_H

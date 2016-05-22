@@ -5,12 +5,12 @@ ProductForm::ProductForm( QWidget *parent ) :
     QWidget( parent ),
     ui( new Ui::ProductForm )
 {
-    ui->setupUi(this);
+    ui->setupUi( this );
     ui->tableProducts->setProductModel();
 }
 
 
-void ProductForm::closeEvent(QCloseEvent *event)
+void ProductForm::closeEvent( QCloseEvent *event )
 {
     emit closeProductForm();
     QWidget::closeEvent( event );
