@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "saleorderform.h"
+#include "productform.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,12 +30,17 @@ private slots:
     void showSaleOrderForm();
     void destroySaleOrderForm();
 
+    void createProductForm();
+    void showProductForm();
+    void destroyProductForm();
+
 private:
     void connectSlots();
 
 private:
     Ui::MainWindow *ui;
     QSharedPointer<SaleOrderForm> _saleOrderForm;
+    QSharedPointer<ProductForm> _productForm;
 };
 
 #endif // MAINWINDOW_H

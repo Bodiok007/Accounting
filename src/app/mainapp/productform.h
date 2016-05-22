@@ -15,6 +15,12 @@ public:
     explicit ProductForm( QWidget *parent = 0 );
     ~ProductForm();
 
+signals:
+    void closeProductForm();
+
+protected:
+    void closeEvent( QCloseEvent *event );
+
 private:
     Ui::ProductForm *ui;
 };
