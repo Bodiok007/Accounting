@@ -40,6 +40,10 @@ void ProductOrderTableView::initContextMenu()
         _contextMenu->addAction( tr( "Друкувати чек" ) );
     printCheck->setObjectName( "printCheck" );
 
+    QAction *showProduct =
+        _contextMenu->addAction( tr( "Показати склад замовлення" ) );
+    showProduct->setObjectName( "showProductOrder" );
+
     connect( &*_contextMenu,
              SIGNAL( triggered( QAction* ) ),
              SLOT( activateCotextMenu( QAction* ) ) );
@@ -50,6 +54,10 @@ void ProductOrderTableView::activateCotextMenu( QAction *pAction )
 {
     if ( pAction->objectName() == "printCheck" ) {
         printCheck();
+    }
+    else if ( pAction->objectName() == "showProductOrder" ) {
+        QString orderId = getCurrentOrderId();
+        emit showProduct( orderId );
     }
 }
 

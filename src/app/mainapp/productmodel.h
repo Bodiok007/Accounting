@@ -24,6 +24,7 @@ private:
     void initQueries();
     void logError( QString error, QString fileName, int line ) const;
     void setHeadersToModel();
+    void setHeadersToModelFromOrder();
     QString lastInsertId();
 
 private:

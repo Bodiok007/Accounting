@@ -16,6 +16,9 @@ public:
 public slots:
     void setProductOrderModel();
 
+signals:
+    void showProduct( QString orderId );
+
 protected:
     void contextMenuEvent( QContextMenuEvent *pe );
 

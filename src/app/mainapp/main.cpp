@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
 
-    ProductOrderForm pof;
-    pof.show();
+    /*ProductOrderForm pof;
+    pof.show();*/
 
     /*ProductForm pf;
     pf.show();*/

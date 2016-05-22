@@ -79,6 +79,7 @@ void MainWindow::destroySaleOrderForm()
 void MainWindow::createProductForm()
 {
     _productForm = QSharedPointer<ProductForm>( new ProductForm() );
+    _productForm->setProductModel();
 
     connect( &*_productForm
              , SIGNAL( closeProductForm() )
@@ -90,6 +91,31 @@ void MainWindow::showProductForm()
 {
     if ( _productForm.isNull() ) {
         createProductForm();
+    } else {
+        _productForm->setProductModel();
+    }
+
+    _productForm->show();
+}
+
+
+void MainWindow::createProductForm( QString orderId )
+{
+    _productForm = QSharedPointer<ProductForm>( new ProductForm() );
+    _productForm->setProductModel( orderId );
+
+    connect( &*_productForm
+             , SIGNAL( closeProductForm() )
+             , SLOT( destroyProductForm() ) );
+}
+
+
+void MainWindow::showProductForm( QString orderId )
+{
+    if ( _productForm.isNull() ) {
+        createProductForm( orderId );
+    } else {
+        _productForm->setProductModel( orderId );
     }
 
     _productForm->show();
@@ -112,6 +138,10 @@ void MainWindow::createProductOrderForm()
     connect( &*_productOrderForm
              , SIGNAL( closeProductOrderForm() )
              , SLOT( destroyProductOrderForm() ) );
+
+    connect( &*_productOrderForm
+             , SIGNAL( showProduct( QString ) )
+             , SLOT( showProductForm( QString ) ) );
 }
 
 

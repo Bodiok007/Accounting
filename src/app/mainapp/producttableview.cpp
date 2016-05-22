@@ -21,6 +21,23 @@ void ProductTableView::setProductModel()
 }
 
 
+void ProductTableView::setProductModel( QString orderId )
+{
+    auto model = _productModel->getModel( orderId );
+
+    if ( model->lastError().isValid() ) {
+        message( tr( "Помилка при завантаженні товарів!" ) );
+        return;
+    }
+
+    this->setModel( &*model );
+    horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+
+    int employeeName = 6;
+    setColumnHidden( employeeName, true );
+}
+
+
 void ProductTableView::message( QString text )
 {
     QMessageBox msgBox;

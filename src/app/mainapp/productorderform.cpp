@@ -7,6 +7,10 @@ ProductOrderForm::ProductOrderForm( QWidget *parent ) :
 {
     ui->setupUi( this );
     ui->tableProductOrder->setProductOrderModel();
+
+    connect( ui->tableProductOrder
+             , SIGNAL( showProduct( QString ) )
+             , SIGNAL( showProduct( QString ) ) );
 }
 
 

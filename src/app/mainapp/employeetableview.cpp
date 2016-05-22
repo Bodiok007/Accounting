@@ -17,8 +17,8 @@ void EmployeeTableView::setEmployeeModel()
         message( tr( "Помилка при завантаженні працівників!" ) );
         return;
     }
-    this->setModel( &*model );
-    this->setColumnHidden( 0, true );
+    setModel( &*model );
+    setColumnHidden( 0, true );
 
     horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch );
     horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Stretch );

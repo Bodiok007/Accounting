@@ -33,6 +33,8 @@ private slots:
 
     void createProductForm();
     void showProductForm();
+    void createProductForm( QString orderId );
+    void showProductForm( QString orderId );
     void destroyProductForm();
 
     void createProductOrderForm();

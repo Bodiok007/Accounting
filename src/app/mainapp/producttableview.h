@@ -14,6 +14,7 @@ public:
 
 public slots:
     void setProductModel();
+    void setProductModel( QString orderId );
 
 private:
     void message( QString text );

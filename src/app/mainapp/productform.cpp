@@ -6,7 +6,6 @@ ProductForm::ProductForm( QWidget *parent ) :
     ui( new Ui::ProductForm )
 {
     ui->setupUi( this );
-    ui->tableProducts->setProductModel();
 }
 
 
@@ -20,4 +19,16 @@ void ProductForm::closeEvent( QCloseEvent *event )
 ProductForm::~ProductForm()
 {
     delete ui;
+}
+
+
+void ProductForm::setProductModel()
+{
+    ui->tableProducts->setProductModel();
+}
+
+
+void ProductForm::setProductModel( QString orderId )
+{
+    ui->tableProducts->setProductModel( orderId );
 }

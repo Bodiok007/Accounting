@@ -17,6 +17,7 @@ public:
 
 signals:
     void closeProductOrderForm();
+    void showProduct( QString orderId );
 
 protected:
     void closeEvent( QCloseEvent *event );

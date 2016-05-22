@@ -39,6 +39,8 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModel( QString orderId )
         return _model;
     }
 
+    setHeadersToModelFromOrder();
+
     return _model;
 }
 
@@ -51,6 +53,29 @@ void ProductModel::setHeadersToModel()
             << tr( "Штрих-код" )
             << tr( "Категорія" )
             << tr( "Ціна" );
+
+    int countHeaders = headers.count();
+
+    for ( int currentHeader = 0;
+              currentHeader < countHeaders;
+              ++currentHeader ) {
+
+       _model->setHeaderData( currentHeader
+                              , Qt::Horizontal
+                              , headers.at( currentHeader ) );
+    }
+}
+
+
+void ProductModel::setHeadersToModelFromOrder()
+{
+    QStringList headers;
+    headers << tr( "Замовлення №" )
+            << tr( "Назва продукту" )
+            << tr( "Штрих-код" )
+            << tr( "Категорія" )
+            << tr( "Ціна" )
+            << tr( "Кількість" );
 
     int countHeaders = headers.count();
 

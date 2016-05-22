@@ -15,6 +15,9 @@ public:
     explicit ProductForm( QWidget *parent = 0 );
     ~ProductForm();
 
+    void setProductModel();
+    void setProductModel( QString orderId );
+
 signals:
     void closeProductForm();
 
