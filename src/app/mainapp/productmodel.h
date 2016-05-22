@@ -11,8 +11,7 @@ class ProductModel : public QObject
     Q_OBJECT
 public:
     explicit ProductModel( QObject *parent = 0 );
-
-signals:
+    QSharedPointer<QSqlQueryModel> getModel();
 
 public slots:
     QString addProduct( Product &product );
@@ -22,14 +21,15 @@ public slots:
 
 private:
     void initQueries();
-    void logError( QString fileName, int line ) const;
-
+    void logError( QString error, QString fileName, int line ) const;
+    void setHeadersToModel();
     QString lastInsertId();
 
 private:
     QSharedPointer<Db> _db;
     QMap<QueryType, QString> _queries;
     mutable QMap<QString, QString> _categories;
+    QSharedPointer<QSqlQueryModel> _model;
 };
 
 #endif // PRODUCTMODEL_H

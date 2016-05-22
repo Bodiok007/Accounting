@@ -27,7 +27,8 @@ FORMS += \
     changepasswordform.ui \
     mainwindow.ui \
     saleorderform.ui \
-    addproductform.ui
+    addproductform.ui \
+    productform.ui
 
 RESOURCES += \
     resource.qrc
@@ -38,6 +39,7 @@ include(models.pri)
 include(views.pri)
 include(mainwindow.pri)
 include(sale.pri)
+include(product.pri)
 
 INCLUDEPATH += ../log
 LIBS += -llog

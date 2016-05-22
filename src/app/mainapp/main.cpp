@@ -6,6 +6,7 @@
 #include "mainapp.h"
 #include "mainwindow.h"
 #include "productorderview.h"
+#include "productform.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +24,10 @@ int main(int argc, char *argv[])
     prd.show();*/
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
-    qDebug() << date;
+
+    /*ProductForm pf;
+    pf.show();*/
+
     /*MainWindow mw;
     mw.show();*/
 

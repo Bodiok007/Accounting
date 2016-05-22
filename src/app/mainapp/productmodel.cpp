@@ -4,7 +4,46 @@ ProductModel::ProductModel( QObject *parent )
     : QObject( parent )
 {
     _db = Db::getInstance();
+    _model = QSharedPointer<QSqlQueryModel>( new QSqlQueryModel() );
     initQueries();
+}
+
+
+QSharedPointer<QSqlQueryModel> ProductModel::getModel()
+{
+    _model->setQuery( _queries[ QueryType::GET_PRODUCT ] );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
+void ProductModel::setHeadersToModel()
+{
+    QStringList headers;
+    headers << tr( "Замовлення №" )
+            << tr( "Назва продукту" )
+            << tr( "Штрих-код" )
+            << tr( "Категорія" )
+            << tr( "Ціна" );
+
+    int countHeaders = headers.count();
+
+    for ( int currentHeader = 0;
+              currentHeader < countHeaders;
+              ++currentHeader ) {
+
+       _model->setHeaderData( currentHeader
+                              , Qt::Horizontal
+                              , headers.at( currentHeader ) );
+    }
 }
 
 
@@ -19,7 +58,7 @@ QString ProductModel::addProduct( Product &product )
     bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT ], parameters );
 
     if ( !statusOk ) {
-        logError( __FILE__, __LINE__ );
+        logError( _db->lastError().text(), __FILE__, __LINE__ );
         return -1;
     }
 
@@ -43,7 +82,7 @@ QMap<QString, QString> &ProductModel::getCategories() const
     bool statusOk = _db->query( _queries[ QueryType::GET_PRODUCT_CATEGORIES ] );
 
     if ( !statusOk ) {
-        logError( __FILE__, __LINE__ );
+        logError( _db->lastError().text(), __FILE__, __LINE__ );
         return _categories;
     }
 
@@ -83,16 +122,18 @@ void ProductModel::initQueries()
             "select addProduct('%1', '%2', '%3', '%4')";
     _queries[ QueryType::GET_PRODUCT_CATEGORIES ] =
             "call getProductCategories()";
+    _queries[ QueryType::GET_PRODUCT ] =
+            "call getProduct()";
 }
 
 
-void ProductModel::logError( QString fileName, int line ) const
+void ProductModel::logError( QString error, QString fileName, int line ) const
 {
     ErrorFileInfo fileInfo;
     fileInfo.setFileName( fileName );
     fileInfo.setLine( line );
 
     Logger::getInstance()->log( ErrorType::ERRORR
-                                , _db->lastError().text()
+                                , error
                                 , fileInfo );
 }
