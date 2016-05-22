@@ -9,6 +9,14 @@ ProductOrderForm::ProductOrderForm( QWidget *parent ) :
     ui->tableProductOrder->setProductOrderModel();
 }
 
+
+void ProductOrderForm::closeEvent( QCloseEvent *event )
+{
+    emit closeProductOrderForm();
+    QWidget::closeEvent( event );
+}
+
+
 ProductOrderForm::~ProductOrderForm()
 {
     delete ui;

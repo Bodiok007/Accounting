@@ -90,7 +90,7 @@
      <string>Перегляд проданих товарів</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonShowOrders">
+   <widget class="QPushButton" name="pushButtonShowProductOrders">
     <property name="geometry">
      <rect>
       <x>140</x>

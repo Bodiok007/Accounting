@@ -17,12 +17,18 @@ void MainWindow::connectSlots()
     connect( ui->pushButtonOut
              , SIGNAL( clicked( bool ) )
              , SLOT( emitClose() ) );
+
     connect( ui->pushButtonAddSale
              , SIGNAL( clicked( bool ) )
              , SLOT( showSaleOrderForm() ) );
+
     connect( ui->pushButtonShowProducts
              , SIGNAL( clicked( bool ) )
              , SLOT( showProductForm() ) );
+
+    connect( ui->pushButtonShowProductOrders
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showProductOrderForm() ) );
 }
 
 
@@ -94,6 +100,35 @@ void MainWindow::destroyProductForm()
 {
     if ( !_productForm.isNull() ) {
         _productForm.clear();
+    }
+}
+
+
+void MainWindow::createProductOrderForm()
+{
+    _productOrderForm = QSharedPointer<ProductOrderForm>(
+                        new ProductOrderForm() );
+
+    connect( &*_productOrderForm
+             , SIGNAL( closeProductOrderForm() )
+             , SLOT( destroyProductOrderForm() ) );
+}
+
+
+void MainWindow::showProductOrderForm()
+{
+    if ( _productOrderForm.isNull() ) {
+        createProductOrderForm();
+    }
+
+    _productOrderForm->show();
+}
+
+
+void MainWindow::destroyProductOrderForm()
+{
+    if ( !_productOrderForm.isNull() ) {
+        _productOrderForm.clear();
     }
 }
 
