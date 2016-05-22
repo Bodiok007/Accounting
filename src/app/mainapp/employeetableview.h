@@ -26,7 +26,7 @@ signals:
     void editUser( UserEditInfo user );
 
 protected:
-    virtual void contextMenuEvent( QContextMenuEvent *pe );
+    void contextMenuEvent( QContextMenuEvent *pe );
 
 private:
     void initContextMenu();

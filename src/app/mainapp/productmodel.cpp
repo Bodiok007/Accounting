@@ -25,6 +25,24 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModel()
 }
 
 
+QSharedPointer<QSqlQueryModel> ProductModel::getModel( QString orderId )
+{
+    QStringList arguments;
+    arguments << orderId;
+
+    _model->setQuery( _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ]
+                      .arg( orderId ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    return _model;
+}
+
+
 void ProductModel::setHeadersToModel()
 {
     QStringList headers;
@@ -124,6 +142,8 @@ void ProductModel::initQueries()
             "call getProductCategories()";
     _queries[ QueryType::GET_PRODUCT ] =
             "call getProduct()";
+    _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ] =
+            "call getProductByOrderId('%1')";
 }
 
 

@@ -12,6 +12,7 @@ class ProductModel : public QObject
 public:
     explicit ProductModel( QObject *parent = 0 );
     QSharedPointer<QSqlQueryModel> getModel();
+    QSharedPointer<QSqlQueryModel> getModel( QString orderId );
 
 public slots:
     QString addProduct( Product &product );

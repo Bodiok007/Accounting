@@ -26,7 +26,7 @@ void EmployeeTableView::setEmployeeModel()
 }
 
 
-void EmployeeTableView::contextMenuEvent(QContextMenuEvent *pe)
+void EmployeeTableView::contextMenuEvent( QContextMenuEvent *pe )
 {
     _contextMenu->exec( pe->globalPos() );
 }
@@ -110,7 +110,7 @@ UserEditInfo EmployeeTableView::getCurrentUserInfo()
     user.firstName = splitUserName.at( 0 );
     user.lastName = splitUserName.at( 1 );
     user.login = model()->data( model()->index( currentRow, 2 ) ).toString();
-    qDebug() << "gettInfo";
+
     return user;
 }
 
