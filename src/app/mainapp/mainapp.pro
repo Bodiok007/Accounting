@@ -19,6 +19,7 @@ SOURCES += main.cpp \
 HEADERS  += querytype.h \
     mainapp.h
 
+
 FORMS += \
     loginform.ui \
     adminform.ui \
@@ -29,7 +30,9 @@ FORMS += \
     saleorderform.ui \
     addproductform.ui \
     productform.ui \
-    productorderform.ui
+    productorderform.ui \
+    customerform.ui \
+    addcustomerform.ui
 
 RESOURCES += \
     resource.qrc
@@ -42,6 +45,7 @@ include(mainwindow.pri)
 include(sale.pri)
 include(product.pri)
 include(productorder.pri)
+include(customer.pri)
 
 INCLUDEPATH += ../log
 LIBS += -llog

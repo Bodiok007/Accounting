@@ -23,6 +23,7 @@ signals:
 
 private:
     void setRoles();
+    void initErrors();
     void connectSlots();
 
     UserInfo getEmployee();
@@ -39,7 +40,6 @@ private:
 
 private slots:
     void addEmployee();
-    void initErrors();
 
 private:
     Ui::AddEmployeeForm *ui;
