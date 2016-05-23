@@ -8,6 +8,8 @@ AddCustomerForm::AddCustomerForm( QWidget *parent ) :
     ui->setupUi( this );
     _customerModel = QSharedPointer<CustomerModel>( new CustomerModel() );
 
+    initErrors();
+
     connect( ui->pushButtonAddCustomer
              , SIGNAL( clicked( bool ) )
              , SLOT( addCustomer() ) );

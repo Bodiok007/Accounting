@@ -28,6 +28,13 @@ void CustomerForm::setCustomerModel()
 }
 
 
+void CustomerForm::closeEvent( QCloseEvent *event )
+{
+    emit closeCustomerForm();
+    QWidget::closeEvent( event );
+}
+
+
 CustomerForm::~CustomerForm()
 {
     delete ui;

@@ -29,6 +29,10 @@ void MainWindow::connectSlots()
     connect( ui->pushButtonShowSales
              , SIGNAL( clicked( bool ) )
              , SLOT( showProductOrderForm() ) );
+
+    connect( ui->pushButtonShowCustomers
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showCustomerForm() ) );
 }
 
 
@@ -159,6 +163,34 @@ void MainWindow::destroyProductOrderForm()
 {
     if ( !_productOrderForm.isNull() ) {
         _productOrderForm.clear();
+    }
+}
+
+
+void MainWindow::createCustomerForm()
+{
+    _customerForm = QSharedPointer<CustomerForm>( new CustomerForm() );
+
+    connect( &*_customerForm
+             , SIGNAL( closeCustomerForm() )
+             , SLOT( destroyCustomerForm() ) );
+}
+
+
+void MainWindow::showCustomerForm()
+{
+    if ( _customerForm.isNull() ) {
+        createCustomerForm();
+    }
+
+    _customerForm->show();
+}
+
+
+void MainWindow::destroyCustomerForm()
+{
+    if ( !_customerForm.isNull() ) {
+        _customerForm.clear();
     }
 }
 

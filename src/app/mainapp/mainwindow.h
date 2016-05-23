@@ -5,6 +5,7 @@
 #include "saleorderform.h"
 #include "productform.h"
 #include "productorderform.h"
+#include "customerform.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +42,10 @@ private slots:
     void showProductOrderForm();
     void destroyProductOrderForm();
 
+    void createCustomerForm();
+    void showCustomerForm();
+    void destroyCustomerForm();
+
 private:
     void connectSlots();
 
@@ -49,6 +54,7 @@ private:
     QSharedPointer<SaleOrderForm> _saleOrderForm;
     QSharedPointer<ProductForm> _productForm;
     QSharedPointer<ProductOrderForm> _productOrderForm;
+    QSharedPointer<CustomerForm> _customerForm;
 };
 
 #endif // MAINWINDOW_H

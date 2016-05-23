@@ -16,8 +16,14 @@ public:
     explicit CustomerForm( QWidget *parent = 0 );
     ~CustomerForm();
 
+signals:
+    void closeCustomerForm();
+
 public slots:
     void setCustomerModel();
+
+protected:
+    void closeEvent( QCloseEvent *event );
 
 private:
     Ui::CustomerForm *ui;
