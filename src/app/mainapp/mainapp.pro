@@ -46,6 +46,7 @@ include(sale.pri)
 include(product.pri)
 include(productorder.pri)
 include(customer.pri)
+include(service.pri)
 
 INCLUDEPATH += ../log
 LIBS += -llog
