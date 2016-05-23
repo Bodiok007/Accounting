@@ -26,7 +26,7 @@ void MainWindow::connectSlots()
              , SIGNAL( clicked( bool ) )
              , SLOT( showProductForm() ) );
 
-    connect( ui->pushButtonShowProductOrders
+    connect( ui->pushButtonShowSales
              , SIGNAL( clicked( bool ) )
              , SLOT( showProductOrderForm() ) );
 }
