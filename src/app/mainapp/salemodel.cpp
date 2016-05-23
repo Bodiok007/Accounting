@@ -1,6 +1,6 @@
-#include "productordermodel.h"
+#include "salemodel.h"
 
-ProductOrderModel::ProductOrderModel( QObject *parent ) :
+SaleModel::SaleModel( QObject *parent ) :
     QObject(parent)
 {
     _db = Db::getInstance();
@@ -10,7 +10,7 @@ ProductOrderModel::ProductOrderModel( QObject *parent ) :
 }
 
 
-QString ProductOrderModel::addOrder()
+QString SaleModel::addOrder()
 {
     QStringList parameters;
     parameters << qApp->property( "employeeId" ).toString()
@@ -29,13 +29,13 @@ QString ProductOrderModel::addOrder()
 }
 
 
-QString ProductOrderModel::getOrderId()
+QString SaleModel::getOrderId()
 {
     return _orderId;
 }
 
 
-QSharedPointer<QSqlQueryModel> ProductOrderModel::getModel()
+QSharedPointer<QSqlQueryModel> SaleModel::getModel()
 {
     _model->setQuery( _queries[ QueryType::GET_PRODUCT_ORDER ] );
 
@@ -51,7 +51,7 @@ QSharedPointer<QSqlQueryModel> ProductOrderModel::getModel()
 }
 
 
-void ProductOrderModel::setHeadersToModel()
+void SaleModel::setHeadersToModel()
 {
     QStringList headers;
     headers << tr( "Замовлення №" )
@@ -73,16 +73,16 @@ void ProductOrderModel::setHeadersToModel()
 }
 
 
-void ProductOrderModel::initQueries()
+void SaleModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT_ORDER ] =
             "select addProductOrder('%1', '%2')";
     _queries[ QueryType::GET_PRODUCT_ORDER ] =
-            "call getProductOrder()";
+            "call getSale()";
 }
 
 
-QString ProductOrderModel::lastInsertId()
+QString SaleModel::lastInsertId()
 {
     auto query = _db->getData();
     query->next();
@@ -94,7 +94,7 @@ QString ProductOrderModel::lastInsertId()
 }
 
 
-void ProductOrderModel::logError( QString error, QString fileName, int line )
+void SaleModel::logError( QString error, QString fileName, int line )
 {
     ErrorFileInfo fileInfo;
     fileInfo.setFileName( fileName );

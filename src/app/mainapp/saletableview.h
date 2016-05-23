@@ -4,20 +4,20 @@
 #include <QtWidgets>
 #include "productmodel.h"
 #include "checkmanager.h"
-#include "productordermodel.h"
+#include "salemodel.h"
 
-class ProductOrderTableView : public QTableView
+class SaleTableView : public QTableView
 {
     Q_OBJECT
 
 public:
-    ProductOrderTableView( QWidget *parent = 0 );
+    SaleTableView( QWidget *parent = 0 );
 
 public slots:
-    void setProductOrderModel();
+    void setSaleModel();
 
 signals:
-    void showProduct( QString orderId );
+    void showSale( QString orderId );
 
 protected:
     void contextMenuEvent( QContextMenuEvent *pe );
@@ -36,7 +36,7 @@ private slots:
 
 private:
     QSharedPointer<ProductModel> _productModel;
-    QSharedPointer<ProductOrderModel> _productOrderModel;
+    QSharedPointer<SaleModel> _productOrderModel;
     QSharedPointer<CheckManager> _check;
     QSharedPointer<QMenu> _contextMenu;
 };

@@ -1,15 +1,15 @@
-#include "productordertableview.h"
+#include "saletableview.h"
 #include "product.h"
 #include "productcheck.h"
 
-ProductOrderTableView::ProductOrderTableView( QWidget *parent ) :
+SaleTableView::SaleTableView( QWidget *parent ) :
     QTableView( parent )
 {
     _productModel = QSharedPointer<ProductModel>(
                     new ProductModel() );
 
-    _productOrderModel = QSharedPointer<ProductOrderModel>(
-                         new ProductOrderModel() );
+    _productOrderModel = QSharedPointer<SaleModel>(
+                         new SaleModel() );
 
     _check = QSharedPointer<CheckManager>(
              new CheckManager( nullptr, new ProductCheck() ) );
@@ -18,7 +18,7 @@ ProductOrderTableView::ProductOrderTableView( QWidget *parent ) :
 }
 
 
-void ProductOrderTableView::setProductOrderModel()
+void SaleTableView::setSaleModel()
 {
     auto model = _productOrderModel->getModel();
 
@@ -32,7 +32,7 @@ void ProductOrderTableView::setProductOrderModel()
 }
 
 
-void ProductOrderTableView::initContextMenu()
+void SaleTableView::initContextMenu()
 {
     _contextMenu = QSharedPointer<QMenu>( new QMenu( this ) );
 
@@ -50,25 +50,25 @@ void ProductOrderTableView::initContextMenu()
 }
 
 
-void ProductOrderTableView::activateCotextMenu( QAction *pAction )
+void SaleTableView::activateCotextMenu( QAction *pAction )
 {
     if ( pAction->objectName() == "printCheck" ) {
         printCheck();
     }
     else if ( pAction->objectName() == "showProductOrder" ) {
         QString orderId = getCurrentOrderId();
-        emit showProduct( orderId );
+        emit showSale( orderId );
     }
 }
 
 
-void ProductOrderTableView::contextMenuEvent( QContextMenuEvent *pe )
+void SaleTableView::contextMenuEvent( QContextMenuEvent *pe )
 {
     _contextMenu->exec( pe->globalPos() );
 }
 
 
-void ProductOrderTableView::printCheck()
+void SaleTableView::printCheck()
 {
     QString orderId = getCurrentOrderId();
     auto model = _productModel->getModel( orderId );
@@ -99,7 +99,7 @@ void ProductOrderTableView::printCheck()
 }
 
 
-void ProductOrderTableView::print( QStringList &general, QList<Product> &productList )
+void SaleTableView::print( QStringList &general, QList<Product> &productList )
 {
     ProductCheckData mapContainer;
     mapContainer[ general ] = &productList;
@@ -112,7 +112,7 @@ void ProductOrderTableView::print( QStringList &general, QList<Product> &product
 }
 
 
-QString ProductOrderTableView::getCurrentOrderId()
+QString SaleTableView::getCurrentOrderId()
 {
     int currentRow = selectionModel()->currentIndex().row();
 
@@ -123,7 +123,7 @@ QString ProductOrderTableView::getCurrentOrderId()
 }
 
 
-void ProductOrderTableView::message( QString text )
+void SaleTableView::message( QString text )
 {
     QMessageBox msgBox;
     msgBox.setText( text );

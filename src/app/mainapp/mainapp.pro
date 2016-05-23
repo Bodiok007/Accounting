@@ -30,9 +30,9 @@ FORMS += \
     saleorderform.ui \
     addproductform.ui \
     productform.ui \
-    productorderform.ui \
     customerform.ui \
-    addcustomerform.ui
+    addcustomerform.ui \
+    saleform.ui
 
 RESOURCES += \
     resource.qrc
@@ -44,7 +44,6 @@ include(views.pri)
 include(mainwindow.pri)
 include(sale.pri)
 include(product.pri)
-include(productorder.pri)
 include(customer.pri)
 include(service.pri)
 

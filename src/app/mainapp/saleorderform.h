@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "addproductform.h"
-#include "productordermodel.h"
+#include "salemodel.h"
 #include "productorderdetailmodel.h"
 #include "checkmanager.h"
 
@@ -19,7 +19,8 @@ public:
     enum class Errors
     {
         NO_ERRORR,
-        PRODUCT_LIST_EMPTY,
+        PRODUCT_LIST_EMPTY_FOR_SAVE,
+        PRODUCT_LIST_EMPTY_FOR_PRINT,
         ADD_ORDER_ERROR
     };
 
@@ -51,7 +52,7 @@ private:
     QSharedPointer<AddProductForm> _addProductForm;
 
     QSharedPointer<ProductModel> _productModel;
-    QSharedPointer<ProductOrderModel> _productOrderModel;
+    QSharedPointer<SaleModel> _productOrderModel;
     QSharedPointer<ProductOrderDetailModel> _productOrderDetailModel;
 
     QSharedPointer<CheckManager> _check;

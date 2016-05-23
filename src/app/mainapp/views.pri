@@ -3,11 +3,11 @@ HEADERS += \
     $$PWD/employeetableview.h \
     $$PWD/productorderview.h \
     $$PWD/producttableview.h \
-    $$PWD/productordertableview.h
+    $$PWD/saletableview.h
 
 SOURCES += \
     $$PWD/messagetableview.cpp \
     $$PWD/employeetableview.cpp \
     $$PWD/productorderview.cpp \
     $$PWD/producttableview.cpp \
-    $$PWD/productordertableview.cpp
+    $$PWD/saletableview.cpp

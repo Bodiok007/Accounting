@@ -7,17 +7,17 @@ namespace Ui {
 class ProductOrderForm;
 }
 
-class ProductOrderForm : public QWidget
+class SaleForm : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ProductOrderForm( QWidget *parent = 0 );
-    ~ProductOrderForm();
+    explicit SaleForm( QWidget *parent = 0 );
+    ~SaleForm();
 
 signals:
     void closeProductOrderForm();
-    void showProduct( QString orderId );
+    void showSale( QString orderId );
 
 protected:
     void closeEvent( QCloseEvent *event );

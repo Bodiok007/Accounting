@@ -15,15 +15,15 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="ProductOrderTableView" name="tableProductOrder"/>
+    <widget class="SaleTableView" name="tableProductOrder"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ProductOrderTableView</class>
+   <class>SaleTableView</class>
    <extends>QTableView</extends>
-   <header>productordertableview.h</header>
+   <header>saletableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

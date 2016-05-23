@@ -24,8 +24,8 @@ void SaleOrderForm::initFields()
     _addProductForm = QSharedPointer<AddProductForm>(
                       new AddProductForm( nullptr, _productModel ) );
 
-    _productOrderModel = QSharedPointer<ProductOrderModel>(
-                         new ProductOrderModel() );
+    _productOrderModel = QSharedPointer<SaleModel>(
+                         new SaleModel() );
 
     _productOrderDetailModel = QSharedPointer<ProductOrderDetailModel>(
                                new ProductOrderDetailModel() );
@@ -82,7 +82,7 @@ void SaleOrderForm::addProduct( Product &product )
 void SaleOrderForm::addOrder() // cycle
 {
     if ( _productList.empty() ) {
-        message( _errors[ Errors::PRODUCT_LIST_EMPTY ] );
+        message( _errors[ Errors::PRODUCT_LIST_EMPTY_FOR_SAVE ] );
         return;
     }
 
@@ -127,14 +127,13 @@ void SaleOrderForm::addOrder() // cycle
         _db->rollback();
         message( _errors[ Errors::ADD_ORDER_ERROR ] );
     }
-
 }
 
 
 void SaleOrderForm::printCheck()
 {
     if ( _productList.empty() ) {
-        message( _errors[ Errors::PRODUCT_LIST_EMPTY ] );
+        message( _errors[ Errors::PRODUCT_LIST_EMPTY_FOR_PRINT ] );
         return;
     }
 
@@ -182,8 +181,11 @@ void SaleOrderForm::initErrors()
     _errors[ Errors::NO_ERRORR ] =
         QString( tr( "Замовлення успішно додано!" ) );
 
-    _errors[ Errors::PRODUCT_LIST_EMPTY ] =
+    _errors[ Errors::PRODUCT_LIST_EMPTY_FOR_SAVE ] =
         QString( tr( "Немає товарів для збереження!" ) );
+
+    _errors[ Errors::PRODUCT_LIST_EMPTY_FOR_PRINT ] =
+        QString( tr( "Немає товарів для друку чека!" ) );
 
     _errors[ Errors::ADD_ORDER_ERROR ] =
         QString( tr( "Помилка при додаванні замовлення!" ) );

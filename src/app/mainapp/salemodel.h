@@ -5,11 +5,11 @@
 #include "db.h"
 #include "querytype.h"
 
-class ProductOrderModel : public QObject
+class SaleModel : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProductOrderModel( QObject *parent = 0 );
+    explicit SaleModel( QObject *parent = 0 );
     QString addOrder();
     QString getOrderId();
     QSharedPointer<QSqlQueryModel> getModel();

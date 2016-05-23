@@ -24,7 +24,7 @@ void MainWindow::connectSlots()
 
     connect( ui->pushButtonShowProducts
              , SIGNAL( clicked( bool ) )
-             , SLOT( showProductForm() ) );
+             , SLOT( showSaleForm() ) );
 
     connect( ui->pushButtonShowSales
              , SIGNAL( clicked( bool ) )
@@ -91,7 +91,7 @@ void MainWindow::createProductForm()
 }
 
 
-void MainWindow::showProductForm()
+void MainWindow::showSaleForm()
 {
     if ( _productForm.isNull() ) {
         createProductForm();
@@ -114,7 +114,7 @@ void MainWindow::createProductForm( QString orderId )
 }
 
 
-void MainWindow::showProductForm( QString orderId )
+void MainWindow::showSaleForm( QString orderId )
 {
     if ( _productForm.isNull() ) {
         createProductForm( orderId );
@@ -136,16 +136,16 @@ void MainWindow::destroyProductForm()
 
 void MainWindow::createProductOrderForm()
 {
-    _productOrderForm = QSharedPointer<ProductOrderForm>(
-                        new ProductOrderForm() );
+    _productOrderForm = QSharedPointer<SaleForm>(
+                        new SaleForm() );
 
     connect( &*_productOrderForm
              , SIGNAL( closeProductOrderForm() )
              , SLOT( destroyProductOrderForm() ) );
 
     connect( &*_productOrderForm
-             , SIGNAL( showProduct( QString ) )
-             , SLOT( showProductForm( QString ) ) );
+             , SIGNAL( showSale( QString ) )
+             , SLOT( showSaleForm( QString ) ) );
 }
 
 
