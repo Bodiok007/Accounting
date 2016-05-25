@@ -130,6 +130,7 @@ void ServiceOrderForm::addOrder()
     bool commitTransactionOk = _db->commit();
     if ( commitTransactionOk ) {
         message( _errors[ Errors::NO_ERRORR ] );
+        // clear fields
     }
     else {
         _db->rollback();
@@ -155,6 +156,13 @@ void ServiceOrderForm::addServiceToForm()
     for ( int i = 0; i < items.size(); ++i ) {
         table->setItem( row, i, items[ i ] );
     }
+}
+
+
+void ServiceOrderForm::closeEvent( QCloseEvent *event )
+{
+    emit closeServiceOrderForm();
+    QWidget::closeEvent( event );
 }
 
 

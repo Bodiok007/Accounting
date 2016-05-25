@@ -33,15 +33,15 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonSaveSaleOrder">
+      <widget class="QPushButton" name="pushButtonAddProduct">
        <property name="minimumSize">
         <size>
-         <width>151</width>
+         <width>121</width>
          <height>40</height>
         </size>
        </property>
        <property name="text">
-        <string>Зберегти замовлення</string>
+        <string>Додати продукт</string>
        </property>
       </widget>
      </item>
@@ -59,15 +59,15 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonAddProduct">
+      <widget class="QPushButton" name="pushButtonSaveSaleOrder">
        <property name="minimumSize">
         <size>
-         <width>121</width>
+         <width>151</width>
          <height>40</height>
         </size>
        </property>
        <property name="text">
-        <string>Додати продукт</string>
+        <string>Зберегти замовлення</string>
        </property>
       </widget>
      </item>

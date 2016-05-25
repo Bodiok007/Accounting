@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
 
-    ServiceOrderForm sof;
-    sof.show();
+    /*ServiceOrderForm sof;
+    sof.show();*/
 
     /*CustomerForm cf;
     cf.show();*/

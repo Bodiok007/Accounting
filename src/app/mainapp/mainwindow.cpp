@@ -33,6 +33,10 @@ void MainWindow::connectSlots()
     connect( ui->pushButtonShowCustomers
              , SIGNAL( clicked( bool ) )
              , SLOT( showCustomerForm() ) );
+
+    connect( ui->pushButtonAddOrder
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showServiceOrderForm() ) );
 }
 
 
@@ -191,6 +195,35 @@ void MainWindow::destroyCustomerForm()
 {
     if ( !_customerForm.isNull() ) {
         _customerForm.clear();
+    }
+}
+
+
+void MainWindow::createServiceOrderForm()
+{
+    _serviceOrderForm = QSharedPointer<ServiceOrderForm>(
+                        new ServiceOrderForm() );
+
+    connect( _serviceOrderForm.data()
+             , SIGNAL( closeServiceOrderForm() )
+             , SLOT( destroyServiceOrderForm() ) );
+}
+
+
+void MainWindow::showServiceOrderForm()
+{
+    if ( _serviceOrderForm.isNull() ) {
+        createServiceOrderForm();
+    }
+
+    _serviceOrderForm->show();
+}
+
+
+void MainWindow::destroyServiceOrderForm()
+{
+    if ( !_serviceOrderForm.isNull() ) {
+        _serviceOrderForm.clear();
     }
 }
 

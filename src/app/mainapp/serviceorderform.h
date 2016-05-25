@@ -30,6 +30,12 @@ public:
     explicit ServiceOrderForm( QWidget *parent = 0 );
     ~ServiceOrderForm();
 
+signals:
+    void closeServiceOrderForm();
+
+protected:
+    void closeEvent( QCloseEvent *event );
+
 private:
     void connectSlots();
     void initFields();
