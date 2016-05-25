@@ -5,6 +5,7 @@ ProductOrderView::ProductOrderView( QWidget *parent )
 { 
     setColumnCount(5);
     setHeaders();
+    horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 }
 
 

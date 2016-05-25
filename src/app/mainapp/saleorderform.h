@@ -33,12 +33,6 @@ signals:
 protected:
     void closeEvent( QCloseEvent *event );
 
-private slots:
-    void emitClose();
-    void addProduct( Product &product );
-    void addOrder();
-    void printCheck();
-
 private:
     void addProductToForm();
     void initFields();
@@ -46,13 +40,19 @@ private:
     void connectSlots();
     void message( QString text );
 
+private slots:
+    void emitClose();
+    void addProduct( Product &product );
+    void addOrder();
+    void printCheck();
+
 private:
     Ui::SaleOrderForm *ui;
     QSharedPointer<Db> _db;
     QSharedPointer<AddProductForm> _addProductForm;
 
     QSharedPointer<ProductModel> _productModel;
-    QSharedPointer<SaleModel> _productOrderModel;
+    QSharedPointer<SaleModel> _saleModel;
     QSharedPointer<ProductOrderDetailModel> _productOrderDetailModel;
 
     QSharedPointer<CheckManager> _check;

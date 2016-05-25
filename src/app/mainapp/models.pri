@@ -6,11 +6,10 @@ HEADERS += \
     $$PWD/productmodel.h \
     $$PWD/product.h \
     $$PWD/productorderdetailmodel.h \
-    $$PWD/salemodel.h
+
 
 SOURCES += \
     $$PWD/messagemodel.cpp \
     $$PWD/usermodel.cpp \
     $$PWD/productmodel.cpp \
-    $$PWD/productorderdetailmodel.cpp \
-    $$PWD/salemodel.cpp
+    $$PWD/productorderdetailmodel.cpp

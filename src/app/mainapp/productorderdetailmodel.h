@@ -14,10 +14,6 @@ public:
 
     bool addOrderDetail( QString orderId, Product &product );
 
-signals:
-
-public slots:
-
 private:
     void initQueries();
     void logError( QString fileName, int line );

@@ -16,11 +16,13 @@ signals:
 
 public:
     QSharedPointer<QSqlQueryModel> getModel();
+    QSharedPointer<QSqlQueryModel> getModelByPhone( QString phone );
     bool addCustomer( Customer &customer );
 
 private:
     void initQueries();
     void setHeadersToModel();
+    void setHeadersToModelWithList();
     void logError( QString error, QString fileName, int line );
 
 private:

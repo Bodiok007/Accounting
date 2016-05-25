@@ -29,6 +29,18 @@ QString SaleModel::addOrder()
 }
 
 
+QString SaleModel::lastInsertId()
+{
+    auto query = _db->getData();
+    query->next();
+
+    QString lastInsertId = query->value( 0 ).toString();
+    _orderId = lastInsertId;
+
+    return lastInsertId;
+}
+
+
 QString SaleModel::getOrderId()
 {
     return _orderId;
@@ -79,18 +91,6 @@ void SaleModel::initQueries()
             "select addProductOrder('%1', '%2')";
     _queries[ QueryType::GET_PRODUCT_ORDER ] =
             "call getSale()";
-}
-
-
-QString SaleModel::lastInsertId()
-{
-    auto query = _db->getData();
-    query->next();
-
-    QString lastInsertId = query->value( 0 ).toString();
-    _orderId = lastInsertId;
-
-    return lastInsertId;
 }
 
 

@@ -27,6 +27,22 @@ QSharedPointer<QSqlQueryModel> CustomerModel::getModel()
 }
 
 
+QSharedPointer<QSqlQueryModel> CustomerModel::getModelByPhone( QString phone )
+{
+    _model->setQuery( _queries[ QueryType::GET_CUSTOMER_BY_PHONE ].arg( phone ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
 bool CustomerModel::addCustomer( Customer &customer )
 {
     QStringList parameters;
@@ -49,6 +65,8 @@ void CustomerModel::initQueries()
 {
     _queries[ QueryType::GET_CUSTOMER ] =
             "call getCustomer()";
+    _queries[ QueryType::GET_CUSTOMER_BY_PHONE ] =
+            "call getCustomerByPhone('%1')";
     _queries[ QueryType::ADD_CUSTOMER ] =
             "call addCustomer('%1', '%2', '%3')";
 }
@@ -59,6 +77,24 @@ void CustomerModel::setHeadersToModel()
     QStringList headers;
     headers << tr( "Замовник" )
             << tr( "Телефон" );
+
+    int countHeaders = headers.count();
+
+    for ( int currentHeader = 0;
+              currentHeader < countHeaders;
+              ++currentHeader ) {
+
+       _model->setHeaderData( currentHeader
+                              , Qt::Horizontal
+                              , headers.at( currentHeader ) );
+    }
+}
+
+
+void CustomerModel::setHeadersToModelWithList()
+{
+    QStringList headers;
+    headers << tr( "Замовник" );
 
     int countHeaders = headers.count();
 

@@ -24,7 +24,7 @@ void SaleOrderForm::initFields()
     _addProductForm = QSharedPointer<AddProductForm>(
                       new AddProductForm( nullptr, _productModel ) );
 
-    _productOrderModel = QSharedPointer<SaleModel>(
+    _saleModel = QSharedPointer<SaleModel>(
                          new SaleModel() );
 
     _productOrderDetailModel = QSharedPointer<ProductOrderDetailModel>(
@@ -79,7 +79,7 @@ void SaleOrderForm::addProduct( Product &product )
 }
 
 
-void SaleOrderForm::addOrder() // cycle
+void SaleOrderForm::addOrder()
 {
     if ( _productList.empty() ) {
         message( _errors[ Errors::PRODUCT_LIST_EMPTY_FOR_SAVE ] );
@@ -92,7 +92,7 @@ void SaleOrderForm::addOrder() // cycle
         return;
     }
 
-    QString orderId = _productOrderModel->addOrder();
+    QString orderId = _saleModel->addOrder();
     if ( orderId.toInt() <= 0 ) {
         _db->rollback();
         message( _errors[ Errors::ADD_ORDER_ERROR ] );
@@ -137,7 +137,7 @@ void SaleOrderForm::printCheck()
         return;
     }
 
-    QString orderId = _productOrderModel->getOrderId();
+    QString orderId = _saleModel->getOrderId();
     QString employeeName = qApp->property( "employeeName" ).toString();
 
     QStringList general;
@@ -168,7 +168,7 @@ void SaleOrderForm::addProductToForm()
     items.push_back( new QTableWidgetItem( product.cost ) );
 
     int row = table->rowCount();
-    table->insertRow(row);
+    table->insertRow( row );
 
     for ( int i = 0; i < items.size(); ++i ) {
         table->setItem( row, i, items[ i ] );

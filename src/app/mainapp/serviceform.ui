@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SaleOrderForm</class>
- <widget class="QWidget" name="SaleOrderForm">
+ <class>ServiceForm</class>
+ <widget class="QWidget" name="ServiceForm">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>653</width>
-    <height>334</height>
+    <width>591</width>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="ProductOrderView" name="tableViewProductOrder"/>
+    <widget class="QTableView" name="tableView"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -33,7 +33,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonSaveSaleOrder">
+      <widget class="QPushButton" name="pushButtonSaveServiceOrder">
        <property name="minimumSize">
         <size>
          <width>151</width>
@@ -59,7 +59,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonAddProduct">
+      <widget class="QPushButton" name="pushButtonAddService">
        <property name="minimumSize">
         <size>
          <width>121</width>
@@ -67,7 +67,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Додати продукт</string>
+        <string>Додати послугу</string>
        </property>
       </widget>
      </item>
@@ -75,13 +75,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ProductOrderView</class>
-   <extends>QTableWidget</extends>
-   <header>productorderview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

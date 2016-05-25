@@ -102,7 +102,7 @@ QString ProductModel::addProduct( Product &product )
 
     if ( !statusOk ) {
         logError( _db->lastError().text(), __FILE__, __LINE__ );
-        return -1;
+        return "-1";
     }
 
     return lastInsertId();
@@ -132,9 +132,9 @@ QMap<QString, QString> &ProductModel::getCategories() const
     auto categories = _db->getData();
 
     while ( categories->next() ) {
-        QString categoryName = categories->value( 0 ).toString();
-        QString categoryID = categories->value( 1 ).toString();
-        _categories[ categoryName ] = categoryID;
+        QString categoryID = categories->value( 0 ).toString();
+        QString categoryName = categories->value( 1 ).toString();
+        _categories[ categoryID ] = categoryName;
     }
 
     return _categories;

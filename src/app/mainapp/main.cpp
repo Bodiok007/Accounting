@@ -9,6 +9,8 @@
 #include "productform.h"
 #include "saleform.h"
 #include "customerform.h"
+#include "addserviceform.h"
+#include "serviceorderform.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +28,9 @@ int main(int argc, char *argv[])
     prd.show();*/
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
+
+    ServiceOrderForm sof;
+    sof.show();
 
     /*CustomerForm cf;
     cf.show();*/
