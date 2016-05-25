@@ -3,6 +3,7 @@
 #include "productcheck.h"
 #include <QDebug>
 #include "checkmanager.h"
+#include "servicecheck.h"
 
 int main(int argc, char *argv[])
 {
@@ -24,14 +25,40 @@ int main(int argc, char *argv[])
 
 
     //container
-    QStringList general;
-    general << "1" << "Mazurok Vitaliy";
+    /*QStringList general;
+    general << "1" << "Mazurok Vitaliy";*/
 
-    ProductCheckData map; map[ general ] = &data;
+    /*ProductCheckData map; map[ general ] = &data;
+    QVariant toCheckContainer;
+    toCheckContainer.setValue( map );*/
+
+    /*CheckManager manager( nullptr, new ProductCheck() );
+    manager.create( toCheckContainer );
+    manager.print();*/
+
+    /*********************************************************/
+
+    Service service1;
+    service1.description = "Description! More and more decription in your hand! For infinity";
+    service1.cost = "320";
+
+    Service service2;
+    service2.description = "Description2";
+    service2.cost = "220";
+
+    QStringList general;
+    general << "1" << "Mazurok Vitaliy" << "Some customer";
+
+    QList<Service> serviceList;
+    serviceList.append( service1 );
+    serviceList.append( service2 );
+
+    ServiceCheckData map;
+    map[ general ] = &serviceList;
     QVariant toCheckContainer;
     toCheckContainer.setValue( map );
 
-    CheckManager manager( nullptr, new ProductCheck() );
+    CheckManager manager( nullptr, new ServiceCheck() );
     manager.create( toCheckContainer );
     manager.print();
 
