@@ -19,12 +19,29 @@ CustomerForm::CustomerForm( QWidget *parent ) :
              , SIGNAL( clicked( bool ) )
              , &*_addCustomerForm
              , SLOT( show() ) );
+
+    connect( ui->pushButtonFind
+             , SIGNAL( clicked( bool ) )
+             , SLOT( findCustomerByPhone() ) );
 }
 
 
 void CustomerForm::setCustomerModel()
 {
     ui->tableCustomer->setCustomerModel();
+}
+
+
+void CustomerForm::findCustomerByPhone()
+{
+    QString customerPhone = ui->linePhone->text();
+
+    if ( customerPhone.isEmpty() ) {
+        ui->tableCustomer->setCustomerModel();
+    }
+    else {
+        ui->tableCustomer->setCustomerModelByPhone( customerPhone );
+    }
 }
 
 

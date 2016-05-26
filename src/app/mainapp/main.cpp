@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
 
-    ShowServiceOrderForm ssof;
-    ssof.show();
+    /*ShowServiceOrderForm ssof;
+    ssof.show();*/
 
     /*ServiceOrderForm sof;
     sof.show();*/

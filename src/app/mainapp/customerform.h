@@ -21,6 +21,7 @@ signals:
 
 public slots:
     void setCustomerModel();
+    void findCustomerByPhone();
 
 protected:
     void closeEvent( QCloseEvent *event );
