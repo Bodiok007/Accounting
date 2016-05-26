@@ -46,19 +46,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonPrintCheck">
-       <property name="minimumSize">
-        <size>
-         <width>121</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Друкувати чек</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pushButtonSaveSaleOrder">
        <property name="minimumSize">
         <size>

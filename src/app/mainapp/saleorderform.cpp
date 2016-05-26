@@ -49,10 +49,6 @@ void SaleOrderForm::connectSlots()
     connect( ui->pushButtonSaveSaleOrder
              , SIGNAL( clicked( bool ) )
              , SLOT( addOrder() ) );
-
-    connect( ui->pushButtonPrintCheck
-             , SIGNAL( clicked( bool ) )
-             , SLOT( printCheck() ) );
 }
 
 void SaleOrderForm::closeEvent( QCloseEvent *event )
@@ -121,12 +117,32 @@ void SaleOrderForm::addOrder()
 
     bool commitTransactionOk = _db->commit();
     if ( commitTransactionOk ) {
-        message( _errors[ Errors::NO_ERRORR ] );
+        if ( isPrintCheck() ) {
+            printCheck();
+        }
+        emit closeSaleOrderForm();
     }
     else {
         _db->rollback();
         message( _errors[ Errors::ADD_ORDER_ERROR ] );
     }
+}
+
+
+bool SaleOrderForm::isPrintCheck()
+{
+    QMessageBox msgBox;
+    msgBox.setText( tr("Замовлення успішно додане! Бажаєте надрукувати чек?") );
+    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::Cancel );
+    msgBox.setDefaultButton( QMessageBox::Ok );
+
+    int userChoose = msgBox.exec();
+
+    if ( userChoose != QMessageBox::Ok ) {
+        return false;
+    }
+
+    return true;
 }
 
 

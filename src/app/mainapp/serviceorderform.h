@@ -9,6 +9,7 @@
 #include "servicemodel.h"
 #include "serviceordermodel.h"
 #include "serviceorderdetailmodel.h"
+#include "checkmanager.h"
 
 namespace Ui {
 class ServiceOrderForm;
@@ -22,7 +23,7 @@ public:
     enum class Errors
     {
         NO_ERRORR,
-        PRODUCT_LIST_EMPTY,
+        SERVICE_LIST_EMPTY,
         NOT_CHOOSE_CUSTOMER,
         ADD_ORDER_ERROR
     };
@@ -42,11 +43,13 @@ private:
     void initErrors();
     void addServiceToForm();
     void message( QString text );
+    bool isPrintCheck();
 
 private slots:
     void findCustomerByPhone();
     void addService( Service &service );
     void addOrder();
+    void printCheck();
 
 private:
     Ui::ServiceOrderForm *ui;
@@ -59,6 +62,8 @@ private:
     QSharedPointer<AddServiceForm> _addServiceForm;
     QList<Service> _serviceList;
     QMap<Errors, QString> _errors;
+
+    QSharedPointer<CheckManager> _check;
 };
 
 #endif // SERVICEORDERFORM_H

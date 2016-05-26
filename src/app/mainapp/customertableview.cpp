@@ -34,3 +34,15 @@ QString CustomerTableView::getSelectedCustomerId()
 
     return customerId;
 }
+
+
+QString CustomerTableView::getSelectedCustomerName()
+{
+    int currentRow = selectionModel()->currentIndex().row();
+
+    // 0 is hide column with Id
+    QModelIndex userIdIndex = model()->index( currentRow, 1 );
+    QString customerName = model()->data( userIdIndex ).toString();
+
+    return customerName;
+}

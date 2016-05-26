@@ -1,5 +1,6 @@
 #include "serviceorderform.h"
 #include "ui_serviceorderform.h"
+#include "servicecheck.h"
 
 ServiceOrderForm::ServiceOrderForm( QWidget *parent ) :
     QWidget( parent ),
@@ -27,6 +28,8 @@ void ServiceOrderForm::initFields()
                          new ServiceOrderModel() );
     _serviceOrderDetailModel = QSharedPointer<ServiceOrderDetailModel>(
                                new ServiceOrderDetailModel() );
+    _check = QSharedPointer<CheckManager>(
+             new CheckManager( nullptr, new ServiceCheck() ) );
 }
 
 
@@ -90,7 +93,7 @@ void ServiceOrderForm::addOrder()
     }
 
     if ( _serviceList.empty() ) {
-        message( _errors[ Errors::PRODUCT_LIST_EMPTY ] );
+        message( _errors[ Errors::SERVICE_LIST_EMPTY ] );
         return;
     }
 
@@ -129,13 +132,59 @@ void ServiceOrderForm::addOrder()
 
     bool commitTransactionOk = _db->commit();
     if ( commitTransactionOk ) {
-        message( _errors[ Errors::NO_ERRORR ] );
-        // clear fields
+        if ( isPrintCheck() ) {
+            printCheck();
+        }
+        emit closeServiceOrderForm();
     }
     else {
         _db->rollback();
         message( _errors[ Errors::ADD_ORDER_ERROR ] );
     }
+}
+
+
+bool ServiceOrderForm::isPrintCheck()
+{
+    QMessageBox msgBox;
+    msgBox.setText( tr("Замовлення успішно додане! Бажаєте надрукувати чек?") );
+    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::Cancel );
+    msgBox.setDefaultButton( QMessageBox::Ok );
+
+    int userChoose = msgBox.exec();
+
+    if ( userChoose != QMessageBox::Ok ) {
+        return false;
+    }
+
+    return true;
+}
+
+
+void ServiceOrderForm::printCheck()
+{
+    if ( _serviceList.empty() ) {
+        message( _errors[ Errors::SERVICE_LIST_EMPTY ] );
+        return;
+    }
+
+    QString orderId = _serviceOrderModel->getOrderId();
+    QString employeeName = qApp->property( "employeeName" ).toString();
+    QString customerName = ui->tableViewCustomers->getSelectedCustomerName();
+
+    QStringList general;
+    general << orderId
+            << employeeName
+            << customerName;
+
+    ServiceCheckData mapContainer;
+    mapContainer[ general ] = &_serviceList;
+
+    QVariant dataToCheck;
+    dataToCheck.setValue( mapContainer );
+
+    _check->create( dataToCheck );
+    _check->print();
 }
 
 
@@ -179,7 +228,7 @@ void ServiceOrderForm::initErrors()
     _errors[ Errors::NO_ERRORR ] =
         QString( tr( "Замовлення успішно додано!" ) );
 
-    _errors[ Errors::PRODUCT_LIST_EMPTY ] =
+    _errors[ Errors::SERVICE_LIST_EMPTY ] =
         QString( tr( "Немає послуг для збереження!" ) );
 
     _errors[ Errors::NOT_CHOOSE_CUSTOMER ] =

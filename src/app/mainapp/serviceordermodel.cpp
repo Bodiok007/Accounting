@@ -28,13 +28,19 @@ QString ServiceOrderModel::addOrder( QString customerId )
 }
 
 
+QString ServiceOrderModel::getOrderId()
+{
+    return _orderId;
+}
+
+
 QString ServiceOrderModel::lastInsertId()
 {
     auto query = _db->getData();
     query->next();
 
     QString lastInsertId = query->value( 0 ).toString();
-    //_orderId = lastInsertId;
+    _orderId = lastInsertId;
 
     return lastInsertId;
 }

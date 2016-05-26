@@ -16,6 +16,7 @@ public slots:
     void setCustomerModel();
     void setCustomerModelByPhone( QString phone );
     QString getSelectedCustomerId();
+    QString getSelectedCustomerName();
 };
 
 #endif // CUSTOMERVIEW_H

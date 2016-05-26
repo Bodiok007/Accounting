@@ -12,6 +12,7 @@ class ServiceOrderModel : public QObject
 public:
     explicit ServiceOrderModel( QObject *parent = 0 );
     QString addOrder( QString customerId );
+    QString getOrderId();
 
 private:
     QString lastInsertId();
@@ -21,6 +22,7 @@ private:
 private:
     QSharedPointer<Db> _db;
     QMap<QueryType, QString> _queries;
+    QString _orderId;
 };
 
 #endif // SERVICEORDERMODEL_H
