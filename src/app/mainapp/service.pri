@@ -6,7 +6,9 @@ HEADERS += \
     $$PWD/service.h \
     $$PWD/serviceorderview.h \
     $$PWD/serviceorderdetailmodel.h \
-    $$PWD/serviceordermodel.h
+    $$PWD/serviceordermodel.h \
+    $$PWD/showserviceorderform.h \
+    $$PWD/showserviceorderview.h
 
 SOURCES += \
     $$PWD/serviceform.cpp \
@@ -15,4 +17,6 @@ SOURCES += \
     $$PWD/servicemodel.cpp \
     $$PWD/serviceorderview.cpp \
     $$PWD/serviceorderdetailmodel.cpp \
-    $$PWD/serviceordermodel.cpp
+    $$PWD/serviceordermodel.cpp \
+    $$PWD/showserviceorderform.cpp \
+    $$PWD/showserviceorderview.cpp

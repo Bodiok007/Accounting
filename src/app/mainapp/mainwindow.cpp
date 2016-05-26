@@ -36,7 +36,11 @@ void MainWindow::connectSlots()
 
     connect( ui->pushButtonAddOrder
              , SIGNAL( clicked( bool ) )
-             , SLOT( showServiceOrderForm() ) );
+             , SLOT( showAddServiceOrderForm() ) );
+
+    connect( ui->pushButtonShowServicesOrder
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showShowServiceOrderForm() ) );
 }
 
 
@@ -199,31 +203,60 @@ void MainWindow::destroyCustomerForm()
 }
 
 
-void MainWindow::createServiceOrderForm()
+void MainWindow::createAddServiceOrderForm()
 {
     _serviceOrderForm = QSharedPointer<ServiceOrderForm>(
                         new ServiceOrderForm() );
 
     connect( _serviceOrderForm.data()
              , SIGNAL( closeServiceOrderForm() )
-             , SLOT( destroyServiceOrderForm() ) );
+             , SLOT( destroyAddServiceOrderForm() ) );
 }
 
 
-void MainWindow::showServiceOrderForm()
+void MainWindow::showAddServiceOrderForm()
 {
     if ( _serviceOrderForm.isNull() ) {
-        createServiceOrderForm();
+        createAddServiceOrderForm();
     }
 
     _serviceOrderForm->show();
 }
 
 
-void MainWindow::destroyServiceOrderForm()
+void MainWindow::destroyAddServiceOrderForm()
 {
     if ( !_serviceOrderForm.isNull() ) {
         _serviceOrderForm.clear();
+    }
+}
+
+
+void MainWindow::createShowServiceOrderForm()
+{
+    _showServiceOrderForm = QSharedPointer<ShowServiceOrderForm>(
+                            new ShowServiceOrderForm() );
+
+    connect( _showServiceOrderForm.data()
+             , SIGNAL( closeShowServiceOrderForm() )
+             , SLOT( destroyShowServiceOrderForm() ) );
+}
+
+
+void MainWindow::showShowServiceOrderForm()
+{
+    if ( _showServiceOrderForm.isNull() ) {
+        createShowServiceOrderForm();
+    }
+
+    _showServiceOrderForm->show();
+}
+
+
+void MainWindow::destroyShowServiceOrderForm()
+{
+    if ( !_showServiceOrderForm.isNull() ) {
+        _showServiceOrderForm.clear();
     }
 }
 

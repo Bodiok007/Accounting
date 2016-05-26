@@ -9,6 +9,28 @@ ServiceModel::ServiceModel( QWidget *parent ) :
 }
 
 
+QSharedPointer<QSqlQueryModel> ServiceModel::getModel()
+{
+    _model->setQuery( _queries[ QueryType::GET_SERVICE_ORDER ] );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
+void ServiceModel::setHeadersToModel()
+{
+
+}
+
+
 QMap<QString, QString> &ServiceModel::getCategories() const
 {
     bool statusOk = _db->query( _queries[ QueryType::GET_SERVICE_CATEGORIES ] );

@@ -39,6 +39,7 @@ private:
     void initErrors();
     void connectSlots();
     void message( QString text );
+    bool isPrintCheck();
 
 private slots:
     void emitClose();

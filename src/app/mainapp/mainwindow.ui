@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>470</width>
-    <height>348</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -90,7 +90,7 @@
      <string>Перегляд проданих товарів</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonShowServices">
+   <widget class="QPushButton" name="pushButtonShowServicesOrder">
     <property name="geometry">
      <rect>
       <x>140</x>
