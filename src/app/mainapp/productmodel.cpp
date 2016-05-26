@@ -27,9 +27,6 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModel()
 
 QSharedPointer<QSqlQueryModel> ProductModel::getModel( QString orderId )
 {
-    QStringList arguments;
-    arguments << orderId;
-
     _model->setQuery( _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ]
                       .arg( orderId ) );
 

@@ -15,6 +15,7 @@ public:
     explicit ServiceModel( QWidget *parent = 0 );
 
     QSharedPointer<QSqlQueryModel> getModel();
+    QSharedPointer<QSqlQueryModel> getModel( QString orderId );
 
 public slots:
     QMap<QString, QString> &getCategories() const;

@@ -23,6 +23,7 @@ protected:
 
 private:
     Ui::ShowServiceOrderForm *ui;
+
 };
 
 #endif // SHOWSERVICEORDERFORM_H

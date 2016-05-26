@@ -5,6 +5,7 @@ ServiceModel::ServiceModel( QWidget *parent ) :
     QWidget( parent )
 {
     _db = Db::getInstance();
+    _model = QSharedPointer<QSqlQueryModel>( new QSqlQueryModel() );
     initQueries();
 }
 
@@ -20,6 +21,21 @@ QSharedPointer<QSqlQueryModel> ServiceModel::getModel()
     }
 
     setHeadersToModel();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel> ServiceModel::getModel( QString orderId )
+{
+    _model->setQuery( _queries[ QueryType::GET_SERVICE_BY_ORDER_ID ]
+                      .arg( orderId ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
 
     return _model;
 }
@@ -105,6 +121,8 @@ void ServiceModel::initQueries()
             "call getServiceCategories()";
     _queries[ QueryType::ADD_SERVICE ] =
             "select addService('%1', '%2', '%3')";
+    _queries[ QueryType::GET_SERVICE_BY_ORDER_ID ] =
+            "call getServiceByOrderId('%1')";
 }
 
 
