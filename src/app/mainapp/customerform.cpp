@@ -11,6 +11,12 @@ CustomerForm::CustomerForm( QWidget *parent ) :
     _addCustomerForm = QSharedPointer<AddCustomerForm>(
                        new AddCustomerForm() );
 
+    connectSlots();
+}
+
+
+void CustomerForm::connectSlots()
+{
     connect( &*_addCustomerForm
              , SIGNAL( updateCustomers() )
              , SLOT( setCustomerModel() ) );
@@ -23,6 +29,10 @@ CustomerForm::CustomerForm( QWidget *parent ) :
     connect( ui->pushButtonFind
              , SIGNAL( clicked( bool ) )
              , SLOT( findCustomerByPhone() ) );
+
+    connect( ui->tableCustomer
+             , SIGNAL( editCustomer( Customer& ) )
+             , SLOT( editCustomer( Customer& ) ) );
 }
 
 
@@ -42,6 +52,38 @@ void CustomerForm::findCustomerByPhone()
     else {
         ui->tableCustomer->setCustomerModelByPhone( customerPhone );
     }
+}
+
+
+void CustomerForm::editCustomer( Customer &customer )
+{
+    if ( _editCustomerForm.isNull() ) {
+        createEditCustomerForm();
+    }
+
+    _editCustomerForm->setCustomer( customer );
+    _editCustomerForm->show();
+}
+
+
+void CustomerForm::createEditCustomerForm()
+{
+    _editCustomerForm = QSharedPointer<EditCustomerForm>(
+                        new EditCustomerForm() );
+
+    connect( _editCustomerForm.data()
+             , SIGNAL( updateCustomers() )
+             , SLOT( setCustomerModel() ) );
+}
+
+
+void CustomerForm::showEditCustomerForm()
+{
+    if ( _editCustomerForm.isNull() ) {
+        createEditCustomerForm();
+    }
+
+    _editCustomerForm->show();
 }
 
 

@@ -18,6 +18,7 @@ public:
     QSharedPointer<QSqlQueryModel> getModel();
     QSharedPointer<QSqlQueryModel> getModelByPhone( QString phone );
     bool addCustomer( Customer &customer );
+    bool updateCustomer( Customer &customer );
 
 private:
     void initQueries();

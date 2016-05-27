@@ -50,7 +50,28 @@ bool CustomerModel::addCustomer( Customer &customer )
                << customer.lastName
                << customer.phone;
 
-    bool statusOk = _db->query( _queries[ QueryType::ADD_CUSTOMER ], parameters );
+    bool statusOk = _db->query( _queries[ QueryType::ADD_CUSTOMER ]
+                                , parameters );
+
+    if ( !statusOk ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+        return false;
+    }
+
+    return true;
+}
+
+
+bool CustomerModel::updateCustomer( Customer &customer )
+{
+    QStringList parameters;
+    parameters << customer.id
+               << customer.firstName
+               << customer.lastName
+               << customer.phone;
+
+    bool statusOk = _db->query( _queries[ QueryType::UPDATE_CUSTOMER ]
+                                , parameters );
 
     if ( !statusOk ) {
         logError( _model->lastError().text(), __FILE__, __LINE__ );
@@ -69,6 +90,8 @@ void CustomerModel::initQueries()
             "call getCustomerByPhone('%1')";
     _queries[ QueryType::ADD_CUSTOMER ] =
             "call addCustomer('%1', '%2', '%3')";
+    _queries[ QueryType::UPDATE_CUSTOMER ] =
+            "call updateCustomer('%1', '%2', '%3', '%4')";
 }
 
 

@@ -36,7 +36,8 @@ FORMS += \
     serviceform.ui \
     serviceorderform.ui \
     addserviceform.ui \
-    showserviceorderform.ui
+    showserviceorderform.ui \
+    editcustomerform.ui
 
 RESOURCES += \
     resource.qrc

@@ -5,6 +5,7 @@
 
 struct Customer
 {
+    QString id;
     QString firstName;
     QString lastName;
     QString phone;

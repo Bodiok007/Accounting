@@ -4,6 +4,7 @@ CustomerTableView::CustomerTableView( QWidget *parent ) :
     QTableView( parent )
 {
     _customerModel = QSharedPointer<CustomerModel>( new CustomerModel() );
+    initContextMenu();
 }
 
 
@@ -45,4 +46,53 @@ QString CustomerTableView::getSelectedCustomerName()
     QString customerName = model()->data( userIdIndex ).toString();
 
     return customerName;
+}
+
+
+void CustomerTableView::initContextMenu()
+{
+    _contextMenu = QSharedPointer<QMenu>( new QMenu( this ) );
+
+    QAction *updateUser =
+        _contextMenu->addAction( tr( "Редагувати замовника" ) );
+    updateUser->setObjectName( "updateCustomer" );
+
+    connect( _contextMenu.data(),
+             SIGNAL( triggered( QAction* ) ),
+             SLOT( activateCotextMenu( QAction* ) ) );
+}
+
+
+void CustomerTableView::contextMenuEvent( QContextMenuEvent *pe )
+{
+    _contextMenu->exec( pe->globalPos() );
+}
+
+
+void CustomerTableView::activateCotextMenu( QAction *pAction )
+{    
+    if ( pAction->objectName() != "updateCustomer" ) {
+        return;
+    }
+
+    int currentRow = selectionModel()->currentIndex().row();
+
+    // 0 is hide column with Id
+    QModelIndex currentIndex = model()->index( currentRow, 0 );
+    QString customerId = model()->data( currentIndex ).toString();
+
+    currentIndex = model()->index( currentRow, 1 );
+    QStringList customerName = model()->data( currentIndex ).toString()
+                                                            .split( " " );
+
+    currentIndex = model()->index( currentRow, 2 );
+    QString customerPhone = model()->data( currentIndex ).toString();
+
+    Customer customer;
+    customer.id = customerId;
+    customer.firstName = customerName.at( 0 );
+    customer.lastName = customerName.at( 1 );
+    customer.phone = customerPhone;
+
+    emit editCustomer( customer );
 }

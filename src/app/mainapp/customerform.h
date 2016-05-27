@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "addcustomerform.h"
+#include "editcustomerform.h"
 
 namespace Ui {
 class CustomerForm;
@@ -22,13 +23,20 @@ signals:
 public slots:
     void setCustomerModel();
     void findCustomerByPhone();
+    void editCustomer( Customer &customer );
+    void showEditCustomerForm();
 
 protected:
     void closeEvent( QCloseEvent *event );
 
 private:
+    void createEditCustomerForm();
+    void connectSlots();
+
+private:
     Ui::CustomerForm *ui;
     QSharedPointer<AddCustomerForm> _addCustomerForm;
+    QSharedPointer<EditCustomerForm> _editCustomerForm;
 };
 
 #endif // CUSTOMERFORM_H
