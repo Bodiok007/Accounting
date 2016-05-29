@@ -21,13 +21,16 @@ int main(int argc, char *argv[])
     }*/
 
     SmsManager *manager = new SmsManager( nullptr, new SmsClubService() );
-    manager->getStatusRequest( "273241119" );
+    /*manager->getStatusRequest( "273241119" );
     QMessageBox msg;
     while (1) {
         qDebug() << manager->getStatus();
         msg.exec();
 
-    }
+    }*/
+
+    auto setting = manager->getSetting()->readSetting();
+    //qDebug() << setting.login;
 
     delete manager;
 

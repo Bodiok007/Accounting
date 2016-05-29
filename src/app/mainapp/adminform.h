@@ -5,6 +5,7 @@
 #include "messagemodel.h"
 #include "editemployeeform.h"
 #include "addemployeeform.h"
+#include "messagesettingform.h"
 
 namespace Ui {
 class AdminForm;
@@ -28,10 +29,12 @@ private:
     void connectSlots();
     void createEditEmployeeForm();
     void createAddEmployeeForm();
+    void createMessageSettingForm();
 
 private slots:
     void showEditEmployeeForm();
     void showAddEmployeeForm();
+    void showMessageSettingForm();
     void setEmployeeModel();
     void setMessageModel();
     void editEmployee( UserEditInfo user );
@@ -42,7 +45,7 @@ private:
     Ui::AdminForm *ui;
     QSharedPointer<EditEmployeeForm> _editEmployeeForm;
     QSharedPointer<AddEmployeeForm> _addEmployeeForm;
-
+    QSharedPointer<MessageSettingForm> _messageSettingForm;
 };
 
 #endif // ADMINFORM_H

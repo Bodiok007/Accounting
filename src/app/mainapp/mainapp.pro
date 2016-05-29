@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql printsupport
+QT       += core gui sql printsupport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -37,7 +37,8 @@ FORMS += \
     serviceorderform.ui \
     addserviceform.ui \
     showserviceorderform.ui \
-    editcustomerform.ui
+    editcustomerform.ui \
+    messagesettingform.ui
 
 RESOURCES += \
     resource.qrc
@@ -60,4 +61,7 @@ LIBS += -ldb
 
 INCLUDEPATH += ../print
 LIBS += -lprint
+
+INCLUDEPATH += ../sms
+LIBS += -lsms
 

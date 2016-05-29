@@ -35,6 +35,10 @@ void AdminForm::connectSlots()
              , SIGNAL( clicked( bool ) )
              , SLOT( addEmployee() ) );
 
+    connect( ui->pushButtonSettings
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showMessageSettingForm() ) );
+
     connect( ui->pushButtonOut
              , SIGNAL( clicked( bool ) )
              , SLOT( emitClose() ) );
@@ -60,6 +64,13 @@ void AdminForm::createAddEmployeeForm()
     connect( &*_addEmployeeForm
              , SIGNAL( updateEmployees() )
              , SLOT( setEmployeeModel() ) );
+}
+
+
+void AdminForm::createMessageSettingForm()
+{
+    _messageSettingForm = QSharedPointer<MessageSettingForm>(
+                            new MessageSettingForm() );
 }
 
 
@@ -98,6 +109,17 @@ void AdminForm::showAddEmployeeForm()
     }
 
     _addEmployeeForm->show();
+}
+
+
+void AdminForm::showMessageSettingForm()
+{
+    if ( _messageSettingForm.isNull() ) {
+        createMessageSettingForm();
+    }
+
+    _messageSettingForm->addSettingToForm();
+    _messageSettingForm->show();
 }
 
 

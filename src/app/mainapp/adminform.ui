@@ -116,7 +116,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>35</height>
+               <height>40</height>
               </size>
              </property>
              <property name="text">
@@ -138,6 +138,36 @@
        <string>Повідомлення</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonSettings">
+           <property name="minimumSize">
+            <size>
+             <width>105</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Налаштування</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item>
         <widget class="MessageTableView" name="tableMessage"/>
        </item>

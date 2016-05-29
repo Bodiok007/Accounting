@@ -10,8 +10,6 @@ SmsSetting::SmsSetting()
     _settingFile = directory + "/smsSettings.ini";
 
     initErrors();
-
-    readSetting();
 }
 
 
@@ -41,6 +39,12 @@ SmsSettingData SmsSetting::readSetting()
     _setting.password = settings.value( "password", "" ).toString();
     _setting.alfaName = settings.value( "alfaName", "" ).toString();
     _setting.isError = false;
+
+    #ifdef QT_DEBUG
+      qDebug() << _setting.login;
+      qDebug() << _setting.password;
+      qDebug() << _setting.alfaName;
+    #endif
 
     if ( settings.status() != QSettings::NoError ) {
         _setting.isError = true;
