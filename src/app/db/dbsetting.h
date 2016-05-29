@@ -20,10 +20,6 @@ public:
     DbSettingData readSetting();
 
 private:
-    QSharedPointer<QIODevice> _settingFile;
-    DbSettingData _setting;
-
-private:
     const QString DB_SETTING_DIRECTORY = QString( QObject::tr( "dbSetting" ) );
     const QString DB_SETTING_FILE_PATH = DB_SETTING_DIRECTORY
                                        + QDir::separator()
@@ -34,13 +30,17 @@ private:
 private:
     void createSettingFolder();
     void checkSettingFolder();
-    void setErrors();
+    void initErrors();
     bool isFileWithSettingExists();
     void readSettingFromFile( QString *settings[], int numSetting );
     void writeSettingToFile( DbSettingData &dbSettingData );
 
     void message( QString message );
     void logError( DbSettingError error, QString fileName, int line );
+
+private:
+    QSharedPointer<QIODevice> _settingFile;
+    DbSettingData _setting;
 };
 
 #endif // DBSETTINGS_H

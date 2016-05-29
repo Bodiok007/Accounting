@@ -13,13 +13,13 @@ DbSetting::DbSetting()
     _settingFile =
         QSharedPointer<QIODevice>( new QFile( DB_SETTING_FILE_PATH ) );
 
-    setErrors();
+    initErrors();
     checkSettingFolder();
     readSetting();
 }
 
 
-void DbSetting::setErrors()
+void DbSetting::initErrors()
 {
    _errorMessages[ DbSettingError::FileNotExists ] =
        QString( QObject::tr( "Файл " ) ) + QDir::currentPath()
@@ -140,7 +140,7 @@ bool DbSetting::isFileWithSettingExists()
 }
 
 
-void DbSetting::readSettingFromFile(QString *settings[], int numSetting )
+void DbSetting::readSettingFromFile( QString *settings[], int numSetting )
 {
     QTextStream in( &*_settingFile );
     QStringList parameterList;

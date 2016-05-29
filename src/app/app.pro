@@ -3,4 +3,5 @@ SUBDIRS += \
     db \
     log \
     mainapp \
-    print
+    print \
+    sms
