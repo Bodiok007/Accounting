@@ -10,8 +10,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    SmsClubService scs;
-    scs.getStatusRequest( "273241119" );
+    /*SmsClubService scs;
+    scs.getStatusRequest( "273241119" );*/
     //scs.send("324324", "sdfsd");
     /*QMessageBox msg;
     while (1) {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     }*/
 
-    SmsManager *manager = new SmsManager( nullptr, new SmsClubService() );
+    //SmsManager *manager = new SmsManager( nullptr, new SmsClubService() );
     /*manager->getStatusRequest( "273241119" );
     QMessageBox msg;
     while (1) {
@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
 
     }*/
 
-    auto setting = manager->getSetting()->readSetting();
+    //auto setting = manager->getSetting()->readSetting();
     //qDebug() << setting.login;
 
-    delete manager;
+    //delete manager;
 
     //scs.send("234324", "Замовлення №346 готове! З повагою, магазин «Комп'ютерна техніка»!");
     /*SmsSettingData st;
@@ -57,10 +57,10 @@ int main(int argc, char *argv[])
              << data.password << " "
              << data.isError;*/
 
-   /* QString message = "=IDS START=<br/>273241119: 2165-05-28 21:14:21<br/>=IDS END=<br/>";
-    QString message2 = "=IDS START=<br/>273241119<br/>=IDS END=";/*/
-    //ResponseParser rp;
-    //qDebug() << rp.getStatus( message );
+    QString message = "=IDS START=<br/>273241119: <br/>=IDS END=<br/>";
+    //QString message2 = "=IDS START=<br/>273241119<br/>=IDS END=";
+    ResponseParser rp;
+    qDebug() << rp.getStatus( message );
     //rp.getMessageId( message2 );
     return a.exec();
 }

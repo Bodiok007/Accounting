@@ -63,7 +63,9 @@ void ServiceOrderModel::setHeadersToModel()
             << tr( "Дата замовлення" )
             << tr( "Дата виконання" )
             << tr( "Кількість послуг" )
-            << tr( "Вартість" );
+            << tr( "Вартість" )
+            << tr( "ID повідомлення сервісу" )
+            << tr( "ID повідомлення DB" );
 
     int countHeaders = headers.count();
 

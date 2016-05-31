@@ -73,7 +73,7 @@ void AddCustomerForm::initErrors()
     _errors[ Errors::EMPTY_FIELDS_ERROR ] =
         QString( tr( "Заповніть, будь ласка, всі поля!" ) );
     _errors[ Errors::ADD_CUSTOMER_ERROR ] =
-            QString( tr( "Помилка при додаванні клієнт!" ) );
+            QString( tr( "Помилка при додаванні клієнта!" ) );
 }
 
 

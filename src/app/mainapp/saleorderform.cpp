@@ -39,10 +39,10 @@ void SaleOrderForm::connectSlots()
 {
     connect( ui->pushButtonAddProduct
              , SIGNAL( clicked( bool ) )
-             , &*_addProductForm
+             , _addProductForm.data()
              , SLOT( show() ) );
 
-    connect( &*_addProductForm
+    connect( _addProductForm.data()
              , SIGNAL( addProduct( Product & ) )
              , SLOT( addProduct( Product & ) ) );
 

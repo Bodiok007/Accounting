@@ -13,7 +13,13 @@ QString ResponseParser::getStatus( QString response )
     QRegularExpression re("^.*(\\d){4}-(\\d){2}-(\\d){2}.*$");
     QRegularExpressionMatch match = re.match( response );
 
+    QRegularExpression reForNoStatus("=IDS START=<br/>\\d+: <br/>=IDS END=<br/>.*");
+    QRegularExpressionMatch matchForNoStatus = reForNoStatus.match( response );
+
     if ( response.contains( re, &match ) ) {
+       return _statuses[ Status::ACCEPTED ];
+    }
+    else if ( response.contains( reForNoStatus, &matchForNoStatus ) ) {
        return _statuses[ Status::ACCEPTED ];
     }
     else if ( response.contains( "DELIVRD", Qt::CaseInsensitive ) ) {

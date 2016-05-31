@@ -3,15 +3,15 @@
 MessageModel::MessageModel( QObject *parent )
     : QObject( parent )
 {
+    _db = Db::getInstance();
     _model = QSharedPointer<QSqlQueryModel>( new QSqlQueryModel() );
+    initQueries();
 }
 
 
 QSharedPointer<QSqlQueryModel> MessageModel::getModel()
 {
-    QString getMessageQuery = "CALL getMessage()";
-
-    _model->setQuery( getMessageQuery );
+    _model->setQuery( _queries[ QueryType::GET_MESSAGE ] );
 
     if ( _model->lastError().isValid() ) {
         logError( __FILE__, __LINE__ );
@@ -22,6 +22,33 @@ QSharedPointer<QSqlQueryModel> MessageModel::getModel()
     setHeadersToModel();
 
     return _model;
+}
+
+
+bool MessageModel::addMessage( Message &message, QString orderId )
+{
+    QStringList arguments;
+    arguments << orderId
+              << message.serviceMessageId
+              << message.text
+              << message.status;
+
+    bool statusOk = _db->query( _queries[ QueryType::ADD_MESSAGE ]
+                                , arguments );
+
+    return statusOk;
+}
+
+
+bool MessageModel::updateMessageStatus( QString messageId, QString status )
+{
+    QStringList parameters;
+    parameters << messageId << status;
+
+    bool statusOk =_db->query( _queries[ QueryType::UPDATE_MESSAGE_STATUS ]
+                               , parameters );
+
+    return statusOk;
 }
 
 
@@ -42,6 +69,17 @@ void MessageModel::setHeadersToModel()
                               , Qt::Horizontal
                               , headers.at( currentHeader ) );
     }
+}
+
+
+void MessageModel::initQueries()
+{
+   _queries[ QueryType::GET_MESSAGE ] =
+       "CALL getMessage()";
+   _queries[ QueryType::ADD_MESSAGE ] =
+       "call addMessage('%1', '%2', '%3', '%4')";
+   _queries[ QueryType::UPDATE_MESSAGE_STATUS ] =
+       "call updateMessageStatus('%1', '%2')";
 }
 
 

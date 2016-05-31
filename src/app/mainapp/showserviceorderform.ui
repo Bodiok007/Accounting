@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1054</width>
+    <width>1215</width>
     <height>456</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="ShowServiceOrderView" name="tableView"/>
+    <widget class="ShowServiceOrderView" name="tableServiceOrders"/>
    </item>
   </layout>
  </widget>

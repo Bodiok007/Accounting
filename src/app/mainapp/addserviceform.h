@@ -36,6 +36,7 @@ private slots:
 private:
     Ui::AddServiceForm *ui;
     QSharedPointer<ServiceModel> _serviceModel;
+    QSharedPointer<Db> _db;
 };
 
 #endif // ADDSERVICEFORM_H

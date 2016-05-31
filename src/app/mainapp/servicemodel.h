@@ -16,6 +16,7 @@ public:
 
     QSharedPointer<QSqlQueryModel> getModel();
     QSharedPointer<QSqlQueryModel> getModel( QString orderId );
+    QSharedPointer<QSqlQueryModel> getModelForCheck( QString orderId );
 
 public slots:
     QMap<QString, QString> &getCategories() const;

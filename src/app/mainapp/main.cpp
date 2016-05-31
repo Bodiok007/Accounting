@@ -12,6 +12,7 @@
 #include "addserviceform.h"
 #include "serviceorderform.h"
 #include "showserviceorderform.h"
+#include "messagemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,13 @@ int main(int argc, char *argv[])
     prd.show();*/
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
+
+
+    MessageModel msgm;
+
+    //Message msg;
+
+    //msgm.addMessage();
 
     /*ShowServiceOrderForm ssof;
     ssof.show();*/

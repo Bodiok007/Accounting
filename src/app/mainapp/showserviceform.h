@@ -12,8 +12,14 @@ class ShowServiceForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit ShowServiceForm(QWidget *parent = 0);
+    explicit ShowServiceForm( QWidget *parent = 0 );
     ~ShowServiceForm();
+
+    void setServiceModel();
+    void setServiceModel( QString orderId );
+
+signals:
+    void closeShowServiceForm();
 
 private:
     Ui::ShowServiceForm *ui;

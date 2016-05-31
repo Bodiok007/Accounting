@@ -12,7 +12,7 @@ ServiceModel::ServiceModel( QWidget *parent ) :
 
 QSharedPointer<QSqlQueryModel> ServiceModel::getModel()
 {
-    _model->setQuery( _queries[ QueryType::GET_SERVICE_ORDER ] );
+    _model->setQuery( _queries[ QueryType::GET_SERVICE ] );
 
     if ( _model->lastError().isValid() ) {
         logError( _model->lastError().text(), __FILE__, __LINE__ );
@@ -37,13 +37,49 @@ QSharedPointer<QSqlQueryModel> ServiceModel::getModel( QString orderId )
         return _model;
     }
 
+    setHeadersToModel();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel> ServiceModel::getModelForCheck( QString orderId )
+{
+    _model->setQuery( _queries[ QueryType::GET_SERVICE_BY_ORDER_ID_FOR_CHECK ]
+                      .arg( orderId ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
     return _model;
 }
 
 
 void ServiceModel::setHeadersToModel()
 {
+    QStringList headers;
+    headers << tr( "Замовлення №" )
+            << tr( "Категорія" )
+            << tr( "Опис" )
+            << tr( "Ціна" )
+            << tr( "Працівик" )
+            << tr( "Замовник" )
+            << tr( "Дата замовлення" )
+            << tr( "Дата виконання" );
 
+    int countHeaders = headers.count();
+
+    for ( int currentHeader = 0;
+              currentHeader < countHeaders;
+              ++currentHeader ) {
+
+       _model->setHeaderData( currentHeader
+                              , Qt::Horizontal
+                              , headers.at( currentHeader ) );
+    }
 }
 
 
@@ -121,8 +157,12 @@ void ServiceModel::initQueries()
             "call getServiceCategories()";
     _queries[ QueryType::ADD_SERVICE ] =
             "select addService('%1', '%2', '%3')";
+    _queries[ QueryType::GET_SERVICE_BY_ORDER_ID_FOR_CHECK ] =
+            "call getServiceForCheckByOrderId('%1')";
     _queries[ QueryType::GET_SERVICE_BY_ORDER_ID ] =
             "call getServiceByOrderId('%1')";
+    _queries[ QueryType::GET_SERVICE ] =
+            "call getService()";
 }
 
 

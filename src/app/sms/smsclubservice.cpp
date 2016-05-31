@@ -99,6 +99,10 @@ bool SmsClubService::isValid()
 QString SmsClubService::getLastMessageId()
 {
     QString lastMessageId = _responceParser->getMessageId( _lastResponse );
+    qDebug() << lastMessageId;
+    if ( lastMessageId == "0" ) {
+        _isValid = false;
+    }
 
     return lastMessageId;
 }

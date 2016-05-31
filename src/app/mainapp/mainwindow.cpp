@@ -41,6 +41,10 @@ void MainWindow::connectSlots()
     connect( ui->pushButtonShowServicesOrder
              , SIGNAL( clicked( bool ) )
              , SLOT( showShowServiceOrderForm() ) );
+
+    connect( ui->pushButtonShowServices
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showShowServiceForm() ) );
 }
 
 
@@ -240,6 +244,10 @@ void MainWindow::createShowServiceOrderForm()
     connect( _showServiceOrderForm.data()
              , SIGNAL( closeShowServiceOrderForm() )
              , SLOT( destroyShowServiceOrderForm() ) );
+
+    connect( _showServiceOrderForm.data()
+             , SIGNAL( showService( QString ) )
+             , SLOT( showShowServiceForm( QString ) ) );
 }
 
 
@@ -257,6 +265,63 @@ void MainWindow::destroyShowServiceOrderForm()
 {
     if ( !_showServiceOrderForm.isNull() ) {
         _showServiceOrderForm.clear();
+    }
+}
+
+
+void MainWindow::createShowServiceForm()
+{
+    _showServiceForm = QSharedPointer<ShowServiceForm>(
+                       new ShowServiceForm() );
+
+    connect( _showServiceForm.data()
+             , SIGNAL( closeShowServiceForm() )
+             , SLOT( destroyShowServiceForm() ) );
+}
+
+
+void MainWindow::showShowServiceForm()
+{
+    if ( _showServiceForm.isNull() ) {
+        createShowServiceForm();
+    }
+    else {
+        _showServiceForm->setServiceModel();
+    }
+
+    _showServiceForm->show();
+}
+
+
+void MainWindow::createShowServiceForm( QString orderId )
+{
+    _showServiceForm = QSharedPointer<ShowServiceForm>(
+                       new ShowServiceForm() );
+    _showServiceForm->setServiceModel( orderId );
+
+    connect( _showServiceForm.data()
+             , SIGNAL( closeShowServiceForm() )
+             , SLOT( destroyShowServiceForm() ) );
+}
+
+
+void MainWindow::showShowServiceForm( QString orderId )
+{
+    if ( _showServiceForm.isNull() ) {
+        createShowServiceForm( orderId );
+    }
+    else {
+        _showServiceForm->setServiceModel( orderId );
+    }
+
+    _showServiceForm->show();
+}
+
+
+void MainWindow::destroyShowServiceForm()
+{
+    if ( !_showServiceForm.isNull() ) {
+        _showServiceForm.clear();
     }
 }
 

@@ -38,7 +38,9 @@ FORMS += \
     addserviceform.ui \
     showserviceorderform.ui \
     editcustomerform.ui \
-    messagesettingform.ui
+    messagesettingform.ui \
+    sendmessageform.ui \
+    showserviceform.ui
 
 RESOURCES += \
     resource.qrc
