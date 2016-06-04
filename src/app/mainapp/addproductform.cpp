@@ -45,7 +45,6 @@ bool AddProductForm::isEmpty()
     if ( _product.name.isEmpty()
          || _product.barcode.isEmpty()
          || _product.category.isEmpty()
-         || _product.count.isEmpty()
          || _product.cost.isEmpty()) {
         return true;
     }
@@ -59,7 +58,7 @@ void AddProductForm::getProductFromForm()
     _product.name = ui->lineProductName->text();
     _product.barcode = ui->lineBarCode->text();
     _product.category = ui->comboBoxProductCategories->currentText();
-    _product.count = ui->lineCount->text();
+    _product.count = "1";
     _product.cost = ui->lineCost->text();
 }
 
@@ -76,7 +75,6 @@ void AddProductForm::clearFields()
 {
     ui->lineProductName->setText( "" );
     ui->lineBarCode->setText( "" );
-    ui->lineCount->setText( "" );
     ui->lineCost->setText( "" );
 }
 

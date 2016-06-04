@@ -6,6 +6,7 @@
 #include "salemodel.h"
 #include "productorderdetailmodel.h"
 #include "checkmanager.h"
+#include "addexistproductform.h"
 
 namespace Ui {
 class SaleOrderForm;
@@ -50,7 +51,9 @@ private slots:
 private:
     Ui::SaleOrderForm *ui;
     QSharedPointer<Db> _db;
+
     QSharedPointer<AddProductForm> _addProductForm;
+    QSharedPointer<AddExistProductForm> _addExistProductForm;
 
     QSharedPointer<ProductModel> _productModel;
     QSharedPointer<SaleModel> _saleModel;

@@ -34,13 +34,11 @@ void SaleForm::setSaleModel()
 void SaleForm::setSaleModel( QString orderId )
 {
     ui->tableProductOrder->setSaleModel( orderId );
-    qDebug() << "qwe";
 }
 
 
 void SaleForm::setSaleModelBySellerName( QString sellerName )
 {
-    qDebug() << "SaleForm::setSaleModelBySellerName";
     ui->tableProductOrder->setSaleModelBySellerName( sellerName );
 }
 

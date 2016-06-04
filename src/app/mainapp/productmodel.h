@@ -13,12 +13,14 @@ public:
     explicit ProductModel( QObject *parent = 0 );
     QSharedPointer<QSqlQueryModel> getModel();
     QSharedPointer<QSqlQueryModel> getModelSold();
+    QSharedPointer<QSqlQueryModel> getModelUnsold();
     QSharedPointer<QSqlQueryModel> getModel( QString orderId );
     QSharedPointer<QSqlQueryModel> getModelByCategory( QString category );
     QSharedPointer<QSqlQueryModel> getModelByCost( QString lowCost
                                                    , QString hightCost );
     QSharedPointer<QSqlQueryModel> getModelByCategoryAndCost(
                                    QMap<QString, QString> &data );
+    QSharedPointer<QSqlQueryModel> getModelByBarcode( QString barcode );
 
 public slots:
     QString addProduct( Product &product );

@@ -24,8 +24,11 @@ void SaleOrderForm::initFields()
     _addProductForm = QSharedPointer<AddProductForm>(
                       new AddProductForm( nullptr, _productModel ) );
 
+    _addExistProductForm = QSharedPointer<AddExistProductForm>(
+                           new AddExistProductForm() );
+
     _saleModel = QSharedPointer<SaleModel>(
-                         new SaleModel() );
+                 new SaleModel() );
 
     _productOrderDetailModel = QSharedPointer<ProductOrderDetailModel>(
                                new ProductOrderDetailModel() );
@@ -46,6 +49,15 @@ void SaleOrderForm::connectSlots()
              , SIGNAL( addProduct( Product & ) )
              , SLOT( addProduct( Product & ) ) );
 
+    connect( ui->pushButtonAddExistProduct
+             , SIGNAL( clicked( bool ) )
+             , _addExistProductForm.data()
+             , SLOT( show() ) );
+
+    connect( _addExistProductForm.data()
+             , SIGNAL( addProduct( Product & ) )
+             , SLOT( addProduct( Product & ) ) );
+
     connect( ui->pushButtonSaveSaleOrder
              , SIGNAL( clicked( bool ) )
              , SLOT( addOrder() ) );
@@ -53,12 +65,9 @@ void SaleOrderForm::connectSlots()
 
 void SaleOrderForm::closeEvent( QCloseEvent *event )
 {
-    qDebug() << "Before emitClose SaleOrderForm";
     emitClose();
-    qDebug() << "After emitClose SaleOrderForm";
     event->accept();
     /*QWidget::closeEvent( event );*/
-    qDebug() << "After QWidget::closeEvent( event ); SaleOrderForm";
 }
 
 
@@ -70,7 +79,7 @@ void SaleOrderForm::emitClose()
 
 void SaleOrderForm::addProduct( Product &product )
 {
-    _productList.append(product);
+    _productList.append( product );
     addProductToForm();
 }
 
@@ -97,14 +106,20 @@ void SaleOrderForm::addOrder()
 
     QString productId = "-1";
     bool addOrderDatailOk = false;
+
     for ( Product &product : _productList ) {
-        productId = _productModel->addProduct( product );
-        if ( productId.toInt() <= 0  ) {
-            _db->rollback();
-             message( _errors[ Errors::ADD_ORDER_ERROR ] );
-            return;
+
+        if ( product.productId.isEmpty() ) {
+            productId = _productModel->addProduct( product );
+
+            if ( productId.toInt() <= 0  ) {
+                _db->rollback();
+                 message( _errors[ Errors::ADD_ORDER_ERROR ] );
+                return;
+            }
+
+            product.productId = productId;
         }
-        product.productId = productId;
 
         addOrderDatailOk = _productOrderDetailModel->addOrderDetail( orderId
                                                                      , product );
@@ -180,7 +195,6 @@ void SaleOrderForm::addProductToForm()
     items.push_back( new QTableWidgetItem( product.name ) );
     items.push_back( new QTableWidgetItem( product.barcode ) );
     items.push_back( new QTableWidgetItem( product.category ) );
-    items.push_back( new QTableWidgetItem( product.count ) );
     items.push_back( new QTableWidgetItem( product.cost ) );
 
     int row = table->rowCount();
@@ -208,7 +222,7 @@ void SaleOrderForm::initErrors()
 }
 
 
-void SaleOrderForm::message(QString text)
+void SaleOrderForm::message( QString text )
 {
     QMessageBox msgBox;
     msgBox.setText( text );
@@ -218,7 +232,5 @@ void SaleOrderForm::message(QString text)
 
 SaleOrderForm::~SaleOrderForm()
 {
-    qDebug() << "Destroy SaleOrderForm";
     delete ui;
-    qDebug() << "END Destroy SaleOrderForm";
 }

@@ -13,6 +13,7 @@
 #include "serviceorderform.h"
 #include "showserviceorderform.h"
 #include "messagemodel.h"
+#include "addexistproductform.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +31,8 @@ int main(int argc, char *argv[])
     prd.show();*/
     MainApp mainApp;
     QString date = QDate::currentDate().toString( QString("yyyy-MM-dd") );
-
+    /*AddExistProductForm aepf;
+    aepf.show();*/
 
     MessageModel msgm;
 

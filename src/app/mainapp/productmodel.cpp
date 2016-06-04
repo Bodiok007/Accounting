@@ -41,6 +41,22 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModelSold()
 }
 
 
+QSharedPointer<QSqlQueryModel> ProductModel::getModelUnsold()
+{
+    _model->setQuery( _queries[ QueryType::GET_UNSOLD_PRODUCT ] );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
 QSharedPointer<QSqlQueryModel> ProductModel::getModel( QString orderId )
 {
     _model->setQuery( _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ]
@@ -115,6 +131,23 @@ ProductModel::getModelByCategoryAndCost( QMap<QString, QString> &data )
 }
 
 
+QSharedPointer<QSqlQueryModel> ProductModel::getModelByBarcode( QString barcode )
+{
+    _model->setQuery( _queries[ QueryType::GET_UNSOLD_PRODUCT_BY_BARCODE ]
+                      .arg( barcode ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModelFromOrder();
+
+    return _model;
+}
+
+
 void ProductModel::setHeadersToModel()
 {
     QStringList headers;
@@ -122,7 +155,7 @@ void ProductModel::setHeadersToModel()
             << tr( "Назва продукту" )
             << tr( "Штрих-код" )
             << tr( "Категорія" )
-            << tr( "Ціна" );
+            << tr( "Ціна" );qDebug() << "setHeadersToModel()";
 
     int countHeaders = headers.count();
 
@@ -144,8 +177,7 @@ void ProductModel::setHeadersToModelFromOrder()
             << tr( "Назва продукту" )
             << tr( "Штрих-код" )
             << tr( "Категорія" )
-            << tr( "Ціна" )
-            << tr( "Кількість" );
+            << tr( "Ціна" ) ;
 
     int countHeaders = headers.count();
 
@@ -247,6 +279,10 @@ void ProductModel::initQueries()
             "call getSoldProductByCost('%1', '%2')";
     _queries[ QueryType::GET_SOLD_PRODUCT_BY_CATEGORY_AND_COST ] =
             "call getSoldProductByCategoryAndCost('%1', '%2', '%3')";
+    _queries[ QueryType::GET_UNSOLD_PRODUCT ] =
+            "call getUnsoldProduct()";
+    _queries[ QueryType::GET_UNSOLD_PRODUCT_BY_BARCODE ] =
+            "call getUnsoldProductByBarcode('%1')";
 }
 
 

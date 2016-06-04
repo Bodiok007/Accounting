@@ -33,6 +33,19 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButtonAddExistProduct">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Додати наявний продукт</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonAddProduct">
        <property name="minimumSize">
         <size>
@@ -41,7 +54,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Додати продукт</string>
+        <string>Додати новий продукт</string>
        </property>
       </widget>
      </item>

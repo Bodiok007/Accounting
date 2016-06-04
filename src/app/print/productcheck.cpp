@@ -101,7 +101,7 @@ void ProductCheck::print()
                    + this->tr( "Кількість" )
                + endTdColumnHeader
                + tdColumnHeader
-                   + this->tr( "Ціна одиниці" )
+                   + this->tr( "Ціна" )
                + endTdColumnHeader
                + tdColumnHeader
                    + this->tr( "Сума" )
