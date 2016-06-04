@@ -63,6 +63,59 @@ QSharedPointer<QSqlQueryModel> SaleModel::getModel()
 }
 
 
+QSharedPointer<QSqlQueryModel> SaleModel::getModel( QString orderId )
+{
+    _model->setQuery( _queries[ QueryType::GET_PRODUCT_ORDER_BY_ID ]
+                                .arg( orderId ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel> SaleModel::getModelBySeller( QString sellerName )
+{
+    _model->setQuery( _queries[ QueryType::GET_PRODUCT_ORDER_BY_SELLER ]
+                                .arg( sellerName ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel> SaleModel::getModelByDate( QString startDate
+                                                          , QString endDate )
+{
+    _model->setQuery( _queries[ QueryType::GET_PRODUCT_ORDER_BY_DATE ]
+                                .arg( startDate )
+                                .arg( endDate ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
 void SaleModel::setHeadersToModel()
 {
     QStringList headers;
@@ -91,6 +144,12 @@ void SaleModel::initQueries()
             "select addProductOrder('%1', '%2')";
     _queries[ QueryType::GET_PRODUCT_ORDER ] =
             "call getSale()";
+    _queries[ QueryType::GET_PRODUCT_ORDER_BY_ID ] =
+            "call getSaleById('%1')";
+    _queries[ QueryType::GET_PRODUCT_ORDER_BY_SELLER ] =
+            "call getSaleBySeller('%1')";
+    _queries[ QueryType::GET_PRODUCT_ORDER_BY_DATE ] =
+            "call getSaleByDate('%1', '%2')";
 }
 
 

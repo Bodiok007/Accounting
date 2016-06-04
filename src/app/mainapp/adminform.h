@@ -6,6 +6,7 @@
 #include "editemployeeform.h"
 #include "addemployeeform.h"
 #include "messagesettingform.h"
+#include "addproductform.h"
 
 namespace Ui {
 class AdminForm;
@@ -30,15 +31,20 @@ private:
     void createEditEmployeeForm();
     void createAddEmployeeForm();
     void createMessageSettingForm();
+    void createAddProductForm();
+    void message( QString text );
 
 private slots:
     void showEditEmployeeForm();
     void showAddEmployeeForm();
+    void showAddProductForm();
     void showMessageSettingForm();
     void setEmployeeModel();
     void setMessageModel();
+    void setProductModel();
     void editEmployee( UserEditInfo user );
     void addEmployee();
+    void addProductToDb( Product &product );
     void emitClose();
 
 private:
@@ -46,6 +52,8 @@ private:
     QSharedPointer<EditEmployeeForm> _editEmployeeForm;
     QSharedPointer<AddEmployeeForm> _addEmployeeForm;
     QSharedPointer<MessageSettingForm> _messageSettingForm;
+    QSharedPointer<AddProductForm> _addProductForm;
+    QSharedPointer<ProductModel> _productModel;
 };
 
 #endif // ADMINFORM_H

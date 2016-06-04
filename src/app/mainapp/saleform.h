@@ -19,8 +19,17 @@ signals:
     void closeProductOrderForm();
     void showSale( QString orderId );
 
+public slots:
+    void search();
+
 protected:
     void closeEvent( QCloseEvent *event );
+
+private:
+    void setSaleModel();
+    void setSaleModel( QString orderId );
+    void setSaleModelBySellerName( QString sellerName );
+    void setSaleModelByDate();
 
 private:
     Ui::ProductOrderForm *ui;

@@ -13,7 +13,8 @@ class AddProductForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit AddProductForm( QWidget *parent, QSharedPointer<ProductModel> productModel );
+    explicit AddProductForm( QWidget *parent
+                             , QSharedPointer<ProductModel> productModel );
     ~AddProductForm();
 
 signals:
@@ -25,6 +26,7 @@ private slots:
 private:
     void addCategoriesToForm();
     bool isEmpty();
+    void getProductFromForm();
 
     void message( QString text );
     void clearFields();

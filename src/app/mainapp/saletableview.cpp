@@ -27,7 +27,48 @@ void SaleTableView::setSaleModel()
         return;
     }
 
-    this->setModel( &*model );
+    this->setModel( model.data() );
+    horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+}
+
+
+void SaleTableView::setSaleModel( QString orderId )
+{
+    auto model = _productOrderModel->getModel( orderId );
+
+    if ( model->lastError().isValid() ) {
+        message( tr( "Помилка при завантаженні замовлень для товарів!" ) );
+        return;
+    }
+
+    this->setModel( model.data() );
+    horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+}
+
+
+void SaleTableView::setSaleModelBySellerName( QString sellerName )
+{
+    auto model = _productOrderModel->getModelBySeller( sellerName );
+
+    if ( model->lastError().isValid() ) {
+        message( tr( "Помилка при завантаженні замовлень для товарів!" ) );
+        return;
+    }
+
+    this->setModel( model.data() );
+    horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+}
+
+void SaleTableView::setSaleModelByDate( QString startDate, QString endDate )
+{
+    auto model = _productOrderModel->getModelByDate( startDate, endDate );
+
+    if ( model->lastError().isValid() ) {
+        message( tr( "Помилка при завантаженні замовлень для товарів!" ) );
+        return;
+    }
+
+    this->setModel( model.data() );
     horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 }
 

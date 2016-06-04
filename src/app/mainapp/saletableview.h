@@ -15,6 +15,9 @@ public:
 
 public slots:
     void setSaleModel();
+    void setSaleModel( QString orderId );
+    void setSaleModelBySellerName( QString sellerName );
+    void setSaleModelByDate( QString startDate, QString endDate );
 
 signals:
     void showSale( QString orderId );

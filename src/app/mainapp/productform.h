@@ -1,7 +1,8 @@
 #ifndef PRODUCTFORM_H
 #define PRODUCTFORM_H
 
-#include <QWidget>
+#include <QtWidgets>
+#include "productmodel.h"
 
 namespace Ui {
 class ProductForm;
@@ -17,15 +18,26 @@ public:
 
     void setProductModel();
     void setProductModel( QString orderId );
+    void setSoldProductModel();
+    void setSoldProductModelByCategory( QString category );
+    void setSoldProductModelByCost();
+    void setSoldProductModelByCategoryAndCost( QString category );
 
 signals:
     void closeProductForm();
+
+public slots:
+    void search();
 
 protected:
     void closeEvent( QCloseEvent *event );
 
 private:
+    void setCategories();
+
+private:
     Ui::ProductForm *ui;
+    QSharedPointer<ProductModel> _productModel;
 };
 
 #endif // PRODUCTFORM_H

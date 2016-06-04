@@ -95,7 +95,7 @@ void MainWindow::destroySaleOrderForm()
 void MainWindow::createProductForm()
 {
     _productForm = QSharedPointer<ProductForm>( new ProductForm() );
-    _productForm->setProductModel();
+    _productForm->setSoldProductModel();
 
     connect( &*_productForm
              , SIGNAL( closeProductForm() )

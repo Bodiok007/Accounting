@@ -15,6 +15,10 @@ public:
     QString addOrder();
     QString getOrderId();
     QSharedPointer<QSqlQueryModel> getModel();
+    QSharedPointer<QSqlQueryModel> getModel( QString orderId );
+    QSharedPointer<QSqlQueryModel> getModelBySeller( QString sellerName );
+    QSharedPointer<QSqlQueryModel> getModelByDate( QString startDate
+                                                   , QString endDate );
 
 private:
     void initQueries();

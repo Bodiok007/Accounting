@@ -25,10 +25,83 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModel()
 }
 
 
+QSharedPointer<QSqlQueryModel> ProductModel::getModelSold()
+{
+    _model->setQuery( _queries[ QueryType::GET_SOLD_PRODUCT ] );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModel();
+
+    return _model;
+}
+
+
 QSharedPointer<QSqlQueryModel> ProductModel::getModel( QString orderId )
 {
     _model->setQuery( _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ]
                       .arg( orderId ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModelFromOrder();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel>
+ProductModel::getModelByCategory( QString category )
+{
+    _model->setQuery( _queries[ QueryType::GET_SOLD_PRODUCT_BY_CATEGORY ]
+                      .arg( category ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModelFromOrder();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel> ProductModel::getModelByCost( QString lowCost
+                                                             , QString hightCost )
+{
+    _model->setQuery( _queries[ QueryType::GET_SOLD_PRODUCT_BY_COST ]
+                      .arg( lowCost )
+                      .arg( hightCost ) );
+
+    if ( _model->lastError().isValid() ) {
+        logError( _model->lastError().text(), __FILE__, __LINE__ );
+
+        return _model;
+    }
+
+    setHeadersToModelFromOrder();
+
+    return _model;
+}
+
+
+QSharedPointer<QSqlQueryModel>
+ProductModel::getModelByCategoryAndCost( QMap<QString, QString> &data )
+{
+    _model->setQuery( _queries[ QueryType::GET_SOLD_PRODUCT_BY_CATEGORY_AND_COST ]
+                      .arg( data[ "category" ] )
+                      .arg( data[ "lowCost" ] )
+                      .arg( data[ "hightCost" ] ) );
 
     if ( _model->lastError().isValid() ) {
         logError( _model->lastError().text(), __FILE__, __LINE__ );
@@ -166,6 +239,14 @@ void ProductModel::initQueries()
             "call getProduct()";
     _queries[ QueryType::GET_PRODUCT_BY_ORDER_ID ] =
             "call getProductByOrderId('%1')";
+    _queries[ QueryType::GET_SOLD_PRODUCT_BY_CATEGORY ] =
+            "call getSoldProductByCategory('%1')";
+    _queries[ QueryType::GET_SOLD_PRODUCT ] =
+            "call getSoldProduct()";
+    _queries[ QueryType::GET_SOLD_PRODUCT_BY_COST ] =
+            "call getSoldProductByCost('%1', '%2')";
+    _queries[ QueryType::GET_SOLD_PRODUCT_BY_CATEGORY_AND_COST ] =
+            "call getSoldProductByCategoryAndCost('%1', '%2', '%3')";
 }
 
 

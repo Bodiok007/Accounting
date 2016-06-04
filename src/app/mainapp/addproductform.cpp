@@ -27,11 +27,7 @@ void AddProductForm::addCategoriesToForm()
 
 void AddProductForm::saveProduct()
 {
-    _product.name = ui->lineProductName->text();
-    _product.barcode = ui->lineBarCode->text();
-    _product.category = ui->comboBoxProductCategories->currentText();
-    _product.count = ui->lineCount->text();
-    _product.cost = ui->lineCost->text();
+    getProductFromForm();
 
     if ( isEmpty() ) {
         message( tr( "Заповніть, будь ласка, всі поля!" ) );
@@ -55,6 +51,16 @@ bool AddProductForm::isEmpty()
     }
 
     return false;
+}
+
+
+void AddProductForm::getProductFromForm()
+{
+    _product.name = ui->lineProductName->text();
+    _product.barcode = ui->lineBarCode->text();
+    _product.category = ui->comboBoxProductCategories->currentText();
+    _product.count = ui->lineCount->text();
+    _product.cost = ui->lineCost->text();
 }
 
 
