@@ -3,7 +3,7 @@
 ProductOrderView::ProductOrderView( QWidget *parent )
     : QTableWidget( parent )
 { 
-    setColumnCount(4);
+    setColumnCount(5);
     setHeaders();
     horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 }
@@ -15,7 +15,8 @@ void ProductOrderView::setHeaders()
     headers << tr( "Назва товару" )
             << tr( "Штрих-код" )
             << tr( "Категорія" )
-            << tr( "Вартість одиниці" );
+            << tr( "Вартість одиниці" )
+            << tr( "Кількість" );
 
     setHorizontalHeaderLabels( headers );
 }

@@ -28,7 +28,7 @@ void AdminForm::setMessageModel()
 
 void AdminForm::setProductModel()
 {
-    ui->tableViewProducts->setProductModel();
+    ui->tableViewProducts->setUnsoldProductModel();
 }
 
 
@@ -53,6 +53,10 @@ void AdminForm::connectSlots()
     connect( ui->pushButtonAddProduct
              , SIGNAL( clicked( bool ) )
              , SLOT( showAddProductForm() ) );
+
+    connect( ui->pushButtonEditProduct
+             , SIGNAL( clicked( bool ) )
+             , SLOT( showEditProductForm() ) );
 }
 
 
@@ -70,7 +74,7 @@ void AdminForm::createEditEmployeeForm()
 void AdminForm::createAddEmployeeForm()
 {
     _addEmployeeForm = QSharedPointer<AddEmployeeForm>(
-                            new AddEmployeeForm() );
+                       new AddEmployeeForm() );
 
     connect( _addEmployeeForm.data()
              , SIGNAL( updateEmployees() )
@@ -87,13 +91,37 @@ void AdminForm::createMessageSettingForm()
 
 void AdminForm::createAddProductForm()
 {
-    _productModel = QSharedPointer<ProductModel>( new ProductModel() );
+    if ( _productModel.isNull() ) {
+        createProductModel();
+    }
+
     _addProductForm = QSharedPointer<AddProductForm>(
-                new AddProductForm( nullptr, _productModel ) );
+                      new AddProductForm( nullptr, _productModel ) );
 
     connect( _addProductForm.data()
              , SIGNAL( addProduct( Product & ) )
              , SLOT( addProductToDb( Product & ) ) );
+}
+
+
+void AdminForm::createEditProductForm()
+{
+    if ( _productModel.isNull() ) {
+        createProductModel();
+    }
+
+    _editProductForm = QSharedPointer<EditProductForm>(
+                       new EditProductForm( nullptr, _productModel ) );
+
+    connect( _editProductForm.data()
+             , SIGNAL( updateProducts() )
+             , SLOT( setProductModel() ) );
+}
+
+
+void AdminForm::createProductModel()
+{
+    _productModel = QSharedPointer<ProductModel>( new ProductModel() );
 }
 
 
@@ -144,6 +172,24 @@ void AdminForm::showEditEmployeeForm()
     }
 
     _editEmployeeForm->show();
+}
+
+
+void AdminForm::showEditProductForm()
+{
+    if ( _editProductForm.isNull() ) {
+        createEditProductForm();
+    }
+
+    Product product = ui->tableViewProducts->getSelectedProduct();
+    if ( product.productId.isEmpty() ) {
+        message( tr( "Виберіть товар для редагування!" ) );
+        return;
+    }
+
+    _editProductForm->addProductToForm( product );
+
+    _editProductForm->show();
 }
 
 

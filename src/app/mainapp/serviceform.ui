@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Додавання послуги в замовлення</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -42,19 +42,6 @@
        </property>
        <property name="text">
         <string>Зберегти замовлення</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonPrintCheck">
-       <property name="minimumSize">
-        <size>
-         <width>121</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Друкувати чек</string>
        </property>
       </widget>
      </item>

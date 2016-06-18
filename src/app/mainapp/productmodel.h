@@ -22,6 +22,8 @@ public:
                                    QMap<QString, QString> &data );
     QSharedPointer<QSqlQueryModel> getModelByBarcode( QString barcode );
 
+    bool updateProduct( Product &product );
+
 public slots:
     QString addProduct( Product &product );
 
@@ -32,6 +34,7 @@ private:
     void initQueries();
     void logError( QString error, QString fileName, int line ) const;
     void setHeadersToModel();
+    void setHeadersToModelByFilter();
     void setHeadersToModelFromOrder();
     QString lastInsertId();
 

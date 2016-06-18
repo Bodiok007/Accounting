@@ -21,8 +21,8 @@ void SaleOrderForm::initFields()
 
     _productModel = QSharedPointer<ProductModel>( new ProductModel() );
 
-    _addProductForm = QSharedPointer<AddProductForm>(
-                      new AddProductForm( nullptr, _productModel ) );
+    /*_addProductForm = QSharedPointer<AddProductForm>(
+                      new AddProductForm( nullptr, _productModel ) );*/
 
     _addExistProductForm = QSharedPointer<AddExistProductForm>(
                            new AddExistProductForm() );
@@ -40,14 +40,14 @@ void SaleOrderForm::initFields()
 
 void SaleOrderForm::connectSlots()
 {
-    connect( ui->pushButtonAddProduct
+    /*connect( ui->pushButtonAddProduct
              , SIGNAL( clicked( bool ) )
              , _addProductForm.data()
-             , SLOT( show() ) );
+             , SLOT( show() ) );*/
 
-    connect( _addProductForm.data()
+    /*connect( _addProductForm.data()
              , SIGNAL( addProduct( Product & ) )
-             , SLOT( addProduct( Product & ) ) );
+             , SLOT( addProduct( Product & ) ) );*/
 
     connect( ui->pushButtonAddExistProduct
              , SIGNAL( clicked( bool ) )
@@ -104,23 +104,9 @@ void SaleOrderForm::addOrder()
         return;
     }
 
-    QString productId = "-1";
     bool addOrderDatailOk = false;
 
     for ( Product &product : _productList ) {
-
-        if ( product.productId.isEmpty() ) {
-            productId = _productModel->addProduct( product );
-
-            if ( productId.toInt() <= 0  ) {
-                _db->rollback();
-                 message( _errors[ Errors::ADD_ORDER_ERROR ] );
-                return;
-            }
-
-            product.productId = productId;
-        }
-
         addOrderDatailOk = _productOrderDetailModel->addOrderDetail( orderId
                                                                      , product );
         if ( !addOrderDatailOk ) {
@@ -196,6 +182,7 @@ void SaleOrderForm::addProductToForm()
     items.push_back( new QTableWidgetItem( product.barcode ) );
     items.push_back( new QTableWidgetItem( product.category ) );
     items.push_back( new QTableWidgetItem( product.cost ) );
+    items.push_back( new QTableWidgetItem( product.count ) );
 
     int row = table->rowCount();
     table->insertRow( row );

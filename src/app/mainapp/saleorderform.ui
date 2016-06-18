@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Створення замовлення продуктів</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -41,20 +41,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Додати наявний продукт</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonAddProduct">
-       <property name="minimumSize">
-        <size>
-         <width>121</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Додати новий продукт</string>
+        <string>Додати продукт</string>
        </property>
       </widget>
      </item>

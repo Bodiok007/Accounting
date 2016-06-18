@@ -22,6 +22,7 @@ signals:
 private slots:
     void addSelectedProduct();
     void searchProduct();
+    void setRangeCountProduct();
 
 private:
     void message( QString text );

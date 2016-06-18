@@ -127,8 +127,8 @@ void ProductTableView::setProductModel( QString orderId )
 
     setColumnHidden( 0, true ); // orderId
 
-    int count = 5;
-    setColumnHidden( count, true );
+    /*int count = 5;
+    setColumnHidden( count, true );*/
 
     int employeeName = 6;
     setColumnHidden( employeeName, true );
@@ -160,7 +160,7 @@ Product ProductTableView::getSelectedProduct()
     product.barcode = index.sibling( currentRow, 2 ).data().toString();
     product.category = index.sibling( currentRow, 3 ).data().toString();
     product.cost = index.sibling( currentRow, 4 ).data().toString();
-    product.count = "1";
+    product.count = index.sibling( currentRow, 5 ).data().toString();
 
     return product;
 }

@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>343</width>
-    <height>221</height>
+    <height>258</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Додавання продукту</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -34,8 +34,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineProductName">
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineBarCode">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -56,8 +56,8 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineBarCode">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineProductName">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -94,7 +94,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_4">
        <property name="maximumSize">
         <size>
@@ -112,8 +112,25 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="QLineEdit" name="lineCost">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Кількість</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineCount">
        <property name="minimumSize">
         <size>
          <width>0</width>

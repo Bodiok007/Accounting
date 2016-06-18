@@ -86,7 +86,7 @@ ProductModel::getModelByCategory( QString category )
         return _model;
     }
 
-    setHeadersToModelFromOrder();
+    setHeadersToModelByFilter();
 
     return _model;
 }
@@ -105,7 +105,7 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModelByCost( QString lowCost
         return _model;
     }
 
-    setHeadersToModelFromOrder();
+    setHeadersToModelByFilter();
 
     return _model;
 }
@@ -125,7 +125,7 @@ ProductModel::getModelByCategoryAndCost( QMap<QString, QString> &data )
         return _model;
     }
 
-    setHeadersToModelFromOrder();
+    setHeadersToModelByFilter();
 
     return _model;
 }
@@ -148,6 +148,23 @@ QSharedPointer<QSqlQueryModel> ProductModel::getModelByBarcode( QString barcode 
 }
 
 
+bool ProductModel::updateProduct( Product &product )
+{
+    QStringList parameters;
+    parameters << product.productId
+               << product.name
+               << product.barcode
+               << product.category
+               << product.cost
+               << product.count;
+
+    bool statusOk = _db->query( _queries[ QueryType::UPDATE_PRODUCT ]
+                                , parameters );
+
+    return statusOk;
+}
+
+
 void ProductModel::setHeadersToModel()
 {
     QStringList headers;
@@ -155,7 +172,33 @@ void ProductModel::setHeadersToModel()
             << tr( "Назва продукту" )
             << tr( "Штрих-код" )
             << tr( "Категорія" )
-            << tr( "Ціна" );qDebug() << "setHeadersToModel()";
+            << tr( "Ціна одиниці" )
+            << tr( "Кількість" )
+            << tr( "Сума" );
+
+    int countHeaders = headers.count();
+
+    for ( int currentHeader = 0;
+              currentHeader < countHeaders;
+              ++currentHeader ) {
+
+       _model->setHeaderData( currentHeader
+                              , Qt::Horizontal
+                              , headers.at( currentHeader ) );
+    }
+}
+
+
+void ProductModel::setHeadersToModelByFilter()
+{
+    QStringList headers;
+    headers << tr( "Замовлення №" )
+            << tr( "Назва продукту" )
+            << tr( "Штрих-код" )
+            << tr( "Категорія" )
+            << tr( "Ціна одиниці" )
+            << tr( "Кількість" )
+            << tr( "Сума" );
 
     int countHeaders = headers.count();
 
@@ -177,7 +220,10 @@ void ProductModel::setHeadersToModelFromOrder()
             << tr( "Назва продукту" )
             << tr( "Штрих-код" )
             << tr( "Категорія" )
-            << tr( "Ціна" ) ;
+            << tr( "Ціна одиниці" )
+            << tr( "Кількість" )
+            << tr( "Продавець" )
+            << tr( "Сума" );
 
     int countHeaders = headers.count();
 
@@ -198,7 +244,8 @@ QString ProductModel::addProduct( Product &product )
     parameters << product.name
                << product.barcode
                << product.category
-               << product.cost;
+               << product.cost
+               << product.count;
 
     bool statusOk = _db->query( _queries[ QueryType::ADD_PRODUCT ], parameters );
 
@@ -264,7 +311,7 @@ QStringList ProductModel::getCategoryList()
 void ProductModel::initQueries()
 {
     _queries[ QueryType::ADD_PRODUCT ] =
-            "select addProduct('%1', '%2', '%3', '%4')";
+            "select addProduct('%1', '%2', '%3', '%4', '%5')";
     _queries[ QueryType::GET_PRODUCT_CATEGORIES ] =
             "call getProductCategories()";
     _queries[ QueryType::GET_PRODUCT ] =
@@ -283,6 +330,8 @@ void ProductModel::initQueries()
             "call getUnsoldProduct()";
     _queries[ QueryType::GET_UNSOLD_PRODUCT_BY_BARCODE ] =
             "call getUnsoldProductByBarcode('%1')";
+    _queries[ QueryType::UPDATE_PRODUCT ] =
+            "call updateProduct('%1', '%2', '%3', '%4', '%5', '%6')";
 }
 
 

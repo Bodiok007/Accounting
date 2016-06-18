@@ -23,10 +23,19 @@ AddExistProductForm::AddExistProductForm( QWidget *parent ) :
 void AddExistProductForm::addSelectedProduct()
 {
     _product = ui->tableExistProduct->getSelectedProduct();
+    // if(ui->productCount > _product.count) error;
     if ( _product.productId.isEmpty() ) {
         message( tr( "Виберіть, будь ласка, продукт!" ) );
         return;
     }
+
+    if ( _product.count.toInt() < ui->spinBoxCount->value() ) {
+        message( "Недостатньо товарів для додавання! Максимальна кількість: "
+                     +  _product.count );
+        return;
+    }
+
+    _product.count = QString::number( ui->spinBoxCount->value() );
 
     emit addProduct( _product );
 }
@@ -41,6 +50,12 @@ void AddExistProductForm::searchProduct()
     else {
         ui->tableExistProduct->setUnsoldProductModel();
     }
+}
+
+
+void AddExistProductForm::setRangeCountProduct()
+{
+
 }
 
 
